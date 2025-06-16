@@ -1,6 +1,6 @@
 # react-native-foundation-models
 
-A React Native Nitro module
+Foundation Models implementation for React Native.
 
 ## Installation
 
