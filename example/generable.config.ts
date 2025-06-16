@@ -79,7 +79,7 @@ const config: GenerableConfig = {
       },
     },
   ],
-  outputPath: 'ios/Generated',
+  outputPath: 'ios/example/Generated',
   moduleName: 'RNFoundationModels',
 }
 

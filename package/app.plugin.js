@@ -1,1 +1,1 @@
-module.exports = require('./lib/commonjs/plugin.js')
+module.exports = require('./lib/commonjs/plugins/withPlugin.js');

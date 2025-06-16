@@ -49,7 +49,7 @@ const config: GenerableConfig = {
       }
     }
   ],
-  outputPath: 'ios/Generated',
+  outputPath: 'ios/example/Generated',
   moduleName: 'FoundationModels'
 };
 
@@ -74,13 +74,13 @@ import Foundation
 struct User {
   /// Unique user identifier
   var id: String
-  
+
   /// Length: 2 - 50
   var name: String
-  
+
   /// Range: 0 - 150
   var age: Double?
-  
+
   var isActive: Bool
 }
 ```
@@ -182,8 +182,8 @@ npm run generate:dev
   name: 'User',
   properties: {
     id: { type: 'string', required: true },
-    email: { 
-      type: 'string', 
+    email: {
+      type: 'string',
       required: true,
       constraints: { pattern: '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$' }
     },
@@ -198,8 +198,8 @@ npm run generate:dev
   name: 'Product',
   properties: {
     id: { type: 'string', required: true },
-    price: { 
-      type: 'number', 
+    price: {
+      type: 'number',
       required: true,
       constraints: { min: 0 }
     },
@@ -228,10 +228,10 @@ import Foundation
 struct User {
   /// Unique user identifier
   var id: String
-  
+
   /// Pattern: ^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$
   var email: String
-  
+
   var profile: Dictionary<String, Any>?
 }
 
@@ -239,13 +239,13 @@ struct User {
 @Generable
 struct Product {
   var id: String
-  
+
   /// Range: 0 - unlimited
   var price: Double
-  
+
   /// Allowed values: electronics, books, clothing
   var category: String
-  
+
   var tags: [String]?
 }
 ```

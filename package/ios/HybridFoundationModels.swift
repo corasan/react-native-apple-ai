@@ -2,9 +2,12 @@ import Foundation
 import NitroModules
 import FoundationModels
 
+let session = LanguageModelSession()
+
 class HybridFoundationModels: HybridFoundationModelsSpec {
 
     func hello(name: String) -> String {
+        
         return "Hello \(name) from FoundationModels!"
     }
 

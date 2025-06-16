@@ -16,17 +16,13 @@ export class GenerableCLI {
 
   async run(): Promise<void> {
     try {
-      console.log('🔄 Loading configuration...');
       const config = this.configLoader.loadConfig();
       this.configLoader.validateConfig(config);
 
-      console.log(`📋 Found ${config.schemas.length} schema(s)`);
-
-      const outputPath = config.outputPath || 'ios/Generated';
-      const fileName = `${config.moduleName || 'RNFoundationModels'}.swift`;
+      const outputPath = config.outputPath || 'ios/example/Generated';
+      const fileName = `${config.moduleName || 'Generables'}.swift`;
       const fullOutputPath = resolve(process.cwd(), outputPath, fileName);
 
-      console.log('🏗️  Generating Swift code...');
       const swiftCode = this.generator.generateFile(config.schemas);
 
       mkdirSync(dirname(fullOutputPath), { recursive: true });
