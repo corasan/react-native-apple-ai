@@ -47,6 +47,10 @@ abstract class HybridFoundationModelsSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun add(a: Double, b: Double): Double
+  
+  @DoNotStrip
+  @Keep
+  abstract fun respond(generating: String): Promise<String>
 
   private external fun initHybrid(): HybridData
 

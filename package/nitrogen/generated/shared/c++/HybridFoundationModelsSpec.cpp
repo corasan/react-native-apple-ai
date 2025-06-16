@@ -16,6 +16,7 @@ namespace margelo::nitro::foundationmodels {
     registerHybrids(this, [](Prototype& prototype) {
       prototype.registerHybridMethod("hello", &HybridFoundationModelsSpec::hello);
       prototype.registerHybridMethod("add", &HybridFoundationModelsSpec::add);
+      prototype.registerHybridMethod("respond", &HybridFoundationModelsSpec::respond);
     });
   }
 

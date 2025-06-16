@@ -13,6 +13,7 @@ namespace margelo::nitro::foundationmodels { class HybridFoundationModelsSpec; }
 
 // Include C++ defined types
 #include "HybridFoundationModelsSpec.hpp"
+#include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>

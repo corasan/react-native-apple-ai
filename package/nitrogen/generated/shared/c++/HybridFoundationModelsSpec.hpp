@@ -16,6 +16,7 @@
 
 
 #include <string>
+#include <NitroModules/Promise.hpp>
 
 namespace margelo::nitro::foundationmodels {
 
@@ -50,6 +51,7 @@ namespace margelo::nitro::foundationmodels {
       // Methods
       virtual std::string hello(const std::string& name) = 0;
       virtual double add(double a, double b) = 0;
+      virtual std::shared_ptr<Promise<std::string>> respond(const std::string& generating) = 0;
 
     protected:
       // Hybrid Setup

@@ -1,10 +1,10 @@
 import { ConfigPlugin } from "@expo/config-plugins";
-import withGenerablePlugin from "./withGenerablePlugin";
+import  withGenerablePackagePlugin from "./generateSwiftFilesInPackage";
 import withIos26 from "./withIos26";
 
 const withPlugin: ConfigPlugin = (config) => {
-  config = withGenerablePlugin(config)
-  return withIos26(config)
+  config = withIos26(config)
+  return withGenerablePackagePlugin(config)
 }
 
 export default withPlugin

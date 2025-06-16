@@ -16,6 +16,7 @@ public protocol HybridFoundationModelsSpec_protocol: HybridObject {
   // Methods
   func hello(name: String) throws -> String
   func add(a: Double, b: Double) throws -> Double
+  func respond(generating: String) throws -> Promise<String>
 }
 
 /// See ``HybridFoundationModelsSpec``

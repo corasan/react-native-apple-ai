@@ -15,6 +15,7 @@ namespace RNFoundationModels { class HybridFoundationModelsSpec_cxx; }
 
 
 #include <string>
+#include <NitroModules/Promise.hpp>
 
 #include "RNFoundationModels-Swift-Cxx-Umbrella.hpp"
 
@@ -65,6 +66,14 @@ namespace margelo::nitro::foundationmodels {
     }
     inline double add(double a, double b) override {
       auto __result = _swiftPart.add(std::forward<decltype(a)>(a), std::forward<decltype(b)>(b));
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline std::shared_ptr<Promise<std::string>> respond(const std::string& generating) override {
+      auto __result = _swiftPart.respond(generating);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

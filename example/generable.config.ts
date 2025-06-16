@@ -35,47 +35,6 @@ const config: GenerableConfig = {
             description: 'Whether the user account is active',
           },
         },
-        tags: {
-          type: 'array',
-          guide: {
-            description: 'User tags or categories',
-          },
-        },
-      },
-    },
-    {
-      name: 'Product',
-      properties: {
-        id: {
-          type: 'string',
-          guide: {
-            description: 'Product identifier',
-          },
-        },
-        title: {
-          type: 'string',
-          guide: {
-            description: 'Product title',
-          },
-        },
-        price: {
-          type: 'number',
-          guide: {
-            description: 'Product price',
-          },
-        },
-        category: {
-          type: 'string',
-          guide: {
-            description: 'Product category',
-          },
-        },
-        inStock: {
-          type: 'boolean',
-          guide: {
-            description: 'Product availability status',
-          },
-        },
       },
     },
   ],
