@@ -1,3 +1,1 @@
-const { withGenerablePlugin } = require('./lib/commonjs/plugin');
-
-module.exports = withGenerablePlugin;
+module.exports = require('./lib/commonjs/plugin.js')
