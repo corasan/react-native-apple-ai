@@ -20,7 +20,7 @@ import NitroModules
 public class HybridFoundationModelsSpec_cxx {
   /**
    * The Swift <> C++ bridge's namespace (`margelo::nitro::foundationmodels::bridge::swift`)
-   * from `FoundationModels-Swift-Cxx-Bridge.hpp`.
+   * from `RNFoundationModels-Swift-Cxx-Bridge.hpp`.
    * This contains specialized C++ templates, and C++ helper functions that can be accessed from Swift.
    */
   public typealias bridge = margelo.nitro.foundationmodels.bridge.swift

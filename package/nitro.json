@@ -4,18 +4,17 @@
     "foundationmodels"
   ],
   "ios": {
-    "iosModuleName": "FoundationModels"
+    "iosModuleName": "RNFoundationModels"
   },
   "android": {
     "androidNamespace": [
       "foundationmodels"
     ],
-    "androidCxxLibName": "FoundationModels"
+    "androidCxxLibName": "RNFoundationModels"
   },
   "autolinking": {
     "FoundationModels": {
-      "swift": "HybridFoundationModels",
-      "kotlin": "HybridFoundationModels"
+      "swift": "HybridFoundationModels"
     }
   },
   "ignorePaths": [

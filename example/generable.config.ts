@@ -4,163 +4,83 @@ const config: GenerableConfig = {
   schemas: [
     {
       name: 'User',
-      description: 'User profile data model for the example app',
       properties: {
         id: {
           type: 'string',
-          required: true,
-          description: 'Unique user identifier',
+          guide: {
+            description: 'Unique user identifier',
+          },
         },
         email: {
           type: 'string',
-          required: true,
-          constraints: {
-            pattern: '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$',
+          guide: {
+            description: 'User email address',
           },
-          description: 'User email address',
         },
         name: {
           type: 'string',
-          required: true,
-          constraints: {
-            minLength: 2,
-            maxLength: 50,
+          guide: {
+            description: 'User display name',
           },
-          description: 'User display name',
         },
         age: {
           type: 'number',
-          required: false,
-          constraints: {
-            min: 13,
-            max: 120,
+          guide: {
+            description: 'User age in years',
           },
-          description: 'User age in years',
         },
         isActive: {
           type: 'boolean',
-          required: true,
-          description: 'Whether the user account is active',
-        },
-        avatar: {
-          type: 'string',
-          required: false,
-          description: 'User avatar image URL',
-        },
-        preferences: {
-          type: 'object',
-          required: false,
-          description: 'User preferences as key-value pairs',
-        },
-      },
-    },
-    {
-      name: 'Post',
-      description: 'Social media post model',
-      properties: {
-        id: {
-          type: 'string',
-          required: true,
-          description: 'Post identifier',
-        },
-        userId: {
-          type: 'string',
-          required: true,
-          description: 'ID of the user who created the post',
-        },
-        title: {
-          type: 'string',
-          required: true,
-          constraints: {
-            minLength: 1,
-            maxLength: 200,
+          guide: {
+            description: 'Whether the user account is active',
           },
-          description: 'Post title',
-        },
-        content: {
-          type: 'string',
-          required: true,
-          constraints: {
-            minLength: 1,
-            maxLength: 2000,
-          },
-          description: 'Post content',
-        },
-        imageUrls: {
-          type: 'array',
-          required: false,
-          items: {
-            type: 'string',
-          },
-          description: 'Array of image URLs attached to the post',
-        },
-        likesCount: {
-          type: 'number',
-          required: true,
-          constraints: {
-            min: 0,
-          },
-          description: 'Number of likes on the post',
-        },
-        isPublished: {
-          type: 'boolean',
-          required: true,
-          description: 'Whether the post is published',
         },
         tags: {
           type: 'array',
-          required: false,
-          items: {
-            type: 'string',
+          guide: {
+            description: 'User tags or categories',
           },
-          description: 'Post tags for categorization',
         },
       },
     },
     {
-      name: 'Settings',
-      description: 'App settings configuration',
+      name: 'Product',
       properties: {
-        theme: {
+        id: {
           type: 'string',
-          required: true,
-          constraints: {
-            enum: ['light', 'dark', 'auto'],
+          guide: {
+            description: 'Product identifier',
           },
-          description: 'App theme preference',
         },
-        notifications: {
-          type: 'boolean',
-          required: true,
-          description: 'Whether notifications are enabled',
-        },
-        language: {
+        title: {
           type: 'string',
-          required: true,
-          constraints: {
-            enum: ['en', 'es', 'fr', 'de', 'pt'],
+          guide: {
+            description: 'Product title',
           },
-          description: 'App language setting',
         },
-        fontSize: {
+        price: {
           type: 'number',
-          required: true,
-          constraints: {
-            min: 12,
-            max: 24,
+          guide: {
+            description: 'Product price',
           },
-          description: 'Text font size preference',
         },
-        autoSync: {
+        category: {
+          type: 'string',
+          guide: {
+            description: 'Product category',
+          },
+        },
+        inStock: {
           type: 'boolean',
-          required: true,
-          description: 'Whether to automatically sync data',
+          guide: {
+            description: 'Product availability status',
+          },
         },
       },
     },
   ],
-  outputPath: 'ios/Generated',
-  moduleName: 'ExampleModels',
+  outputPath: 'example/ios/Generated',
+  moduleName: 'FoundationModels',
 }
 
 export default config

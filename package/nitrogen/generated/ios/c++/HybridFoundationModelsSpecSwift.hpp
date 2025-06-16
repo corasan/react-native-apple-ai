@@ -10,13 +10,13 @@
 #include "HybridFoundationModelsSpec.hpp"
 
 // Forward declaration of `HybridFoundationModelsSpec_cxx` to properly resolve imports.
-namespace FoundationModels { class HybridFoundationModelsSpec_cxx; }
+namespace RNFoundationModels { class HybridFoundationModelsSpec_cxx; }
 
 
 
 #include <string>
 
-#include "FoundationModels-Swift-Cxx-Umbrella.hpp"
+#include "RNFoundationModels-Swift-Cxx-Umbrella.hpp"
 
 namespace margelo::nitro::foundationmodels {
 
@@ -33,13 +33,13 @@ namespace margelo::nitro::foundationmodels {
   class HybridFoundationModelsSpecSwift: public virtual HybridFoundationModelsSpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridFoundationModelsSpecSwift(const FoundationModels::HybridFoundationModelsSpec_cxx& swiftPart):
+    explicit HybridFoundationModelsSpecSwift(const RNFoundationModels::HybridFoundationModelsSpec_cxx& swiftPart):
       HybridObject(HybridFoundationModelsSpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline FoundationModels::HybridFoundationModelsSpec_cxx& getSwiftPart() noexcept {
+    inline RNFoundationModels::HybridFoundationModelsSpec_cxx& getSwiftPart() noexcept {
       return _swiftPart;
     }
 
@@ -73,7 +73,7 @@ namespace margelo::nitro::foundationmodels {
     }
 
   private:
-    FoundationModels::HybridFoundationModelsSpec_cxx _swiftPart;
+    RNFoundationModels::HybridFoundationModelsSpec_cxx _swiftPart;
   };
 
 } // namespace margelo::nitro::foundationmodels

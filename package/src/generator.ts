@@ -24,11 +24,11 @@ export class SwiftGenerator {
         return 'Double';
       case 'boolean':
         return 'Bool';
-      case 'array':
-        if (property.items) {
-          return `[${this.mapTypeToSwift(property.items)}]`;
-        }
-        return '[Any]';
+      // case 'array':
+      //   if (property.items) {
+      //     return `[${this.mapTypeToSwift(property.items)}]`;
+      //   }
+      //   return '[Any]';
       case 'object':
         return 'Dictionary<String, Any>';
       default:
@@ -36,31 +36,11 @@ export class SwiftGenerator {
     }
   }
 
-  private generatePropertyDocumentation(property: GenerableProperty): string[] {
+  private generateGuideDescription(property: GenerableProperty): string[] {
     const lines: string[] = [];
 
-    if (property.description) {
-      lines.push(`${this.indent()}/// ${property.description}`);
-    }
-
-    if (property.constraints) {
-      const constraints = property.constraints;
-      if (constraints.minLength !== undefined || constraints.maxLength !== undefined) {
-        const min = constraints.minLength ?? 0;
-        const max = constraints.maxLength ?? 'unlimited';
-        lines.push(`${this.indent()}/// Length: ${min} - ${max}`);
-      }
-      if (constraints.min !== undefined || constraints.max !== undefined) {
-        const min = constraints.min ?? 'unlimited';
-        const max = constraints.max ?? 'unlimited';
-        lines.push(`${this.indent()}/// Range: ${min} - ${max}`);
-      }
-      if (constraints.pattern) {
-        lines.push(`${this.indent()}/// Pattern: ${constraints.pattern}`);
-      }
-      if (constraints.enum) {
-        lines.push(`${this.indent()}/// Allowed values: ${constraints.enum.join(', ')}`);
-      }
+    if (property.guide) {
+      lines.push(`${this.indent()}@Guide(description: "${property.guide.description}")`);
     }
 
     return lines;
@@ -69,23 +49,17 @@ export class SwiftGenerator {
   private generateProperty(name: string, property: GenerableProperty): string[] {
     const lines: string[] = [];
 
-    lines.push(...this.generatePropertyDocumentation(property));
+    lines.push(...this.generateGuideDescription(property));
 
     const swiftType = this.mapTypeToSwift(property);
-    const isOptional = !property.required;
-    const optionalMarker = isOptional ? '?' : '';
 
-    lines.push(`${this.indent()}var ${name}: ${swiftType}${optionalMarker}`);
+    lines.push(`${this.indent()}var ${name}: ${swiftType}`);
 
     return lines;
   }
 
   generateStruct(schema: GenerableSchema): string {
     const lines: string[] = [];
-
-    if (schema.description) {
-      lines.push(`/// ${schema.description}`);
-    }
 
     lines.push(`@Generable`);
     lines.push(`struct ${schema.name} {`);
@@ -108,7 +82,7 @@ export class SwiftGenerator {
   generateFile(schemas: GenerableSchema[]): string {
     const lines: string[] = [];
 
-    lines.push('import Foundation');
+    lines.push('import FoundationModels');
     lines.push('');
 
     schemas.forEach((schema, index) => {

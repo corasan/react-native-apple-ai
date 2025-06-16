@@ -32,7 +32,15 @@
     },
     "plugins": [
       "expo-router",
-      "react-native-foundation-models"
+      "react-native-foundation-models",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "26.0"
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

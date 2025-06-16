@@ -16,8 +16,6 @@
 #include <NitroModules/HybridObjectRegistry.hpp>
 
 #include "JHybridFoundationModelsSpec.hpp"
-#include <NitroModules/JNISharedPtr.hpp>
-#include <NitroModules/DefaultConstructableObject.hpp>
 
 namespace margelo::nitro::foundationmodels {
 
@@ -31,15 +29,7 @@ int initialize(JavaVM* vm) {
     margelo::nitro::foundationmodels::JHybridFoundationModelsSpec::registerNatives();
 
     // Register Nitro Hybrid Objects
-    HybridObjectRegistry::registerHybridObjectConstructor(
-      "FoundationModels",
-      []() -> std::shared_ptr<HybridObject> {
-        static DefaultConstructableObject<JHybridFoundationModelsSpec::javaobject> object("com/margelo/nitro/foundationmodels/HybridFoundationModels");
-        auto instance = object.create();
-        auto globalRef = jni::make_global(instance);
-        return JNISharedPtr::make_shared_from_jni<JHybridFoundationModelsSpec>(globalRef);
-      }
-    );
+    
   });
 }
 

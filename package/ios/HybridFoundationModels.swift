@@ -1,5 +1,6 @@
 import Foundation
 import NitroModules
+import FoundationModels
 
 class HybridFoundationModels: HybridFoundationModelsSpec {
 
