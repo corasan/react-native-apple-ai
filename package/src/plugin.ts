@@ -1,5 +1,5 @@
-import { ConfigPlugin, withDangerousMod } from '@expo/config-plugins';
-import { GenerableCLI } from './cli';
+import { ConfigPlugin, withDangerousMod, withXcodeProject } from '@expo/config-plugins';
+import { GenerableCLI } from './cli.node.';
 
 export interface GenerablePluginOptions {
   configPath?: string;
@@ -8,7 +8,18 @@ export interface GenerablePluginOptions {
 const withGenerablePlugin: ConfigPlugin<GenerablePluginOptions> = (
   config
 ) => {
-  return withDangerousMod(config, [
+  const frameworkConfig = withXcodeProject(config, (conf) => {
+    const xcodeProject = conf.modResults
+    const frameworksGroup = xcodeProject.pbxGroupByName("Frameworks");
+    const hasFramework = frameworksGroup.children.some(
+        (child: any) => child.comment === 'FoundationModels.framework'
+      );
+      if (!hasFramework) {
+        xcodeProject.addFramework('FoundationModels.framework');
+      }
+      return conf
+  })
+  return withDangerousMod(frameworkConfig, [
     'ios',
     async (config) => {
       const cli = new GenerableCLI();
