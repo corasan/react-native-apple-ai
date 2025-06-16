@@ -150,7 +150,7 @@ const config: GenerableConfig = {
       }
     }
   ],
-  outputPath: 'ios/example/Generated',
+  outputPath: 'ios/Generated',
   moduleName: 'FoundationModels'
 };
 
