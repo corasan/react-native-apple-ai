@@ -5,4 +5,3 @@ export const FoundationModels =
 	NitroModules.createHybridObject<FoundationModelsSpec>("FoundationModels");
 
 export * from './types';
-export * from './generator';

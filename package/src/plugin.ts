@@ -1,5 +1,5 @@
 import { ConfigPlugin, withDangerousMod, withXcodeProject } from '@expo/config-plugins';
-import { GenerableCLI } from './cli.node.';
+import { GenerableCLI } from './cli';
 
 export interface GenerablePluginOptions {
   configPath?: string;

@@ -1,71 +1,80 @@
-import { GenerableConfig, GenerableSchema } from './types';
+import { GenerableConfig } from './types';
+import { existsSync } from 'node:fs';
+import { resolve } from 'path';
 
-export const defaultConfig: GenerableConfig = {
-  schemas: [],
-  outputPath: 'ios/Generated',
-  moduleName: 'FoundationModels'
-};
+export class ConfigLoader {
+  private configPath: string;
 
-export function createExampleConfig(): GenerableConfig {
-  const userSchema: GenerableSchema = {
-    name: 'User',
-    properties: {
-      id: {
-        type: 'string',
-        guide: {description: 'Unique user identifier'}
-      },
-      email: {
-        type: 'string',
-        guide: {description: 'User email address'}
-      },
-      name: {
-        type: 'string',
-        guide: {description: 'User display name'}
-      },
-      age: {
-        type: 'number',
-        guide: {description: 'User age in years'}
-      },
-      isActive: {
-        type: 'boolean',
-        guide: {description: 'Whether the user account is active'}
-      },
-      tags: {
-        type: 'array',
-        guide: { description: 'User tags or categories' }
-      }
+  constructor(configPath = 'generable.config') {
+    this.configPath = configPath;
+  }
+
+  loadConfig(): GenerableConfig {
+    const basePath = resolve(process.cwd(), this.configPath);
+    const jsPath = `${basePath}.js`;
+    const tsPath = `${basePath}.ts`;
+
+    let fullPath: string;
+    let isTypeScript = false;
+
+    if (existsSync(jsPath)) {
+      fullPath = jsPath;
+    } else if (existsSync(tsPath)) {
+      fullPath = tsPath;
+      isTypeScript = true;
+    } else {
+      throw new Error(`Configuration file not found: ${jsPath} or ${tsPath}`);
     }
-  };
 
-  const productSchema: GenerableSchema = {
-    name: 'Product',
-    properties: {
-      id: {
-        type: 'string',
-        guide: { description: 'Product identifier' }
-      },
-      title: {
-        type: 'string',
-        guide: { description: 'Product title' }
-      },
-      price: {
-        type: 'number',
-        guide: { description: 'Product price' }
-      },
-      category: {
-        type: 'string',
-        guide: { description: 'Product category' }
-      },
-      inStock: {
-        type: 'boolean',
-        guide: { description: 'Product availability status' }
+    try {
+      delete require.cache[require.resolve(fullPath)];
+
+      if (isTypeScript) {
+        try {
+          const ts = require('typescript');
+          const fs = require('fs');
+
+          const tsContent = fs.readFileSync(fullPath, 'utf8');
+
+          const result = ts.transpile(tsContent, {
+            module: ts.ModuleKind.CommonJS,
+            target: ts.ScriptTarget.ES2018,
+            esModuleInterop: true,
+            allowSyntheticDefaultImports: true,
+            skipLibCheck: true,
+          });
+
+          const Module = require('module');
+          const tempModule = new Module(fullPath, module);
+          tempModule.filename = fullPath;
+          tempModule._compile(result, fullPath);
+
+          const config = tempModule.exports.default || tempModule.exports;
+          return config;
+        } catch (tsError) {
+          throw new Error(`Failed to compile TypeScript config: ${tsError}`);
+        }
+      } else {
+        const config = require(fullPath);
+        return config.default || config;
       }
+    } catch (error) {
+      throw new Error(`Failed to load configuration: ${error}`);
     }
-  };
+  }
 
-  return {
-    schemas: [userSchema, productSchema],
-    outputPath: 'ios/Generated',
-    moduleName: 'FoundationModels'
-  };
+  validateConfig(config: GenerableConfig): void {
+    if (!config.schemas || !Array.isArray(config.schemas)) {
+      throw new Error('Configuration must have a schemas array');
+    }
+
+    config.schemas.forEach((schema, index) => {
+      if (!schema.name) {
+        throw new Error(`Schema at index ${index} must have a name`);
+      }
+      if (!schema.properties || typeof schema.properties !== 'object') {
+        throw new Error(`Schema '${schema.name}' must have properties object`);
+      }
+    });
+  }
 }

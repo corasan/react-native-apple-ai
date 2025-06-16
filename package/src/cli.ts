@@ -3,7 +3,7 @@
 import { writeFileSync, mkdirSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { SwiftGenerator } from './generator';
-import { ConfigLoader } from './config.node';
+import { ConfigLoader } from './config';
 
 export class GenerableCLI {
   private generator: SwiftGenerator;
@@ -23,7 +23,7 @@ export class GenerableCLI {
       console.log(`📋 Found ${config.schemas.length} schema(s)`);
 
       const outputPath = config.outputPath || 'ios/Generated';
-      const fileName = `${config.moduleName || 'FoundationModels'}.swift`;
+      const fileName = `${config.moduleName || 'RNFoundationModels'}.swift`;
       const fullOutputPath = resolve(process.cwd(), outputPath, fileName);
 
       console.log('🏗️  Generating Swift code...');
