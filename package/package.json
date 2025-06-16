@@ -4,7 +4,7 @@
   "description": "A React Native Nitro module",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
-  "types": "./lib/typescript/src/index.d.ts",
+  "types": "./lib/typescript/commonjs/index.d.ts",
   "react-native": "./src/index",
   "source": "./src/index",
   "bin": {
@@ -66,8 +66,8 @@
     "@expo/config-plugins": "^8.0.0",
     "@types/react": "*",
     "nitro-codegen": "^0.26.2",
-    "react-native-builder-bob": "^0.40.12",
-    "ts-node": "^10.9.0"
+    "react-native-builder-bob": "^0.33.1",
+    "ts-node": "^10.9.2"
   },
   "codegenConfig": {
     "name": "FoundationModelsSpec",
