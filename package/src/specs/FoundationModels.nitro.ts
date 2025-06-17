@@ -1,7 +1,10 @@
-import { HybridObject } from 'react-native-nitro-modules';
+import type { HybridObject } from 'react-native-nitro-modules'
 
-export interface FoundationModels extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
-  hello(name: string): string;
-  add(a: number, b: number): number;
-  respond(generating: string, prompt: string): Promise<string>
+export interface FoundationModels extends HybridObject<{ ios: 'swift' }> {
+  respond(prompt: string, generating?: string): Promise<string>
+  streamResponse(
+    prompt: string,
+    onStream: (stream: string) => void,
+    generating?: string,
+  ): Promise<string>
 }

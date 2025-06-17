@@ -7,17 +7,16 @@
 
 #include "HybridFoundationModelsSpec.hpp"
 
-namespace margelo::nitro::foundationmodels {
+namespace margelo::nitro::rnappleai {
 
   void HybridFoundationModelsSpec::loadHybridMethods() {
     // load base methods/properties
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
-      prototype.registerHybridMethod("hello", &HybridFoundationModelsSpec::hello);
-      prototype.registerHybridMethod("add", &HybridFoundationModelsSpec::add);
       prototype.registerHybridMethod("respond", &HybridFoundationModelsSpec::respond);
+      prototype.registerHybridMethod("streamResponse", &HybridFoundationModelsSpec::streamResponse);
     });
   }
 
-} // namespace margelo::nitro::foundationmodels
+} // namespace margelo::nitro::rnappleai

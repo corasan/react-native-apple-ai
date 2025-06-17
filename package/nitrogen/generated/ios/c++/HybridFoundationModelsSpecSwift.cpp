@@ -7,5 +7,5 @@
 
 #include "HybridFoundationModelsSpecSwift.hpp"
 
-namespace margelo::nitro::foundationmodels {
-} // namespace margelo::nitro::foundationmodels
+namespace margelo::nitro::rnappleai {
+} // namespace margelo::nitro::rnappleai

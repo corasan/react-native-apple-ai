@@ -19,11 +19,11 @@ import NitroModules
  */
 public class HybridFoundationModelsSpec_cxx {
   /**
-   * The Swift <> C++ bridge's namespace (`margelo::nitro::foundationmodels::bridge::swift`)
-   * from `RNFoundationModels-Swift-Cxx-Bridge.hpp`.
+   * The Swift <> C++ bridge's namespace (`margelo::nitro::rnappleai::bridge::swift`)
+   * from `RNAppleAI-Swift-Cxx-Bridge.hpp`.
    * This contains specialized C++ templates, and C++ helper functions that can be accessed from Swift.
    */
-  public typealias bridge = margelo.nitro.foundationmodels.bridge.swift
+  public typealias bridge = margelo.nitro.rnappleai.bridge.swift
 
   /**
    * Holds an instance of the `HybridFoundationModelsSpec` Swift protocol.
@@ -33,7 +33,7 @@ public class HybridFoundationModelsSpec_cxx {
   /**
    * Holds a weak pointer to the C++ class that wraps the Swift class.
    */
-  private var __cxxPart: bridge.std__weak_ptr_margelo__nitro__foundationmodels__HybridFoundationModelsSpec_
+  private var __cxxPart: bridge.std__weak_ptr_margelo__nitro__rnappleai__HybridFoundationModelsSpec_
 
   /**
    * Create a new `HybridFoundationModelsSpec_cxx` that wraps the given `HybridFoundationModelsSpec`.
@@ -72,15 +72,15 @@ public class HybridFoundationModelsSpec_cxx {
 
   /**
    * Gets (or creates) the C++ part of this Hybrid Object.
-   * The C++ part is a `std::shared_ptr<margelo::nitro::foundationmodels::HybridFoundationModelsSpec>`.
+   * The C++ part is a `std::shared_ptr<margelo::nitro::rnappleai::HybridFoundationModelsSpec>`.
    */
-  public func getCxxPart() -> bridge.std__shared_ptr_margelo__nitro__foundationmodels__HybridFoundationModelsSpec_ {
+  public func getCxxPart() -> bridge.std__shared_ptr_margelo__nitro__rnappleai__HybridFoundationModelsSpec_ {
     let cachedCxxPart = self.__cxxPart.lock()
     if cachedCxxPart.__convertToBool() {
       return cachedCxxPart
     } else {
-      let newCxxPart = bridge.create_std__shared_ptr_margelo__nitro__foundationmodels__HybridFoundationModelsSpec_(self.toUnsafe())
-      __cxxPart = bridge.weakify_std__shared_ptr_margelo__nitro__foundationmodels__HybridFoundationModelsSpec_(newCxxPart)
+      let newCxxPart = bridge.create_std__shared_ptr_margelo__nitro__rnappleai__HybridFoundationModelsSpec_(self.toUnsafe())
+      __cxxPart = bridge.weakify_std__shared_ptr_margelo__nitro__rnappleai__HybridFoundationModelsSpec_(newCxxPart)
       return newCxxPart
     }
   }
@@ -101,33 +101,45 @@ public class HybridFoundationModelsSpec_cxx {
 
   // Methods
   @inline(__always)
-  public final func hello(name: std.string) -> bridge.Result_std__string_ {
+  public final func respond(prompt: std.string, generating: bridge.std__optional_std__string_) -> bridge.Result_std__shared_ptr_Promise_std__string___ {
     do {
-      let __result = try self.__implementation.hello(name: String(name))
-      let __resultCpp = std.string(__result)
-      return bridge.create_Result_std__string_(__resultCpp)
+      let __result = try self.__implementation.respond(prompt: String(prompt), generating: { () -> String? in
+        if let __unwrapped = generating.value {
+          return String(__unwrapped)
+        } else {
+          return nil
+        }
+      }())
+      let __resultCpp = { () -> bridge.std__shared_ptr_Promise_std__string__ in
+        let __promise = bridge.create_std__shared_ptr_Promise_std__string__()
+        let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_std__string__(__promise)
+        __result
+          .then({ __result in __promiseHolder.resolve(std.string(__result)) })
+          .catch({ __error in __promiseHolder.reject(__error.toCpp()) })
+        return __promise
+      }()
+      return bridge.create_Result_std__shared_ptr_Promise_std__string___(__resultCpp)
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_std__string_(__exceptionPtr)
+      return bridge.create_Result_std__shared_ptr_Promise_std__string___(__exceptionPtr)
     }
   }
   
   @inline(__always)
-  public final func add(a: Double, b: Double) -> bridge.Result_double_ {
+  public final func streamResponse(prompt: std.string, onStream: bridge.Func_void_std__string, generating: bridge.std__optional_std__string_) -> bridge.Result_std__shared_ptr_Promise_std__string___ {
     do {
-      let __result = try self.__implementation.add(a: a, b: b)
-      let __resultCpp = __result
-      return bridge.create_Result_double_(__resultCpp)
-    } catch (let __error) {
-      let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_double_(__exceptionPtr)
-    }
-  }
-  
-  @inline(__always)
-  public final func respond(generating: std.string, prompt: std.string) -> bridge.Result_std__shared_ptr_Promise_std__string___ {
-    do {
-      let __result = try self.__implementation.respond(generating: String(generating), prompt: String(prompt))
+      let __result = try self.__implementation.streamResponse(prompt: String(prompt), onStream: { () -> (String) -> Void in
+        let __wrappedFunction = bridge.wrap_Func_void_std__string(onStream)
+        return { (__stream: String) -> Void in
+          __wrappedFunction.call(std.string(__stream))
+        }
+      }(), generating: { () -> String? in
+        if let __unwrapped = generating.value {
+          return String(__unwrapped)
+        } else {
+          return nil
+        }
+      }())
       let __resultCpp = { () -> bridge.std__shared_ptr_Promise_std__string__ in
         let __promise = bridge.create_std__shared_ptr_Promise_std__string__()
         let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_std__string__(__promise)

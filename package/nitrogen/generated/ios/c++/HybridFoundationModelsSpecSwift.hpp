@@ -10,16 +10,18 @@
 #include "HybridFoundationModelsSpec.hpp"
 
 // Forward declaration of `HybridFoundationModelsSpec_cxx` to properly resolve imports.
-namespace RNFoundationModels { class HybridFoundationModelsSpec_cxx; }
+namespace RNAppleAI { class HybridFoundationModelsSpec_cxx; }
 
 
 
-#include <string>
 #include <NitroModules/Promise.hpp>
+#include <string>
+#include <optional>
+#include <functional>
 
-#include "RNFoundationModels-Swift-Cxx-Umbrella.hpp"
+#include "RNAppleAI-Swift-Cxx-Umbrella.hpp"
 
-namespace margelo::nitro::foundationmodels {
+namespace margelo::nitro::rnappleai {
 
   /**
    * The C++ part of HybridFoundationModelsSpec_cxx.swift.
@@ -34,13 +36,13 @@ namespace margelo::nitro::foundationmodels {
   class HybridFoundationModelsSpecSwift: public virtual HybridFoundationModelsSpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridFoundationModelsSpecSwift(const RNFoundationModels::HybridFoundationModelsSpec_cxx& swiftPart):
+    explicit HybridFoundationModelsSpecSwift(const RNAppleAI::HybridFoundationModelsSpec_cxx& swiftPart):
       HybridObject(HybridFoundationModelsSpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline RNFoundationModels::HybridFoundationModelsSpec_cxx& getSwiftPart() noexcept {
+    inline RNAppleAI::HybridFoundationModelsSpec_cxx& getSwiftPart() noexcept {
       return _swiftPart;
     }
 
@@ -56,24 +58,16 @@ namespace margelo::nitro::foundationmodels {
 
   public:
     // Methods
-    inline std::string hello(const std::string& name) override {
-      auto __result = _swiftPart.hello(name);
+    inline std::shared_ptr<Promise<std::string>> respond(const std::string& prompt, const std::optional<std::string>& generating) override {
+      auto __result = _swiftPart.respond(prompt, generating);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline double add(double a, double b) override {
-      auto __result = _swiftPart.add(std::forward<decltype(a)>(a), std::forward<decltype(b)>(b));
-      if (__result.hasError()) [[unlikely]] {
-        std::rethrow_exception(__result.error());
-      }
-      auto __value = std::move(__result.value());
-      return __value;
-    }
-    inline std::shared_ptr<Promise<std::string>> respond(const std::string& generating, const std::string& prompt) override {
-      auto __result = _swiftPart.respond(generating, prompt);
+    inline std::shared_ptr<Promise<std::string>> streamResponse(const std::string& prompt, const std::function<void(const std::string& /* stream */)>& onStream, const std::optional<std::string>& generating) override {
+      auto __result = _swiftPart.streamResponse(prompt, onStream, generating);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
@@ -82,7 +76,7 @@ namespace margelo::nitro::foundationmodels {
     }
 
   private:
-    RNFoundationModels::HybridFoundationModelsSpec_cxx _swiftPart;
+    RNAppleAI::HybridFoundationModelsSpec_cxx _swiftPart;
   };
 
-} // namespace margelo::nitro::foundationmodels
+} // namespace margelo::nitro::rnappleai
