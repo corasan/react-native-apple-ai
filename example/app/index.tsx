@@ -1,7 +1,7 @@
 import { Text, View } from '@/components/Themed'
 import { useState } from 'react'
 import { Button, StyleSheet } from 'react-native'
-import { FoundationModels } from 'react-native-foundation-models'
+import { FoundationModels } from 'react-native-apple-ai'
 
 export default function IndexScreen() {
   const [result, setResult] = useState('')

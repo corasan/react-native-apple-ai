@@ -13,47 +13,51 @@ This system allows you to define your data models once in TypeScript and automat
 Create a `generable.config.ts` file in your project root:
 
 ```typescript
-import { GenerableConfig } from 'react-native-foundation-models';
+import type { GenerableConfig } from 'react-native-apple-ai'
 
 const config: GenerableConfig = {
   schemas: [
     {
       name: 'User',
-      description: 'User profile data model',
       properties: {
         id: {
           type: 'string',
-          required: true,
-          description: 'Unique user identifier'
+          guide: {
+            description: 'Unique user identifier',
+          },
+        },
+        email: {
+          type: 'string',
+          guide: {
+            description: 'User email address',
+          },
         },
         name: {
           type: 'string',
-          required: true,
-          constraints: {
-            minLength: 2,
-            maxLength: 50
-          }
+          guide: {
+            description: 'User display name',
+          },
         },
         age: {
           type: 'number',
-          required: false,
-          constraints: {
-            min: 0,
-            max: 150
-          }
+          guide: {
+            description: 'User age in years',
+          },
         },
         isActive: {
           type: 'boolean',
-          required: true
-        }
-      }
-    }
+          guide: {
+            description: 'Whether the user account is active',
+          },
+        },
+      },
+    },
   ],
   outputPath: 'ios/Generated',
-  moduleName: 'FoundationModels'
-};
+  moduleName: 'Generables',
+}
 
-export default config;
+export default config
 ```
 
 ### 2. Generate Swift Code
@@ -61,7 +65,7 @@ export default config;
 Run the generator:
 
 ```bash
-npm run generate
+bunx expo prebuild -p ios
 ```
 
 This creates Swift structs in your iOS project:
@@ -157,7 +161,7 @@ For Expo projects, add to `app.config.js`:
 ```javascript
 export default {
   plugins: [
-    ['react-native-foundation-models/plugin', {
+    ['react-native-apple-ai/plugin', {
       configPath: 'generable.config.ts'
     }]
   ]

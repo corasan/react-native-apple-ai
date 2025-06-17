@@ -1,14 +1,14 @@
 {
   "$schema": "https://nitro.margelo.com/nitro.schema.json",
   "cxxNamespace": [
-    "foundationmodels"
+    "rnappleai"
   ],
   "ios": {
-    "iosModuleName": "RNFoundationModels"
+    "iosModuleName": "RNAppleAI"
   },
   "android": {
     "androidNamespace": [
-      "foundationmodels"
+      "rnappleai"
     ],
     "androidCxxLibName": "RNFoundationModels"
   },

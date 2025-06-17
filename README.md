@@ -1,17 +1,17 @@
-# react-native-foundation-models
+# react-native-apple-ai
 
 Foundation Models implementation for React Native.
 
 ## Installation
 
 ```sh
-npm install react-native-foundation-models
+npm install react-native-apple-ai
 ```
 
 ## Usage
 
 ```javascript
-import { FoundationModelsSpec } from 'react-native-foundation-models';
+import { FoundationModelsSpec } from 'react-native-apple-ai';
 import { NitroModules } from 'react-native-nitro-modules';
 
 const FoundationModels = NitroModules.create<FoundationModelsSpec>('FoundationModels');
