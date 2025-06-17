@@ -2,7 +2,7 @@ import Foundation
 import NitroModules
 import FoundationModels
 
-let session = LanguageModelSession()
+let session = LanguageModelSession(instructions: "You are a helpful assistant")
 
 class HybridFoundationModels: HybridFoundationModelsSpec {
 
@@ -15,14 +15,16 @@ class HybridFoundationModels: HybridFoundationModelsSpec {
         return a + b
     }
     
-    func respond(generating: String) throws -> Promise<String> {
-        print("The supposed generating: \(generating)")
+    func respond(generating: String, prompt: String) throws -> Promise<String> {
         return Promise.async {
-            let response = try await session.respond(generating: User.self) {
-                "Create a user"
+            guard let structType = GenerableTypes(fromString: generating) else {
+                print("Error: Unknown struct \(generating)")
+                return "My name is Unknown"
             }
-            print(response.content)
-            return response.content.name
+            let response = try await structType.generate(session: session) {
+                prompt
+            }
+            return "My name is \(response.content.name)"
         }
     }
 }

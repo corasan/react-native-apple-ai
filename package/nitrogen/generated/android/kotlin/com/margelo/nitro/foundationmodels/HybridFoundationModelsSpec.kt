@@ -50,7 +50,7 @@ abstract class HybridFoundationModelsSpec: HybridObject() {
   
   @DoNotStrip
   @Keep
-  abstract fun respond(generating: String): Promise<String>
+  abstract fun respond(generating: String, prompt: String): Promise<String>
 
   private external fun initHybrid(): HybridData
 

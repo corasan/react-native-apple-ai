@@ -72,8 +72,8 @@ namespace margelo::nitro::foundationmodels {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline std::shared_ptr<Promise<std::string>> respond(const std::string& generating) override {
-      auto __result = _swiftPart.respond(generating);
+    inline std::shared_ptr<Promise<std::string>> respond(const std::string& generating, const std::string& prompt) override {
+      auto __result = _swiftPart.respond(generating, prompt);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

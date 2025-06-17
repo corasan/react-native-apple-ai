@@ -44,9 +44,9 @@ namespace margelo::nitro::foundationmodels {
     auto __result = method(_javaPart, a, b);
     return __result;
   }
-  std::shared_ptr<Promise<std::string>> JHybridFoundationModelsSpec::respond(const std::string& generating) {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JString> /* generating */)>("respond");
-    auto __result = method(_javaPart, jni::make_jstring(generating));
+  std::shared_ptr<Promise<std::string>> JHybridFoundationModelsSpec::respond(const std::string& generating, const std::string& prompt) {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JString> /* generating */, jni::alias_ref<jni::JString> /* prompt */)>("respond");
+    auto __result = method(_javaPart, jni::make_jstring(generating), jni::make_jstring(prompt));
     return [&]() {
       auto __promise = Promise<std::string>::create();
       __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {

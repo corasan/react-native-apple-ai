@@ -125,9 +125,9 @@ public class HybridFoundationModelsSpec_cxx {
   }
   
   @inline(__always)
-  public final func respond(generating: std.string) -> bridge.Result_std__shared_ptr_Promise_std__string___ {
+  public final func respond(generating: std.string, prompt: std.string) -> bridge.Result_std__shared_ptr_Promise_std__string___ {
     do {
-      let __result = try self.__implementation.respond(generating: String(generating))
+      let __result = try self.__implementation.respond(generating: String(generating), prompt: String(prompt))
       let __resultCpp = { () -> bridge.std__shared_ptr_Promise_std__string__ in
         let __promise = bridge.create_std__shared_ptr_Promise_std__string__()
         let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_std__string__(__promise)

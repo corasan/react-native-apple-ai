@@ -53,7 +53,7 @@ namespace margelo::nitro::foundationmodels {
     // Methods
     std::string hello(const std::string& name) override;
     double add(double a, double b) override;
-    std::shared_ptr<Promise<std::string>> respond(const std::string& generating) override;
+    std::shared_ptr<Promise<std::string>> respond(const std::string& generating, const std::string& prompt) override;
 
   private:
     friend HybridBase;

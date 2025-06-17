@@ -17,3 +17,30 @@ struct User {
   @Guide(description: "Whether the user account is active")
   var isActive: Bool
 }
+
+enum GenerableTypes: String, CaseIterable  {
+    case user = "User"
+    
+    init?(fromString string: String) {
+        self.init(rawValue: string)
+    }
+    
+    func generate(
+        session: LanguageModelSession,
+        options: GenerationOptions = GenerationOptions(),
+        includeSchemaInPrompt: Bool = true,
+        isolation: isolated (any Actor)? = #isolation,
+        @PromptBuilder prompt: () throws -> Prompt
+    ) async throws -> LanguageModelSession.Response<User> {
+        switch self {
+        case .user:
+            return try await session.respond(
+                generating: User.self,
+                options: options,
+                includeSchemaInPrompt: includeSchemaInPrompt,
+                isolation: isolation,
+                prompt: prompt
+            )
+        }
+    }
+}
