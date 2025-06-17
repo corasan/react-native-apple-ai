@@ -1,35 +1,38 @@
 import { ConfigPlugin, withXcodeProject } from '@expo/config-plugins';
-import { SwiftCode } from './SwiftCode';
-import { withBuildSourceFile } from '@expo/config-plugins/build/ios/XcodeProjectFile'
+import { writeFileSync, mkdirSync } from 'fs';
+import { resolve } from 'path';
+import { SwiftGenerator } from './SwiftGenerator';
 
-export interface GenerablePluginOptions {
+export interface GenerablePackagePluginOptions {
   configPath?: string;
 }
 
-const swiftCode = new SwiftCode();
-const res = swiftCode.generate();
+
+export function generateSwiftFilesInPackage() {
+  try {
+    const swiftGenerator = new SwiftGenerator();
+    const generatedCode = swiftGenerator.generate();
+    const packagePath = resolve(__dirname, '../../../ios/Generables');
+    const filePath = resolve(packagePath, 'Generables.swift');
+
+    mkdirSync(packagePath, { recursive: true });
+    writeFileSync(filePath, generatedCode, 'utf8');
+
+    console.log(`✅ Created Generables.swift`);
+
+  } catch (error) {
+    console.error('❌ Failed to create Swift file in package:', error);
+    throw error;
+  }
+}
 
 const withGenerablePlugin: ConfigPlugin = (
   config
 ) => {
-  const frameworkConfig = withXcodeProject(config, (conf) => {
-    const xcodeProject = conf.modResults
-    const frameworksGroup = xcodeProject.pbxGroupByName("Frameworks");
-    const hasFramework = frameworksGroup.children.some(
-        (child: any) => child.comment === 'FoundationModels.framework'
-      );
-      if (!hasFramework) {
-        xcodeProject.addFramework('FoundationModels.framework');
-      }
-      return conf
+  return withXcodeProject(config, (conf) => {
+    generateSwiftFilesInPackage()
+    return conf
   })
-
-  config = withBuildSourceFile(frameworkConfig, {
-    filePath: 'Generables.swift',
-    contents: res,
-    overwrite: true
-  })
-  return config
 };
 
 export default withGenerablePlugin;
