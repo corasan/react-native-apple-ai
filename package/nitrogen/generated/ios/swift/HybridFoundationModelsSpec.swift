@@ -11,9 +11,10 @@ import NitroModules
 /// See ``HybridFoundationModelsSpec``
 public protocol HybridFoundationModelsSpec_protocol: HybridObject {
   // Properties
-  
+  var isResponding: Bool { get }
 
   // Methods
+  func initialize(instructions: String) throws -> Void
   func respond(prompt: String, generating: String?) throws -> Promise<String>
   func streamResponse(prompt: String, onStream: @escaping (_ stream: String) -> Void, generating: String?) throws -> Promise<String>
 }

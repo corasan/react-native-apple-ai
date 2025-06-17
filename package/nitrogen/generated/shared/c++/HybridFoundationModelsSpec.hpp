@@ -15,8 +15,8 @@
 
 
 
-#include <NitroModules/Promise.hpp>
 #include <string>
+#include <NitroModules/Promise.hpp>
 #include <optional>
 #include <functional>
 
@@ -47,10 +47,11 @@ namespace margelo::nitro::rnappleai {
 
     public:
       // Properties
-      
+      virtual bool getIsResponding() = 0;
 
     public:
       // Methods
+      virtual void initialize(const std::string& instructions) = 0;
       virtual std::shared_ptr<Promise<std::string>> respond(const std::string& prompt, const std::optional<std::string>& generating) = 0;
       virtual std::shared_ptr<Promise<std::string>> streamResponse(const std::string& prompt, const std::function<void(const std::string& /* stream */)>& onStream, const std::optional<std::string>& generating) = 0;
 

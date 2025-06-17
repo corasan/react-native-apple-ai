@@ -14,8 +14,8 @@ namespace RNAppleAI { class HybridFoundationModelsSpec_cxx; }
 
 
 
-#include <NitroModules/Promise.hpp>
 #include <string>
+#include <NitroModules/Promise.hpp>
 #include <optional>
 #include <functional>
 
@@ -54,10 +54,18 @@ namespace margelo::nitro::rnappleai {
 
   public:
     // Properties
-    
+    inline bool getIsResponding() noexcept override {
+      return _swiftPart.isResponding();
+    }
 
   public:
     // Methods
+    inline void initialize(const std::string& instructions) override {
+      auto __result = _swiftPart.initialize(instructions);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
     inline std::shared_ptr<Promise<std::string>> respond(const std::string& prompt, const std::optional<std::string>& generating) override {
       auto __result = _swiftPart.respond(prompt, generating);
       if (__result.hasError()) [[unlikely]] {

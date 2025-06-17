@@ -2,21 +2,28 @@ import Foundation
 import NitroModules
 import FoundationModels
 
-let session = LanguageModelSession(instructions: "You are a helpful assistant")
-
 class HybridFoundationModels: HybridFoundationModelsSpec {
-
-    func hello(name: String) -> String {
-        
-        return "Hello \(name) from FoundationModels!"
-    }
-
-    func add(a: Double, b: Double) -> Double {
-        return a + b
+    private var session: LanguageModelSession? = nil
+    
+    var isResponding: Bool {
+        guard let session = session else { return false }
+        return session.isResponding
     }
     
-    func respond(generating: String, prompt: String) throws -> Promise<String> {
+    func initialize(instructions: String) {
+        session = LanguageModelSession(instructions: instructions)
+    }
+
+    func respond(prompt: String, generating: String?) throws -> Promise<String> {
         return Promise.async {
+            guard let session = self.session else {
+                return "Error: Session not initialized"
+            }
+            guard let generating = generating else {
+                let response = try await session.respond(to: prompt)
+                return response.content
+            }
+            
             guard let structType = GenerableTypes(fromString: generating) else {
                 print("Error: Unknown struct \(generating)")
                 return "My name is Unknown"
@@ -25,6 +32,25 @@ class HybridFoundationModels: HybridFoundationModelsSpec {
                 prompt
             }
             return "My name is \(response.content.name)"
+        }
+    }
+    
+    func streamResponse(prompt: String, onStream: @escaping (String) -> Void, generating: String?) throws -> Promise<String> {
+        return Promise.async {
+            guard let session = self.session else {
+                return "Error: Session not initialized"
+            }
+            do {
+                let stream = session.streamResponse(to: prompt)
+                for try await token in stream {
+                    onStream(token)
+                }
+                let result = try await stream.collect()
+                return result.content
+            } catch {
+                print("Error streaming response: \(error)")
+                return ""
+            }
         }
     }
 }

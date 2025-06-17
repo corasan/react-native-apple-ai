@@ -97,9 +97,25 @@ public class HybridFoundationModelsSpec_cxx {
   }
 
   // Properties
-  
+  public final var isResponding: Bool {
+    @inline(__always)
+    get {
+      return self.__implementation.isResponding
+    }
+  }
 
   // Methods
+  @inline(__always)
+  public final func initialize(instructions: std.string) -> bridge.Result_void_ {
+    do {
+      try self.__implementation.initialize(instructions: String(instructions))
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
   @inline(__always)
   public final func respond(prompt: std.string, generating: bridge.std__optional_std__string_) -> bridge.Result_std__shared_ptr_Promise_std__string___ {
     do {

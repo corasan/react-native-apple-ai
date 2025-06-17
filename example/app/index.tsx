@@ -7,24 +7,24 @@ export default function IndexScreen() {
   const [result, setResult] = useState('')
   const respond = async () => {
     try {
-      const res = await FoundationModels.respond('User', 'Generate a cool user')
-      setResult(res)
+      FoundationModels.initialize('You are a helpful assistant')
+      await FoundationModels.streamResponse('What is quantum computing?', stream => {
+        setResult(stream)
+      })
     } catch (error) {
       console.log(error)
     }
   }
+
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.title}>{FoundationModels.hello('Nitro Developer')}</Text>
-      <Text style={styles.title}>2 + 2 is {FoundationModels.add(2, 2)}</Text> */}
-
       <Text style={styles.title}>{result}</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <Button title="Click Me" onPress={() => respond()} />
+      <Button title="Respond" onPress={() => respond()} />
     </View>
   )
 }
@@ -36,8 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 16,
     paddingVertical: 10,
     textAlign: 'center',
   },

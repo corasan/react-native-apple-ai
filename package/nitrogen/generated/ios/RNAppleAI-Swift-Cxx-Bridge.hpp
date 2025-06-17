@@ -109,6 +109,15 @@ namespace margelo::nitro::rnappleai::bridge::swift {
   using std__weak_ptr_margelo__nitro__rnappleai__HybridFoundationModelsSpec_ = std::weak_ptr<margelo::nitro::rnappleai::HybridFoundationModelsSpec>;
   inline std__weak_ptr_margelo__nitro__rnappleai__HybridFoundationModelsSpec_ weakify_std__shared_ptr_margelo__nitro__rnappleai__HybridFoundationModelsSpec_(const std::shared_ptr<margelo::nitro::rnappleai::HybridFoundationModelsSpec>& strong) { return strong; }
   
+  // pragma MARK: Result<void>
+  using Result_void_ = Result<void>;
+  inline Result_void_ create_Result_void_() {
+    return Result<void>::withValue();
+  }
+  inline Result_void_ create_Result_void_(const std::exception_ptr& error) {
+    return Result<void>::withError(error);
+  }
+  
   // pragma MARK: Result<std::shared_ptr<Promise<std::string>>>
   using Result_std__shared_ptr_Promise_std__string___ = Result<std::shared_ptr<Promise<std::string>>>;
   inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::shared_ptr<Promise<std::string>>& value) {
