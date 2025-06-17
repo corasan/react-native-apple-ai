@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
     "GCC_PREPROCESSOR_DEFINITIONS" => "$(inherited) FOLLY_NO_CONFIG FOLLY_CFG_NO_COROUTINES"
   }
 
-  load 'nitrogen/generated/ios/RNFoundationModels+autolinking.rb'
+  load 'nitrogen/generated/ios/RNAppleAI+autolinking.rb'
   add_nitrogen_files(s)
 
   s.dependency 'React-jsi'
