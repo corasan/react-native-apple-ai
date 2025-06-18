@@ -1,4 +1,3 @@
-import Foundation
 import NitroModules
 import FoundationModels
 
@@ -11,7 +10,7 @@ class HybridFoundationModels: HybridFoundationModelsSpec {
     }
     
     func initialize(instructions: String) {
-        session = LanguageModelSession(instructions: instructions)
+        session = LanguageModelSession(tools: [HaikuTool()], instructions: instructions)
     }
 
     func respond(prompt: String, generating: String?) throws -> Promise<String> {
