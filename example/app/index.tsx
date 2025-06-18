@@ -8,7 +8,7 @@ export default function IndexScreen() {
   const respond = async () => {
     try {
       FoundationModels.initialize('You are a helpful assistant')
-      await FoundationModels.streamResponse('What is quantum computing?', stream => {
+      await FoundationModels.streamResponse('Create a haiku about birds', stream => {
         setResult(stream)
       })
     } catch (error) {

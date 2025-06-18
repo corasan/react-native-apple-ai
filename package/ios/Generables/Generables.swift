@@ -45,3 +45,42 @@ enum GenerableTypes: String, CaseIterable  {
     }
   }
 }
+
+struct HaikuTool: Tool {
+    var name = "haikuTool"
+    var description = "A tool to generate haikus based on the provided search term."
+
+    @Generable
+    struct Arguments {
+        var searchTerm: String
+    }
+
+    func call(arguments: Arguments) async throws -> ToolOutput {
+        let toolBridge = ToolBridge.shared
+        _ = try toolBridge.callJSFunction(
+            functionName: "fetchFromServer",
+            args: [
+                "searchTerm": "Birds"
+            ]
+        )
+        return ToolOutput(GeneratedContent(properties: ["result": ""]))
+    }
+}
+
+enum ToolTypes {
+    case exampleTool(HaikuTool)
+
+//    func callFunction() throws {
+//        let toolBridge = ToolBridge.shared
+//        switch self {
+//            case .exampleTool:
+//            let result = try toolBridge.callJSFunction(
+//                functionName: "fetchFromServer",
+//                args: [
+//                    "searchTerm": "word"
+//                ]
+//            )
+//            break
+//        }
+//    }
+}
