@@ -1,12 +1,12 @@
-import { ConfigPlugin, withDangerousMod } from '@expo/config-plugins';
-import path from 'path';
-import fs from 'fs';
-import {mergeContents} from '@expo/config-plugins/build/utils/generateCode'
+import fs from 'node:fs'
+import path from 'node:path'
+import { type ConfigPlugin, withDangerousMod } from '@expo/config-plugins'
+import { mergeContents } from '@expo/config-plugins/build/utils/generateCode'
 
-const withIos26: ConfigPlugin = (config) => {
+const withIos26: ConfigPlugin = config => {
   return withDangerousMod(config, [
     'ios',
-    async (config) => {
+    async config => {
       // Find the Podfile
       const podfile = path.join(config.modRequest.platformProjectRoot, 'Podfile')
       // Read the Podfile
@@ -23,7 +23,7 @@ const withIos26: ConfigPlugin = (config) => {
     end`,
         anchor: /post_install do \|installer\|/i,
         offset: 1,
-        comment: '#'
+        comment: '#',
       })
 
       if (!setDeploymentTarget.didMerge) {
@@ -34,8 +34,8 @@ const withIos26: ConfigPlugin = (config) => {
       fs.writeFileSync(podfile, setDeploymentTarget.contents)
 
       return config
-    }
+    },
   ])
 }
 
-export default withIos26;
+export default withIos26
