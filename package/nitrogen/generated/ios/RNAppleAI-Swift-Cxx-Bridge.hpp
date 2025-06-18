@@ -10,13 +10,18 @@
 // Forward declarations of C++ defined types
 // Forward declaration of `HybridFoundationModelsSpec` to properly resolve imports.
 namespace margelo::nitro::rnappleai { class HybridFoundationModelsSpec; }
+// Forward declaration of `HybridToolBridgeSpec` to properly resolve imports.
+namespace margelo::nitro::rnappleai { class HybridToolBridgeSpec; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridFoundationModelsSpec_cxx` to properly resolve imports.
 namespace RNAppleAI { class HybridFoundationModelsSpec_cxx; }
+// Forward declaration of `HybridToolBridgeSpec_cxx` to properly resolve imports.
+namespace RNAppleAI { class HybridToolBridgeSpec_cxx; }
 
 // Include C++ defined types
 #include "HybridFoundationModelsSpec.hpp"
+#include "HybridToolBridgeSpec.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/PromiseHolder.hpp>
 #include <NitroModules/Result.hpp>
@@ -25,6 +30,7 @@ namespace RNAppleAI { class HybridFoundationModelsSpec_cxx; }
 #include <memory>
 #include <optional>
 #include <string>
+#include <unordered_map>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -125,6 +131,83 @@ namespace margelo::nitro::rnappleai::bridge::swift {
   }
   inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::exception_ptr& error) {
     return Result<std::shared_ptr<Promise<std::string>>>::withError(error);
+  }
+  
+  // pragma MARK: std::shared_ptr<Promise<void>>
+  /**
+   * Specialized version of `std::shared_ptr<Promise<void>>`.
+   */
+  using std__shared_ptr_Promise_void__ = std::shared_ptr<Promise<void>>;
+  inline std::shared_ptr<Promise<void>> create_std__shared_ptr_Promise_void__() {
+    return Promise<void>::create();
+  }
+  inline PromiseHolder<void> wrap_std__shared_ptr_Promise_void__(std::shared_ptr<Promise<void>> promise) {
+    return PromiseHolder<void>(std::move(promise));
+  }
+  
+  // pragma MARK: std::function<void()>
+  /**
+   * Specialized version of `std::function<void()>`.
+   */
+  using Func_void = std::function<void()>;
+  /**
+   * Wrapper class for a `std::function<void()>`, this can be used from Swift.
+   */
+  class Func_void_Wrapper final {
+  public:
+    explicit Func_void_Wrapper(std::function<void()>&& func): _function(std::make_shared<std::function<void()>>(std::move(func))) {}
+    inline void call() const {
+      _function->operator()();
+    }
+  private:
+    std::shared_ptr<std::function<void()>> _function;
+  };
+  Func_void create_Func_void(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_Wrapper wrap_Func_void(Func_void value) {
+    return Func_void_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::unordered_map<std::string, std::string>
+  /**
+   * Specialized version of `std::unordered_map<std::string, std::string>`.
+   */
+  using std__unordered_map_std__string__std__string_ = std::unordered_map<std::string, std::string>;
+  inline std::unordered_map<std::string, std::string> create_std__unordered_map_std__string__std__string_(size_t size) {
+    std::unordered_map<std::string, std::string> map;
+    map.reserve(size);
+    return map;
+  }
+  inline std::vector<std::string> get_std__unordered_map_std__string__std__string__keys(const std__unordered_map_std__string__std__string_& map) {
+    std::vector<std::string> keys;
+    keys.reserve(map.size());
+    for (const auto& entry : map) {
+      keys.push_back(entry.first);
+    }
+    return keys;
+  }
+  inline void emplace_std__unordered_map_std__string__std__string_(std__unordered_map_std__string__std__string_& map, const std::string& key, const std::string& value) {
+    map.emplace(key, value);
+  }
+  
+  // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridToolBridgeSpec>
+  /**
+   * Specialized version of `std::shared_ptr<margelo::nitro::rnappleai::HybridToolBridgeSpec>`.
+   */
+  using std__shared_ptr_margelo__nitro__rnappleai__HybridToolBridgeSpec_ = std::shared_ptr<margelo::nitro::rnappleai::HybridToolBridgeSpec>;
+  std::shared_ptr<margelo::nitro::rnappleai::HybridToolBridgeSpec> create_std__shared_ptr_margelo__nitro__rnappleai__HybridToolBridgeSpec_(void* _Nonnull swiftUnsafePointer);
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__rnappleai__HybridToolBridgeSpec_(std__shared_ptr_margelo__nitro__rnappleai__HybridToolBridgeSpec_ cppType);
+  
+  // pragma MARK: std::weak_ptr<margelo::nitro::rnappleai::HybridToolBridgeSpec>
+  using std__weak_ptr_margelo__nitro__rnappleai__HybridToolBridgeSpec_ = std::weak_ptr<margelo::nitro::rnappleai::HybridToolBridgeSpec>;
+  inline std__weak_ptr_margelo__nitro__rnappleai__HybridToolBridgeSpec_ weakify_std__shared_ptr_margelo__nitro__rnappleai__HybridToolBridgeSpec_(const std::shared_ptr<margelo::nitro::rnappleai::HybridToolBridgeSpec>& strong) { return strong; }
+  
+  // pragma MARK: Result<std::shared_ptr<Promise<void>>>
+  using Result_std__shared_ptr_Promise_void___ = Result<std::shared_ptr<Promise<void>>>;
+  inline Result_std__shared_ptr_Promise_void___ create_Result_std__shared_ptr_Promise_void___(const std::shared_ptr<Promise<void>>& value) {
+    return Result<std::shared_ptr<Promise<void>>>::withValue(value);
+  }
+  inline Result_std__shared_ptr_Promise_void___ create_Result_std__shared_ptr_Promise_void___(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<Promise<void>>>::withError(error);
   }
 
 } // namespace margelo::nitro::rnappleai::bridge::swift

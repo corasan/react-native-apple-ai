@@ -15,6 +15,9 @@
   "autolinking": {
     "FoundationModels": {
       "swift": "HybridFoundationModels"
+    },
+    "ToolBridge": {
+      "swift": "ToolBridge"
     }
   },
   "ignorePaths": [
