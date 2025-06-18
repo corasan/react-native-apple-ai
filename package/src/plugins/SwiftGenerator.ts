@@ -1,4 +1,5 @@
-import type { GenerableConfig, GenerableProperty, GenerableSchema } from '../types'
+import type { GenerableConfig, GenerableProperty, GenerableSchema, Tool } from '../types'
+import { toPascalCase } from '../utils/toPascalName'
 import { ConfigLoader } from './ConfigLoader'
 
 export class SwiftGenerator {
@@ -13,12 +14,20 @@ export class SwiftGenerator {
   }
 
   generate(): string {
-    const swiftCode = this.generateFile(this.config.schemas)
+    const swiftCode = this.generateFile(this.config.schemas, this.config.tools)
 
     console.log(`Creating ${this.config.schemas.length} struct(s):`)
     for (const schema of this.config.schemas) {
       console.log(`   - ${schema.name}`)
     }
+
+    if (this.config.tools) {
+      console.log(`Creating ${this.config.tools.length} tool(s):`)
+      for (const tool of this.config.tools) {
+        console.log(`   - ${toPascalCase(tool.name)}Tool`)
+      }
+    }
+
     return swiftCode
   }
 
@@ -156,10 +165,11 @@ export class SwiftGenerator {
     return lines.join('\n')
   }
 
-  generateFile(schemas: GenerableSchema[]): string {
+  generateFile(schemas: GenerableSchema[], tools?: Tool[]): string {
     const lines: string[] = []
 
     lines.push('import FoundationModels')
+    lines.push('import NitroModules')
     lines.push('')
 
     schemas.forEach((schema, index) => {
@@ -170,6 +180,18 @@ export class SwiftGenerator {
       lines.push(this.generateStruct(schema))
     })
 
+    if (tools && tools.length > 0) {
+      lines.push('')
+      lines.push('')
+      tools.forEach((tool, index) => {
+        if (index > 0) {
+          lines.push('')
+          lines.push('')
+        }
+        lines.push(this.generateTool(tool))
+      })
+    }
+
     if (schemas.length > 0) {
       lines.push('')
       lines.push('')
@@ -177,5 +199,92 @@ export class SwiftGenerator {
     }
 
     return lines.join('\n')
+  }
+
+  private generateTool(tool: Tool): string {
+    const lines: string[] = []
+    const toolStructName = `${toPascalCase(tool.name)}Tool`
+
+    lines.push(`struct ${toolStructName}: Tool {`)
+    this.increaseIndent()
+
+    lines.push(`${this.indent()}var name = "${tool.name}"`)
+    lines.push(`${this.indent()}var description = "${tool.description}"`)
+    lines.push('')
+
+    lines.push(`${this.indent()}@Generable`)
+    lines.push(`${this.indent()}struct Arguments {`)
+    this.increaseIndent()
+
+    Object.entries(tool.arguments).forEach(([name, property], index) => {
+      if (index > 0) {
+        lines.push('')
+      }
+      lines.push(...this.generateProperty(name, property))
+    })
+
+    this.decreaseIndent()
+    lines.push(`${this.indent()}}`)
+    lines.push('')
+
+    lines.push(
+      `${this.indent()}func call(arguments: Arguments) async throws -> ToolOutput {`,
+    )
+    this.increaseIndent()
+    lines.push(`${this.indent()}let toolBridge = ToolBridge.shared`)
+    lines.push(
+      `${this.indent()}let result = try await toolBridge.callJSFunction(functionName: "${tool.functionName}")`,
+    )
+
+    if (tool.resultSchema) {
+      lines.push('')
+      for (const [name, property] of Object.entries(tool.resultSchema)) {
+        const anyMapMethod = this.getAnyMapMethod(property.type)
+        lines.push(`${this.indent()}let ${name} = result.${anyMapMethod}(key: "${name}")`)
+      }
+
+      lines.push('')
+      const properties = Object.keys(tool.resultSchema)
+        .map(name => `"${name}": ${name}`)
+        .join(', ')
+      lines.push(
+        `${this.indent()}return ToolOutput(GeneratedContent(properties: [${properties}]))`,
+      )
+    } else {
+      lines.push(`${this.indent()}return ToolOutput(GeneratedContent(properties: [:]))`)
+    }
+
+    this.decreaseIndent()
+    lines.push(`${this.indent()}}`)
+
+    this.decreaseIndent()
+    lines.push('}')
+
+    return lines.join('\n')
+  }
+
+  private getAnyMapMethod(type: string): string {
+    switch (type) {
+      case 'string':
+        return 'getString'
+      case 'number':
+        return 'getDouble'
+      case 'boolean':
+        return 'getBoolean'
+      case 'array':
+        return 'getArray'
+      case 'object':
+        return 'getObject'
+      default:
+        return 'getString'
+    }
+  }
+
+  pritoPascalCase(str: string): string {
+    return str
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .split(/[\s_-]+/)
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join('')
   }
 }
