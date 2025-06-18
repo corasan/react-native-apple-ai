@@ -12,12 +12,13 @@
 // Forward declaration of `HybridToolBridgeSpec_cxx` to properly resolve imports.
 namespace RNAppleAI { class HybridToolBridgeSpec_cxx; }
 
+// Forward declaration of `AnyMap` to properly resolve imports.
+namespace NitroModules { class AnyMap; }
 
-
-#include <NitroModules/Promise.hpp>
 #include <string>
 #include <functional>
-#include <unordered_map>
+#include <NitroModules/Promise.hpp>
+#include <NitroModules/AnyMap.hpp>
 
 #include "RNAppleAI-Swift-Cxx-Umbrella.hpp"
 
@@ -58,21 +59,11 @@ namespace margelo::nitro::rnappleai {
 
   public:
     // Methods
-    inline std::shared_ptr<Promise<void>> registerJSFunction(const std::string& name, const std::function<void()>& implementation) override {
+    inline void registerJSFunction(const std::string& name, const std::function<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>()>& implementation) override {
       auto __result = _swiftPart.registerJSFunction(name, implementation);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
-      auto __value = std::move(__result.value());
-      return __value;
-    }
-    inline std::shared_ptr<Promise<void>> callJSFunction(const std::string& functionName, const std::unordered_map<std::string, std::string>& args) override {
-      auto __result = _swiftPart.callJSFunction(functionName, args);
-      if (__result.hasError()) [[unlikely]] {
-        std::rethrow_exception(__result.error());
-      }
-      auto __value = std::move(__result.value());
-      return __value;
     }
 
   private:

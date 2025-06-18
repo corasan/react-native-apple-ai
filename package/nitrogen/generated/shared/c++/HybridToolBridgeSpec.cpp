@@ -15,7 +15,6 @@ namespace margelo::nitro::rnappleai {
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
       prototype.registerHybridMethod("registerJSFunction", &HybridToolBridgeSpec::registerJSFunction);
-      prototype.registerHybridMethod("callJSFunction", &HybridToolBridgeSpec::callJSFunction);
     });
   }
 

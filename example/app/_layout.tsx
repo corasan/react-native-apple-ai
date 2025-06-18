@@ -8,6 +8,7 @@ export { ErrorBoundary } from 'expo-router'
 
 ToolBridge.registerJSFunction('fetchFromServer', () => {
   console.log('Calling registered JS function')
+  return { name: 'Henry', lastname: 'Paulino' }
 })
 
 export default function RootLayout() {

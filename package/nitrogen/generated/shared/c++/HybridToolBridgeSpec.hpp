@@ -13,12 +13,13 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
+// Forward declaration of `AnyMap` to properly resolve imports.
+namespace NitroModules { class AnyMap; }
 
-
-#include <NitroModules/Promise.hpp>
 #include <string>
 #include <functional>
-#include <unordered_map>
+#include <NitroModules/Promise.hpp>
+#include <NitroModules/AnyMap.hpp>
 
 namespace margelo::nitro::rnappleai {
 
@@ -51,8 +52,7 @@ namespace margelo::nitro::rnappleai {
 
     public:
       // Methods
-      virtual std::shared_ptr<Promise<void>> registerJSFunction(const std::string& name, const std::function<void()>& implementation) = 0;
-      virtual std::shared_ptr<Promise<void>> callJSFunction(const std::string& functionName, const std::unordered_map<std::string, std::string>& args) = 0;
+      virtual void registerJSFunction(const std::string& name, const std::function<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>()>& implementation) = 0;
 
     protected:
       // Hybrid Setup

@@ -2,23 +2,21 @@ import NitroModules
 
 class ToolBridge: HybridToolBridgeSpec {
     static let shared = ToolBridge()
-    private var jsImplementations: [String: () -> Void] = [:]
+    private var jsImplementations: [String: () -> Promise<AnyMapHolder>] = [:]
 
-    func registerJSFunction(name: String, implementation: @escaping () -> Void) throws -> Promise<Void> {
-        Promise.async {
-            print("Registering this function: \(name)")
-            ToolBridge.shared.jsImplementations[name] = implementation
-        }
+    func registerJSFunction(name: String, implementation: @escaping () -> Promise<AnyMapHolder>) throws -> Void {
+        ToolBridge.shared.jsImplementations[name] = implementation
     }
 
-    func callJSFunction(functionName: String, args: Dictionary<String, String>) throws -> Promise<Void> {
-        return Promise.async {
-            guard ToolBridge.shared.jsImplementations[functionName] != nil else {
-                print("The function you are trying to call doesn't exist: \(functionName)")
-                return
-            }
-            print("Calling this function: \(functionName)")
-            ToolBridge.shared.jsImplementations[functionName]?()
+    func callJSFunction(functionName: String) async throws -> AnyMapHolder {
+        guard let function = ToolBridge.shared.jsImplementations[functionName] else {
+            print("The function you are trying to call doesn't exist: \(functionName)")
+            throw ToolError.unknown
         }
+        return try await function().await()
     }
+}
+
+enum ToolError: Error {
+    case unknown
 }

@@ -1,4 +1,5 @@
 import FoundationModels
+import NitroModules
 
 @Generable
 struct User {
@@ -47,23 +48,21 @@ enum GenerableTypes: String, CaseIterable  {
 }
 
 struct HaikuTool: Tool {
-    var name = "haikuTool"
-    var description = "A tool to generate haikus based on the provided search term."
+    var name = "contactNameTool"
+    var description = "A tool to gets a contact's name!"
 
     @Generable
     struct Arguments {
-        var searchTerm: String
+//        var name: String
+//        var lastname: String
     }
 
     func call(arguments: Arguments) async throws -> ToolOutput {
         let toolBridge = ToolBridge.shared
-        _ = try toolBridge.callJSFunction(
-            functionName: "fetchFromServer",
-            args: [
-                "searchTerm": "Birds"
-            ]
-        )
-        return ToolOutput(GeneratedContent(properties: ["result": ""]))
+        let result = try await toolBridge.callJSFunction(functionName: "fetchFromServer")
+        let name = result.getString(key: "name")
+        let lastname = result.getString(key: "lastname")
+        return ToolOutput(GeneratedContent(properties: ["name": name, "lastname": lastname]))
     }
 }
 

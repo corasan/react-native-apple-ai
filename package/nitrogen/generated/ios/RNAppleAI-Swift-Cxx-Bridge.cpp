@@ -46,11 +46,20 @@ namespace margelo::nitro::rnappleai::bridge::swift {
     return swiftPart.toUnsafe();
   }
   
-  // pragma MARK: std::function<void()>
-  Func_void create_Func_void(void* _Nonnull swiftClosureWrapper) {
-    auto swiftClosure = RNAppleAI::Func_void::fromUnsafe(swiftClosureWrapper);
-    return [swiftClosure = std::move(swiftClosure)]() mutable -> void {
-      swiftClosure.call();
+  // pragma MARK: std::function<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>()>
+  Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ create_Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = RNAppleAI::Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap___::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)]() mutable -> std::shared_ptr<Promise<std::shared_ptr<AnyMap>>> {
+      auto __result = swiftClosure.call();
+      return __result;
+    };
+  }
+  
+  // pragma MARK: std::function<void(const std::shared_ptr<AnyMap>& /* result */)>
+  Func_void_std__shared_ptr_AnyMap_ create_Func_void_std__shared_ptr_AnyMap_(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = RNAppleAI::Func_void_std__shared_ptr_AnyMap_::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::shared_ptr<AnyMap>& result) mutable -> void {
+      swiftClosure.call(result);
     };
   }
   

@@ -101,53 +101,39 @@ public class HybridToolBridgeSpec_cxx {
 
   // Methods
   @inline(__always)
-  public final func registerJSFunction(name: std.string, implementation: bridge.Func_void) -> bridge.Result_std__shared_ptr_Promise_void___ {
+  public final func registerJSFunction(name: std.string, implementation: bridge.Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap___) -> bridge.Result_void_ {
     do {
-      let __result = try self.__implementation.registerJSFunction(name: String(name), implementation: { () -> () -> Void in
-        let __wrappedFunction = bridge.wrap_Func_void(implementation)
-        return { () -> Void in
-          __wrappedFunction.call()
+      try self.__implementation.registerJSFunction(name: String(name), implementation: { () -> () -> Promise<AnyMapHolder> in
+        let __wrappedFunction = bridge.wrap_Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(implementation)
+        return { () -> Promise<AnyMapHolder> in
+          let __result = __wrappedFunction.call()
+          return { () -> Promise<AnyMapHolder> in
+            let __promise = Promise<AnyMapHolder>()
+            let __resolver = { (__result: AnyMapHolder) in
+              __promise.resolve(withResult: __result)
+            }
+            let __rejecter = { (__error: Error) in
+              __promise.reject(withError: __error)
+            }
+            let __resolverCpp = { () -> bridge.Func_void_std__shared_ptr_AnyMap_ in
+              let __closureWrapper = Func_void_std__shared_ptr_AnyMap_(__resolver)
+              return bridge.create_Func_void_std__shared_ptr_AnyMap_(__closureWrapper.toUnsafe())
+            }()
+            let __rejecterCpp = { () -> bridge.Func_void_std__exception_ptr in
+              let __closureWrapper = Func_void_std__exception_ptr(__rejecter)
+              return bridge.create_Func_void_std__exception_ptr(__closureWrapper.toUnsafe())
+            }()
+            let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(__result)
+            __promiseHolder.addOnResolvedListener(__resolverCpp)
+            __promiseHolder.addOnRejectedListener(__rejecterCpp)
+            return __promise
+          }()
         }
       }())
-      let __resultCpp = { () -> bridge.std__shared_ptr_Promise_void__ in
-        let __promise = bridge.create_std__shared_ptr_Promise_void__()
-        let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_void__(__promise)
-        __result
-          .then({ __result in __promiseHolder.resolve() })
-          .catch({ __error in __promiseHolder.reject(__error.toCpp()) })
-        return __promise
-      }()
-      return bridge.create_Result_std__shared_ptr_Promise_void___(__resultCpp)
+      return bridge.create_Result_void_()
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_std__shared_ptr_Promise_void___(__exceptionPtr)
-    }
-  }
-  
-  @inline(__always)
-  public final func callJSFunction(functionName: std.string, args: bridge.std__unordered_map_std__string__std__string_) -> bridge.Result_std__shared_ptr_Promise_void___ {
-    do {
-      let __result = try self.__implementation.callJSFunction(functionName: String(functionName), args: { () -> Dictionary<String, String> in
-        var __dictionary = Dictionary<String, String>(minimumCapacity: args.size())
-        let __keys = bridge.get_std__unordered_map_std__string__std__string__keys(args)
-        for __key in __keys {
-          let __value = args[__key]!
-          __dictionary[String(__key)] = String(__value)
-        }
-        return __dictionary
-      }())
-      let __resultCpp = { () -> bridge.std__shared_ptr_Promise_void__ in
-        let __promise = bridge.create_std__shared_ptr_Promise_void__()
-        let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_void__(__promise)
-        __result
-          .then({ __result in __promiseHolder.resolve() })
-          .catch({ __error in __promiseHolder.reject(__error.toCpp()) })
-        return __promise
-      }()
-      return bridge.create_Result_std__shared_ptr_Promise_void___(__resultCpp)
-    } catch (let __error) {
-      let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_std__shared_ptr_Promise_void___(__exceptionPtr)
+      return bridge.create_Result_void_(__exceptionPtr)
     }
   }
 }

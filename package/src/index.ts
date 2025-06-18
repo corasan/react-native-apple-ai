@@ -1,6 +1,6 @@
+import { NitroModules } from 'react-native-nitro-modules'
 import type { FoundationModels as FoundationModelsSpec } from './specs/FoundationModels.nitro'
 import type { ToolBridge as ToolBridgeSpec } from './specs/ToolBridge.nitro'
-import { NitroModules } from 'react-native-nitro-modules'
 
 export const FoundationModels =
   NitroModules.createHybridObject<FoundationModelsSpec>('FoundationModels')

@@ -12,6 +12,7 @@ export interface GenerableSchema {
 
 export interface GenerableConfig {
   schemas: GenerableSchema[]
+  tools?: Tool[]
   outputPath?: string
   moduleName?: string
 }
@@ -20,5 +21,5 @@ export interface Tool {
   name: string
   description: string
   arguments: Record<string, GenerableProperty>
-  call: () => void
+  functionName: string
 }
