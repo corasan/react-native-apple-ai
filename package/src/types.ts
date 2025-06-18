@@ -22,4 +22,5 @@ export interface Tool {
   description: string
   arguments: Record<string, GenerableProperty>
   functionName: string
+  resultSchema?: Record<string, GenerableProperty>
 }
