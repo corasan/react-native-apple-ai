@@ -5,7 +5,7 @@ import { ConfigLoader } from './ConfigLoader'
 export class SwiftGenerator {
   private config: GenerableConfig
   private indentLevel = 0
-  private readonly indentSize = 2
+  private readonly indentSize = 4
 
   constructor() {
     const configLoader = new ConfigLoader()
@@ -232,9 +232,25 @@ export class SwiftGenerator {
     )
     this.increaseIndent()
     lines.push(`${this.indent()}let toolBridge = ToolBridge.shared`)
-    lines.push(
-      `${this.indent()}let result = try await toolBridge.callJSFunction(functionName: "${tool.functionName}")`,
-    )
+
+    const argumentEntries = Object.entries(tool.arguments)
+    if (argumentEntries.length > 0) {
+      lines.push(`${this.indent()}let argumentsDict: AnyMapHolder = AnyMapHolder()`)
+      for (const [name, property] of argumentEntries) {
+        const setterMethod = this.getAnyMapSetterMethod(property.type)
+        lines.push(
+          `${this.indent()}argumentsDict.${setterMethod}(key: "${name}", value: arguments.${name})`,
+        )
+      }
+      lines.push(
+        `${this.indent()}let result = try await toolBridge.callJSFunction(functionName: "${tool.functionName}", args: argumentsDict)`,
+      )
+    } else {
+      lines.push(`${this.indent()}var argumentsDict: AnyMapHolder = AnyMapHolder()`)
+      lines.push(
+        `${this.indent()}let result = try await toolBridge.callJSFunction(functionName: "${tool.functionName}", arguments: argumentsDict)`,
+      )
+    }
 
     if (tool.resultSchema) {
       lines.push('')
@@ -277,6 +293,23 @@ export class SwiftGenerator {
         return 'getObject'
       default:
         return 'getString'
+    }
+  }
+
+  private getAnyMapSetterMethod(type: string): string {
+    switch (type) {
+      case 'string':
+        return 'setString'
+      case 'number':
+        return 'setDouble'
+      case 'boolean':
+        return 'setBoolean'
+      case 'array':
+        return 'setArray'
+      case 'object':
+        return 'setObject'
+      default:
+        return 'setString'
     }
   }
 

@@ -38,6 +38,32 @@ const config: GenerableConfig = {
       },
     },
   ],
+  tools: [
+    {
+      name: 'Weather',
+      description: 'A tool to get the weather details based on the city',
+      functionName: 'getWeatherByCity',
+      arguments: {
+        city: {
+          type: 'string',
+          guide: {
+            description: 'The city to fetch the weather from',
+          },
+        },
+      },
+      resultSchema: {
+        humidity: {
+          type: 'number',
+        },
+        temperature: {
+          type: 'number',
+        },
+        precipitation: {
+          type: 'number',
+        },
+      },
+    },
+  ],
   outputPath: 'ios/Generated',
   moduleName: 'Generables',
 }

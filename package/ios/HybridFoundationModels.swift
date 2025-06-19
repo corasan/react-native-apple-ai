@@ -10,7 +10,7 @@ class HybridFoundationModels: HybridFoundationModelsSpec {
     }
     
     func initialize(instructions: String) {
-        session = LanguageModelSession(tools: [HaikuTool()], instructions: instructions)
+        session = LanguageModelSession(tools: [WeatherTool()], instructions: instructions)
     }
 
     func respond(prompt: String, generating: String?) throws -> Promise<String> {

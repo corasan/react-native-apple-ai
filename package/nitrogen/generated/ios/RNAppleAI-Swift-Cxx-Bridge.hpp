@@ -135,29 +135,6 @@ namespace margelo::nitro::rnappleai::bridge::swift {
     return Result<std::shared_ptr<Promise<std::string>>>::withError(error);
   }
   
-  // pragma MARK: std::function<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>()>
-  /**
-   * Specialized version of `std::function<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>()>`.
-   */
-  using Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ = std::function<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>()>;
-  /**
-   * Wrapper class for a `std::function<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>()>`, this can be used from Swift.
-   */
-  class Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper final {
-  public:
-    explicit Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper(std::function<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>()>&& func): _function(std::make_shared<std::function<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>()>>(std::move(func))) {}
-    inline std::shared_ptr<Promise<std::shared_ptr<AnyMap>>> call() const {
-      auto __result = _function->operator()();
-      return __result;
-    }
-  private:
-    std::shared_ptr<std::function<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>()>> _function;
-  };
-  Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ create_Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(void* _Nonnull swiftClosureWrapper);
-  inline Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper wrap_Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ value) {
-    return Func_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper(std::move(value));
-  }
-  
   // pragma MARK: std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>
   /**
    * Specialized version of `std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>`.
@@ -190,6 +167,63 @@ namespace margelo::nitro::rnappleai::bridge::swift {
   Func_void_std__shared_ptr_AnyMap_ create_Func_void_std__shared_ptr_AnyMap_(void* _Nonnull swiftClosureWrapper);
   inline Func_void_std__shared_ptr_AnyMap__Wrapper wrap_Func_void_std__shared_ptr_AnyMap_(Func_void_std__shared_ptr_AnyMap_ value) {
     return Func_void_std__shared_ptr_AnyMap__Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>
+  /**
+   * Specialized version of `std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>&)>`.
+   */
+  using Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_ = std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>;
+  /**
+   * Wrapper class for a `std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& / * args * /)>`, this can be used from Swift.
+   */
+  class Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap__Wrapper final {
+  public:
+    explicit Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap__Wrapper(std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>&& func): _function(std::make_shared<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>>(std::move(func))) {}
+    inline std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> call(std::shared_ptr<AnyMap> args) const {
+      auto __result = _function->operator()(args);
+      return __result;
+    }
+  private:
+    std::shared_ptr<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>> _function;
+  };
+  Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_ create_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(void* _Nonnull swiftClosureWrapper);
+  inline Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap__Wrapper wrap_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_ value) {
+    return Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap__Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>
+  /**
+   * Specialized version of `std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>`.
+   */
+  using std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____ = std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>;
+  inline std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> create_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____() {
+    return Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>::create();
+  }
+  inline PromiseHolder<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>> wrap_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____(std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> promise) {
+    return PromiseHolder<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>(std::move(promise));
+  }
+  
+  // pragma MARK: std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>
+  /**
+   * Specialized version of `std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>&)>`.
+   */
+  using Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ = std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& / * result * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper final {
+  public:
+    explicit Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper(std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>&& func): _function(std::make_shared<std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>>(std::move(func))) {}
+    inline void call(std::shared_ptr<Promise<std::shared_ptr<AnyMap>>> result) const {
+      _function->operator()(result);
+    }
+  private:
+    std::shared_ptr<std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>> _function;
+  };
+  Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ create_Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper wrap_Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ value) {
+    return Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper(std::move(value));
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridToolBridgeSpec>

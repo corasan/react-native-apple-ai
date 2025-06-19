@@ -6,9 +6,22 @@ import { Stack } from 'expo-router'
 import { ToolBridge } from 'react-native-apple-ai'
 export { ErrorBoundary } from 'expo-router'
 
-ToolBridge.registerJSFunction('fetchFromServer', () => {
-  console.log('Calling registered JS function')
-  return { name: 'Henry', lastname: 'Paulino' }
+const url =
+  'https://api.tomorrow.io/v4/weather/realtime?location=toronto&apikey=jS60WZbS4JuOHYv20IbKpw3T2hUnNiIY'
+const options = {
+  method: 'GET',
+  headers: { accept: 'application/json', 'accept-encoding': 'deflate, gzip, br' },
+}
+ToolBridge.registerJSFunction('getWeatherByCity', async args => {
+  const res = await fetch(url, options)
+  const result = await res.json()
+  const data = result.data.values
+
+  return {
+    temperature: data.temperature,
+    humidity: data.humidity,
+    precipitation: data.precipitationProbability,
+  }
 })
 
 export default function RootLayout() {

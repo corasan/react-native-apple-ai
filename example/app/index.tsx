@@ -1,16 +1,21 @@
 import { Text, View } from '@/components/Themed'
 import { useState } from 'react'
-import { Button, StyleSheet } from 'react-native'
+import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import { FoundationModels } from 'react-native-apple-ai'
 
 export default function IndexScreen() {
   const [result, setResult] = useState('')
+  const [input, setInput] = useState('')
+
   const respond = async () => {
     try {
       FoundationModels.initialize('You are a helpful assistant')
-      await FoundationModels.streamResponse('Get the contact name for Henry', stream => {
-        setResult(stream)
-      })
+      await FoundationModels.streamResponse(
+        'What is the weather like in New York City?',
+        stream => {
+          setResult(stream)
+        },
+      )
     } catch (error) {
       console.log(error)
     }
@@ -18,13 +23,18 @@ export default function IndexScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{result}</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <Button title="Respond" onPress={() => respond()} />
+      <View style={{ paddingBottom: 50 }}>
+        <Text style={styles.title}>{result}</Text>
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput value={input} onChangeText={setInput} style={styles.input} />
+        <TouchableOpacity onPress={() => respond()}>
+          <View style={styles.button}>
+            <Text style={{ color: 'white', fontWeight: '600', fontSize: 16 }}>Send</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
@@ -33,16 +43,36 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+    padding: 16,
+    paddingBottom: 60,
   },
   title: {
-    fontSize: 16,
+    fontSize: 18,
     paddingVertical: 10,
-    textAlign: 'center',
   },
   separator: {
     marginVertical: 30,
     height: 1,
     width: '80%',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    gap: 12,
+    alignItems: 'center',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#e3e3e3',
+    borderRadius: 100,
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    fontSize: 16,
+  },
+  button: {
+    backgroundColor: 'dodgerblue',
+    borderRadius: 100,
+    padding: 8,
   },
 })

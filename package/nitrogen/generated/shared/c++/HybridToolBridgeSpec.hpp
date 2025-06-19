@@ -52,7 +52,7 @@ namespace margelo::nitro::rnappleai {
 
     public:
       // Methods
-      virtual void registerJSFunction(const std::string& name, const std::function<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>()>& implementation) = 0;
+      virtual void registerJSFunction(const std::string& name, const std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>& implementation) = 0;
 
     protected:
       // Hybrid Setup

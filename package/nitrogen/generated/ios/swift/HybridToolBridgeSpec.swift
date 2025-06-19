@@ -14,7 +14,7 @@ public protocol HybridToolBridgeSpec_protocol: HybridObject {
   
 
   // Methods
-  func registerJSFunction(name: String, implementation: @escaping () -> Promise<AnyMapHolder>) throws -> Void
+  func registerJSFunction(name: String, implementation: @escaping (_ args: AnyMapHolder) -> Promise<Promise<AnyMapHolder>>) throws -> Void
 }
 
 /// See ``HybridToolBridgeSpec``
