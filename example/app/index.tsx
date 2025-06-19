@@ -1,34 +1,38 @@
 import { Text, View } from '@/components/Themed'
 import { useState } from 'react'
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import { FoundationModels } from 'react-native-apple-ai'
+
+FoundationModels.initialize('You are a helpful assistant')
 
 export default function IndexScreen() {
   const [result, setResult] = useState('')
-  const [input, setInput] = useState('')
+  const [prompt, setPrompt] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const respond = async () => {
     try {
-      FoundationModels.initialize('You are a helpful assistant')
-      await FoundationModels.streamResponse(
-        'What is the weather like in New York City?',
-        stream => {
-          setResult(stream)
-        },
-      )
+      setLoading(true)
+      await FoundationModels.streamResponse(prompt, stream => {
+        setResult(stream)
+      })
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
     <View style={styles.container}>
-      <View style={{ paddingBottom: 50 }}>
+      <View style={{ paddingBottom: 20 }}>
         <Text style={styles.title}>{result}</Text>
       </View>
 
+      <View style={{ height: 40 }}>{loading && <ActivityIndicator size="small" />}</View>
+
       <View style={styles.inputContainer}>
-        <TextInput value={input} onChangeText={setInput} style={styles.input} />
+        <TextInput value={prompt} onChangeText={setPrompt} style={styles.input} />
         <TouchableOpacity onPress={() => respond()}>
           <View style={styles.button}>
             <Text style={{ color: 'white', fontWeight: '600', fontSize: 16 }}>Send</Text>
