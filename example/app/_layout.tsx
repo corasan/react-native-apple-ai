@@ -11,8 +11,10 @@ const options = {
   headers: { accept: 'application/json', 'accept-encoding': 'deflate, gzip, br' },
 }
 
+const WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY
+
 ToolBridge.registerJSFunction('getWeatherByCity', async args => {
-  const url = `https://api.tomorrow.io/v4/weather/realtime?location=${args.city}&apikey=jS60WZbS4JuOHYv20IbKpw3T2hUnNiIY`
+  const url = `https://api.tomorrow.io/v4/weather/realtime?location=${args.city}&apikey=${WEATHER_API_KEY}`
   const res = await fetch(url, options)
   const result = await res.json()
   const data = result.data.values
