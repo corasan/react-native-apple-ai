@@ -6,13 +6,13 @@ import { Stack } from 'expo-router'
 import { ToolBridge } from 'react-native-apple-ai'
 export { ErrorBoundary } from 'expo-router'
 
-const url =
-  'https://api.tomorrow.io/v4/weather/realtime?location=toronto&apikey=jS60WZbS4JuOHYv20IbKpw3T2hUnNiIY'
 const options = {
   method: 'GET',
   headers: { accept: 'application/json', 'accept-encoding': 'deflate, gzip, br' },
 }
+
 ToolBridge.registerJSFunction('getWeatherByCity', async args => {
+  const url = `https://api.tomorrow.io/v4/weather/realtime?location=${args.city}&apikey=jS60WZbS4JuOHYv20IbKpw3T2hUnNiIY`
   const res = await fetch(url, options)
   const result = await res.json()
   const data = result.data.values
