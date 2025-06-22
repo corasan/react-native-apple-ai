@@ -1,4 +1,5 @@
 import NitroModules
+import FoundationModels
 
 typealias AnyMap = AnyMapHolder
 

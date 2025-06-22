@@ -12,6 +12,7 @@
 
 #include "HybridFoundationModelsSpecSwift.hpp"
 #include "HybridToolBridgeSpecSwift.hpp"
+#include "HybridToolFactorySpecSwift.hpp"
 
 @interface RNAppleAIAutolinking : NSObject
 @end
@@ -33,6 +34,13 @@
     "ToolBridge",
     []() -> std::shared_ptr<HybridObject> {
       std::shared_ptr<margelo::nitro::rnappleai::HybridToolBridgeSpec> hybridObject = RNAppleAI::RNAppleAIAutolinking::createToolBridge();
+      return hybridObject;
+    }
+  );
+  HybridObjectRegistry::registerHybridObjectConstructor(
+    "ToolFactory",
+    []() -> std::shared_ptr<HybridObject> {
+      std::shared_ptr<margelo::nitro::rnappleai::HybridToolFactorySpec> hybridObject = RNAppleAI::RNAppleAIAutolinking::createToolFactory();
       return hybridObject;
     }
   );

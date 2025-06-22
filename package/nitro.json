@@ -18,6 +18,9 @@
     },
     "ToolBridge": {
       "swift": "ToolBridge"
+    },
+    "ToolFactory": {
+      "swift": "HybridToolFactory"
     }
   },
   "ignorePaths": [

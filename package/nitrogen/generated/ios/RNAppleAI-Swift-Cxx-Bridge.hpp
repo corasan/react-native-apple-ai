@@ -14,16 +14,24 @@ namespace NitroModules { class AnyMap; }
 namespace margelo::nitro::rnappleai { class HybridFoundationModelsSpec; }
 // Forward declaration of `HybridToolBridgeSpec` to properly resolve imports.
 namespace margelo::nitro::rnappleai { class HybridToolBridgeSpec; }
+// Forward declaration of `HybridToolFactorySpec` to properly resolve imports.
+namespace margelo::nitro::rnappleai { class HybridToolFactorySpec; }
+// Forward declaration of `HybridTool` to properly resolve imports.
+namespace margelo::nitro::rnappleai { struct HybridTool; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridFoundationModelsSpec_cxx` to properly resolve imports.
 namespace RNAppleAI { class HybridFoundationModelsSpec_cxx; }
 // Forward declaration of `HybridToolBridgeSpec_cxx` to properly resolve imports.
 namespace RNAppleAI { class HybridToolBridgeSpec_cxx; }
+// Forward declaration of `HybridToolFactorySpec_cxx` to properly resolve imports.
+namespace RNAppleAI { class HybridToolFactorySpec_cxx; }
 
 // Include C++ defined types
 #include "HybridFoundationModelsSpec.hpp"
+#include "HybridTool.hpp"
 #include "HybridToolBridgeSpec.hpp"
+#include "HybridToolFactorySpec.hpp"
 #include <NitroModules/AnyMap.hpp>
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/PromiseHolder.hpp>
@@ -237,5 +245,26 @@ namespace margelo::nitro::rnappleai::bridge::swift {
   // pragma MARK: std::weak_ptr<margelo::nitro::rnappleai::HybridToolBridgeSpec>
   using std__weak_ptr_margelo__nitro__rnappleai__HybridToolBridgeSpec_ = std::weak_ptr<margelo::nitro::rnappleai::HybridToolBridgeSpec>;
   inline std__weak_ptr_margelo__nitro__rnappleai__HybridToolBridgeSpec_ weakify_std__shared_ptr_margelo__nitro__rnappleai__HybridToolBridgeSpec_(const std::shared_ptr<margelo::nitro::rnappleai::HybridToolBridgeSpec>& strong) { return strong; }
+  
+  // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridToolFactorySpec>
+  /**
+   * Specialized version of `std::shared_ptr<margelo::nitro::rnappleai::HybridToolFactorySpec>`.
+   */
+  using std__shared_ptr_margelo__nitro__rnappleai__HybridToolFactorySpec_ = std::shared_ptr<margelo::nitro::rnappleai::HybridToolFactorySpec>;
+  std::shared_ptr<margelo::nitro::rnappleai::HybridToolFactorySpec> create_std__shared_ptr_margelo__nitro__rnappleai__HybridToolFactorySpec_(void* _Nonnull swiftUnsafePointer);
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__rnappleai__HybridToolFactorySpec_(std__shared_ptr_margelo__nitro__rnappleai__HybridToolFactorySpec_ cppType);
+  
+  // pragma MARK: std::weak_ptr<margelo::nitro::rnappleai::HybridToolFactorySpec>
+  using std__weak_ptr_margelo__nitro__rnappleai__HybridToolFactorySpec_ = std::weak_ptr<margelo::nitro::rnappleai::HybridToolFactorySpec>;
+  inline std__weak_ptr_margelo__nitro__rnappleai__HybridToolFactorySpec_ weakify_std__shared_ptr_margelo__nitro__rnappleai__HybridToolFactorySpec_(const std::shared_ptr<margelo::nitro::rnappleai::HybridToolFactorySpec>& strong) { return strong; }
+  
+  // pragma MARK: Result<HybridTool>
+  using Result_HybridTool_ = Result<HybridTool>;
+  inline Result_HybridTool_ create_Result_HybridTool_(const HybridTool& value) {
+    return Result<HybridTool>::withValue(value);
+  }
+  inline Result_HybridTool_ create_Result_HybridTool_(const std::exception_ptr& error) {
+    return Result<HybridTool>::withError(error);
+  }
 
 } // namespace margelo::nitro::rnappleai::bridge::swift
