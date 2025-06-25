@@ -33,7 +33,7 @@ struct NitroTool: Tool {
     
     typealias Arguments = GeneratedContent
     
-    func call(arguments: GeneratedContent) async throws -> ToolOutput {˝
+    func call(arguments: GeneratedContent) async throws -> ToolOutput {
         
     }
     
