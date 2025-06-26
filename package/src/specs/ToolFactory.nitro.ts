@@ -1,8 +1,7 @@
 import type { AnyMap, HybridObject } from 'react-native-nitro-modules'
+import type { Tool } from './Tool.nitro'
 
-interface ToolAction {
-  (params: AnyMap): Promise<AnyMap>
-}
+type ToolAction = (params: AnyMap) => Promise<AnyMap>
 
 interface ToolConfig {
   name: string
@@ -11,12 +10,6 @@ interface ToolConfig {
   call: ToolAction
 }
 
-interface HybridTool {
-  readonly name: string
-  readonly description: string
-  readonly arguments: AnyMap
-}
-
 export interface ToolFactory extends HybridObject<{ ios: 'swift' }> {
-  create(config: ToolConfig): HybridTool
+  create(config: ToolConfig): Tool
 }
