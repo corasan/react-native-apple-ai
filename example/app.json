@@ -40,7 +40,8 @@
             "deploymentTarget": "26.0"
           }
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
