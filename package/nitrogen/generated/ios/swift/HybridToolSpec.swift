@@ -16,7 +16,7 @@ public protocol HybridToolSpec_protocol: HybridObject {
   var arguments: AnyMapHolder { get }
 
   // Methods
-  
+  func call() throws -> Promise<AnyMapHolder>
 }
 
 /// See ``HybridToolSpec``

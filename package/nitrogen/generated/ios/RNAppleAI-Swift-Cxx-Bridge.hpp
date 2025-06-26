@@ -10,8 +10,12 @@
 // Forward declarations of C++ defined types
 // Forward declaration of `AnyMap` to properly resolve imports.
 namespace NitroModules { class AnyMap; }
+// Forward declaration of `FMLanguageModelSession` to properly resolve imports.
+namespace margelo::nitro::rnappleai { struct FMLanguageModelSession; }
 // Forward declaration of `HybridFoundationModelsSpec` to properly resolve imports.
 namespace margelo::nitro::rnappleai { class HybridFoundationModelsSpec; }
+// Forward declaration of `HybridLanguageModelSessionFactorySpec` to properly resolve imports.
+namespace margelo::nitro::rnappleai { class HybridLanguageModelSessionFactorySpec; }
 // Forward declaration of `HybridToolBridgeSpec` to properly resolve imports.
 namespace margelo::nitro::rnappleai { class HybridToolBridgeSpec; }
 // Forward declaration of `HybridToolFactorySpec` to properly resolve imports.
@@ -22,6 +26,8 @@ namespace margelo::nitro::rnappleai { class HybridToolSpec; }
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridFoundationModelsSpec_cxx` to properly resolve imports.
 namespace RNAppleAI { class HybridFoundationModelsSpec_cxx; }
+// Forward declaration of `HybridLanguageModelSessionFactorySpec_cxx` to properly resolve imports.
+namespace RNAppleAI { class HybridLanguageModelSessionFactorySpec_cxx; }
 // Forward declaration of `HybridToolBridgeSpec_cxx` to properly resolve imports.
 namespace RNAppleAI { class HybridToolBridgeSpec_cxx; }
 // Forward declaration of `HybridToolFactorySpec_cxx` to properly resolve imports.
@@ -30,7 +36,9 @@ namespace RNAppleAI { class HybridToolFactorySpec_cxx; }
 namespace RNAppleAI { class HybridToolSpec_cxx; }
 
 // Include C++ defined types
+#include "FMLanguageModelSession.hpp"
 #include "HybridFoundationModelsSpec.hpp"
+#include "HybridLanguageModelSessionFactorySpec.hpp"
 #include "HybridToolBridgeSpec.hpp"
 #include "HybridToolFactorySpec.hpp"
 #include "HybridToolSpec.hpp"
@@ -43,6 +51,7 @@ namespace RNAppleAI { class HybridToolSpec_cxx; }
 #include <memory>
 #include <optional>
 #include <string>
+#include <vector>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -145,6 +154,28 @@ namespace margelo::nitro::rnappleai::bridge::swift {
     return Result<std::shared_ptr<Promise<std::string>>>::withError(error);
   }
   
+  // pragma MARK: std::function<void()>
+  /**
+   * Specialized version of `std::function<void()>`.
+   */
+  using Func_void = std::function<void()>;
+  /**
+   * Wrapper class for a `std::function<void()>`, this can be used from Swift.
+   */
+  class Func_void_Wrapper final {
+  public:
+    explicit Func_void_Wrapper(std::function<void()>&& func): _function(std::make_shared<std::function<void()>>(std::move(func))) {}
+    inline void call() const {
+      _function->operator()();
+    }
+  private:
+    std::shared_ptr<std::function<void()>> _function;
+  };
+  Func_void create_Func_void(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_Wrapper wrap_Func_void(Func_void value) {
+    return Func_void_Wrapper(std::move(value));
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>`.
@@ -156,6 +187,47 @@ namespace margelo::nitro::rnappleai::bridge::swift {
   // pragma MARK: std::weak_ptr<margelo::nitro::rnappleai::HybridToolSpec>
   using std__weak_ptr_margelo__nitro__rnappleai__HybridToolSpec_ = std::weak_ptr<margelo::nitro::rnappleai::HybridToolSpec>;
   inline std__weak_ptr_margelo__nitro__rnappleai__HybridToolSpec_ weakify_std__shared_ptr_margelo__nitro__rnappleai__HybridToolSpec_(const std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>& strong) { return strong; }
+  
+  // pragma MARK: std::vector<std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>>
+  /**
+   * Specialized version of `std::vector<std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>>`.
+   */
+  using std__vector_std__shared_ptr_margelo__nitro__rnappleai__HybridToolSpec__ = std::vector<std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>>;
+  inline std::vector<std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>> create_std__vector_std__shared_ptr_margelo__nitro__rnappleai__HybridToolSpec__(size_t size) {
+    std::vector<std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>> vector;
+    vector.reserve(size);
+    return vector;
+  }
+  
+  // pragma MARK: std::optional<std::vector<std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>>>
+  /**
+   * Specialized version of `std::optional<std::vector<std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>>>`.
+   */
+  using std__optional_std__vector_std__shared_ptr_margelo__nitro__rnappleai__HybridToolSpec___ = std::optional<std::vector<std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>>>;
+  inline std::optional<std::vector<std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>>> create_std__optional_std__vector_std__shared_ptr_margelo__nitro__rnappleai__HybridToolSpec___(const std::vector<std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>>& value) {
+    return std::optional<std::vector<std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>>>(value);
+  }
+  
+  // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>
+  /**
+   * Specialized version of `std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>`.
+   */
+  using std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_ = std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>;
+  std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec> create_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_(void* _Nonnull swiftUnsafePointer);
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_(std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_ cppType);
+  
+  // pragma MARK: std::weak_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>
+  using std__weak_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_ = std::weak_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>;
+  inline std__weak_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_ weakify_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_(const std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>& strong) { return strong; }
+  
+  // pragma MARK: Result<FMLanguageModelSession>
+  using Result_FMLanguageModelSession_ = Result<FMLanguageModelSession>;
+  inline Result_FMLanguageModelSession_ create_Result_FMLanguageModelSession_(const FMLanguageModelSession& value) {
+    return Result<FMLanguageModelSession>::withValue(value);
+  }
+  inline Result_FMLanguageModelSession_ create_Result_FMLanguageModelSession_(const std::exception_ptr& error) {
+    return Result<FMLanguageModelSession>::withError(error);
+  }
   
   // pragma MARK: std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>
   /**
@@ -189,6 +261,15 @@ namespace margelo::nitro::rnappleai::bridge::swift {
   Func_void_std__shared_ptr_AnyMap_ create_Func_void_std__shared_ptr_AnyMap_(void* _Nonnull swiftClosureWrapper);
   inline Func_void_std__shared_ptr_AnyMap__Wrapper wrap_Func_void_std__shared_ptr_AnyMap_(Func_void_std__shared_ptr_AnyMap_ value) {
     return Func_void_std__shared_ptr_AnyMap__Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: Result<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>
+  using Result_std__shared_ptr_Promise_std__shared_ptr_AnyMap____ = Result<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>;
+  inline Result_std__shared_ptr_Promise_std__shared_ptr_AnyMap____ create_Result_std__shared_ptr_Promise_std__shared_ptr_AnyMap____(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& value) {
+    return Result<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>::withValue(value);
+  }
+  inline Result_std__shared_ptr_Promise_std__shared_ptr_AnyMap____ create_Result_std__shared_ptr_Promise_std__shared_ptr_AnyMap____(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>::withError(error);
   }
   
   // pragma MARK: std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>

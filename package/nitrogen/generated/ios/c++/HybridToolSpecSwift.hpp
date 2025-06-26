@@ -17,6 +17,7 @@ namespace NitroModules { class AnyMap; }
 
 #include <string>
 #include <NitroModules/AnyMap.hpp>
+#include <NitroModules/Promise.hpp>
 
 #include "RNAppleAI-Swift-Cxx-Umbrella.hpp"
 
@@ -68,7 +69,14 @@ namespace margelo::nitro::rnappleai {
 
   public:
     // Methods
-    
+    inline std::shared_ptr<Promise<std::shared_ptr<AnyMap>>> call() override {
+      auto __result = _swiftPart.call();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
 
   private:
     RNAppleAI::HybridToolSpec_cxx _swiftPart;

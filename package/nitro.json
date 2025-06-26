@@ -21,6 +21,9 @@
     },
     "ToolFactory": {
       "swift": "HybridToolFactory"
+    },
+    "LanguageModelSessionFactory": {
+      "swift": "HybridLanguageModelSessionFactory"
     }
   },
   "ignorePaths": [
