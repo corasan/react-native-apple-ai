@@ -14,7 +14,7 @@ public protocol HybridToolFactorySpec_protocol: HybridObject {
   
 
   // Methods
-  func create(config: ToolConfig) throws -> HybridTool
+  func create(config: ToolConfig) throws -> (any HybridToolSpec)
 }
 
 /// See ``HybridToolFactorySpec``

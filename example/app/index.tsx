@@ -1,9 +1,9 @@
-import { Text, View } from '@/components/Themed'
 import { useState } from 'react'
 import { ActivityIndicator, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import { FoundationModels } from 'react-native-apple-ai'
+import { Text, View } from '@/components/Themed'
 
-FoundationModels.initialize('You are a helpful assistant')
+// FoundationModels.initialize('You are a helpful assistant')
 
 export default function IndexScreen() {
   const [result, setResult] = useState('')
@@ -13,9 +13,9 @@ export default function IndexScreen() {
   const respond = async () => {
     try {
       setLoading(true)
-      await FoundationModels.streamResponse(prompt, stream => {
-        setResult(stream)
-      })
+      // await FoundationModels.streamResponse(prompt, stream => {
+      //   setResult(stream)
+      // })
     } catch (error) {
       console.log(error)
     } finally {

@@ -16,16 +16,16 @@ namespace margelo::nitro::rnappleai { class HybridFoundationModelsSpec; }
 namespace margelo::nitro::rnappleai { class HybridToolBridgeSpec; }
 // Forward declaration of `HybridToolFactorySpec` to properly resolve imports.
 namespace margelo::nitro::rnappleai { class HybridToolFactorySpec; }
-// Forward declaration of `HybridTool` to properly resolve imports.
-namespace margelo::nitro::rnappleai { struct HybridTool; }
+// Forward declaration of `HybridToolSpec` to properly resolve imports.
+namespace margelo::nitro::rnappleai { class HybridToolSpec; }
 // Forward declaration of `ToolConfig` to properly resolve imports.
 namespace margelo::nitro::rnappleai { struct ToolConfig; }
 
 // Include C++ defined types
 #include "HybridFoundationModelsSpec.hpp"
-#include "HybridTool.hpp"
 #include "HybridToolBridgeSpec.hpp"
 #include "HybridToolFactorySpec.hpp"
+#include "HybridToolSpec.hpp"
 #include "ToolConfig.hpp"
 #include <NitroModules/AnyMap.hpp>
 #include <NitroModules/Promise.hpp>
@@ -52,6 +52,8 @@ namespace RNAppleAI { class HybridFoundationModelsSpec_cxx; }
 namespace RNAppleAI { class HybridToolBridgeSpec_cxx; }
 // Forward declaration of `HybridToolFactorySpec_cxx` to properly resolve imports.
 namespace RNAppleAI { class HybridToolFactorySpec_cxx; }
+// Forward declaration of `HybridToolSpec_cxx` to properly resolve imports.
+namespace RNAppleAI { class HybridToolSpec_cxx; }
 
 // Include Swift defined types
 #if __has_include("RNAppleAI-Swift.h")

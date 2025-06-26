@@ -1,9 +1,10 @@
 import 'expo-dev-client'
 import 'react-native-reanimated'
-import { useColorScheme } from '@/components/useColorScheme'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
 import { Stack } from 'expo-router'
-import { ToolBridge } from 'react-native-apple-ai'
+import { Tool, ToolBridge, ToolFactory } from 'react-native-apple-ai'
+import { useColorScheme } from '@/components/useColorScheme'
+
 export { ErrorBoundary } from 'expo-router'
 
 const options = {
@@ -25,6 +26,16 @@ ToolBridge.registerJSFunction('getWeatherByCity', async args => {
     precipitation: data.precipitationProbability,
   }
 })
+
+const tool = ToolFactory.create({
+  name: 'Henry',
+  description: 'im me',
+  arguments: {},
+  call: async () => {
+    return {}
+  },
+})
+console.log(tool.description)
 
 export default function RootLayout() {
   const colorScheme = useColorScheme()

@@ -21,9 +21,6 @@
     },
     "ToolFactory": {
       "swift": "HybridToolFactory"
-    },
-    "NitroLanguageModelSession": {
-      "swift": "NitroLanguageModelSession"
     }
   },
   "ignorePaths": [

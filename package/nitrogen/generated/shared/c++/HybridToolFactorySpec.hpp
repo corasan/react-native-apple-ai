@@ -13,12 +13,13 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-// Forward declaration of `HybridTool` to properly resolve imports.
-namespace margelo::nitro::rnappleai { struct HybridTool; }
+// Forward declaration of `HybridToolSpec` to properly resolve imports.
+namespace margelo::nitro::rnappleai { class HybridToolSpec; }
 // Forward declaration of `ToolConfig` to properly resolve imports.
 namespace margelo::nitro::rnappleai { struct ToolConfig; }
 
-#include "HybridTool.hpp"
+#include <memory>
+#include "HybridToolSpec.hpp"
 #include "ToolConfig.hpp"
 
 namespace margelo::nitro::rnappleai {
@@ -52,7 +53,7 @@ namespace margelo::nitro::rnappleai {
 
     public:
       // Methods
-      virtual HybridTool create(const ToolConfig& config) = 0;
+      virtual std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec> create(const ToolConfig& config) = 0;
 
     protected:
       // Hybrid Setup

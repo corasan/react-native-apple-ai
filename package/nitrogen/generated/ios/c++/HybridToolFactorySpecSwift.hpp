@@ -12,17 +12,18 @@
 // Forward declaration of `HybridToolFactorySpec_cxx` to properly resolve imports.
 namespace RNAppleAI { class HybridToolFactorySpec_cxx; }
 
-// Forward declaration of `HybridTool` to properly resolve imports.
-namespace margelo::nitro::rnappleai { struct HybridTool; }
-// Forward declaration of `AnyMap` to properly resolve imports.
-namespace NitroModules { class AnyMap; }
+// Forward declaration of `HybridToolSpec` to properly resolve imports.
+namespace margelo::nitro::rnappleai { class HybridToolSpec; }
 // Forward declaration of `ToolConfig` to properly resolve imports.
 namespace margelo::nitro::rnappleai { struct ToolConfig; }
+// Forward declaration of `AnyMap` to properly resolve imports.
+namespace NitroModules { class AnyMap; }
 
-#include "HybridTool.hpp"
+#include <memory>
+#include "HybridToolSpec.hpp"
+#include "ToolConfig.hpp"
 #include <string>
 #include <NitroModules/AnyMap.hpp>
-#include "ToolConfig.hpp"
 #include <functional>
 #include <NitroModules/Promise.hpp>
 
@@ -65,7 +66,7 @@ namespace margelo::nitro::rnappleai {
 
   public:
     // Methods
-    inline HybridTool create(const ToolConfig& config) override {
+    inline std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec> create(const ToolConfig& config) override {
       auto __result = _swiftPart.create(config);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
