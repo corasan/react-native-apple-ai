@@ -8,6 +8,7 @@
 #include "RNAppleAI-Swift-Cxx-Bridge.hpp"
 
 // Include C++ implementation defined types
+#include "HybridFMLanguageModelSessionSpecSwift.hpp"
 #include "HybridFoundationModelsSpecSwift.hpp"
 #include "HybridLanguageModelSessionFactorySpecSwift.hpp"
 #include "HybridToolBridgeSpecSwift.hpp"
@@ -49,12 +50,20 @@ namespace margelo::nitro::rnappleai::bridge::swift {
     return swiftPart.toUnsafe();
   }
   
-  // pragma MARK: std::function<void()>
-  Func_void create_Func_void(void* _Nonnull swiftClosureWrapper) {
-    auto swiftClosure = RNAppleAI::Func_void::fromUnsafe(swiftClosureWrapper);
-    return [swiftClosure = std::move(swiftClosure)]() mutable -> void {
-      swiftClosure.call();
-    };
+  // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridFMLanguageModelSessionSpec>
+  std::shared_ptr<margelo::nitro::rnappleai::HybridFMLanguageModelSessionSpec> create_std__shared_ptr_margelo__nitro__rnappleai__HybridFMLanguageModelSessionSpec_(void* _Nonnull swiftUnsafePointer) {
+    RNAppleAI::HybridFMLanguageModelSessionSpec_cxx swiftPart = RNAppleAI::HybridFMLanguageModelSessionSpec_cxx::fromUnsafe(swiftUnsafePointer);
+    return std::make_shared<margelo::nitro::rnappleai::HybridFMLanguageModelSessionSpecSwift>(swiftPart);
+  }
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__rnappleai__HybridFMLanguageModelSessionSpec_(std__shared_ptr_margelo__nitro__rnappleai__HybridFMLanguageModelSessionSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::rnappleai::HybridFMLanguageModelSessionSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::rnappleai::HybridFMLanguageModelSessionSpecSwift>(cppType);
+  #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridFMLanguageModelSessionSpec\" is not implemented in Swift!");
+    }
+  #endif
+    RNAppleAI::HybridFMLanguageModelSessionSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
+    return swiftPart.toUnsafe();
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>

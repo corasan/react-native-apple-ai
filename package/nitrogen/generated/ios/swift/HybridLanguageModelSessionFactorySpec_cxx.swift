@@ -101,14 +101,17 @@ public class HybridLanguageModelSessionFactorySpec_cxx {
 
   // Methods
   @inline(__always)
-  public final func createSession(config: LanguageModelSessionConfig) -> bridge.Result_FMLanguageModelSession_ {
+  public final func createSession(config: LanguageModelSessionConfig) -> bridge.Result_std__shared_ptr_margelo__nitro__rnappleai__HybridFMLanguageModelSessionSpec__ {
     do {
       let __result = try self.__implementation.createSession(config: config)
-      let __resultCpp = __result
-      return bridge.create_Result_FMLanguageModelSession_(__resultCpp)
+      let __resultCpp = { () -> bridge.std__shared_ptr_margelo__nitro__rnappleai__HybridFMLanguageModelSessionSpec_ in
+        let __cxxWrapped = __result.getCxxWrapper()
+        return __cxxWrapped.getCxxPart()
+      }()
+      return bridge.create_Result_std__shared_ptr_margelo__nitro__rnappleai__HybridFMLanguageModelSessionSpec__(__resultCpp)
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_FMLanguageModelSession_(__exceptionPtr)
+      return bridge.create_Result_std__shared_ptr_margelo__nitro__rnappleai__HybridFMLanguageModelSessionSpec__(__exceptionPtr)
     }
   }
 }

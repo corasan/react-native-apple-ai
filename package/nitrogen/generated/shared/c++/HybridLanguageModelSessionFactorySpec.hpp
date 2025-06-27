@@ -13,12 +13,13 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-// Forward declaration of `FMLanguageModelSession` to properly resolve imports.
-namespace margelo::nitro::rnappleai { struct FMLanguageModelSession; }
+// Forward declaration of `HybridFMLanguageModelSessionSpec` to properly resolve imports.
+namespace margelo::nitro::rnappleai { class HybridFMLanguageModelSessionSpec; }
 // Forward declaration of `LanguageModelSessionConfig` to properly resolve imports.
 namespace margelo::nitro::rnappleai { struct LanguageModelSessionConfig; }
 
-#include "FMLanguageModelSession.hpp"
+#include <memory>
+#include "HybridFMLanguageModelSessionSpec.hpp"
 #include "LanguageModelSessionConfig.hpp"
 
 namespace margelo::nitro::rnappleai {
@@ -52,7 +53,7 @@ namespace margelo::nitro::rnappleai {
 
     public:
       // Methods
-      virtual FMLanguageModelSession createSession(const LanguageModelSessionConfig& config) = 0;
+      virtual std::shared_ptr<margelo::nitro::rnappleai::HybridFMLanguageModelSessionSpec> createSession(const LanguageModelSessionConfig& config) = 0;
 
     protected:
       // Hybrid Setup

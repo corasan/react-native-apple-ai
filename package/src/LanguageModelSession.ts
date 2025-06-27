@@ -52,7 +52,7 @@ export class LanguageModelSession {
    * Initiates a streaming response from the language model
    * This method starts the AI conversation and streams the response back
    */
-  streamResponse() {
-    this.session.streamResponse()
+  streamResponse(prompt: string, callback: (token: string) => void) {
+    this.session.streamResponse(prompt, callback)
   }
 }

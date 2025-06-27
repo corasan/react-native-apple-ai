@@ -7,7 +7,7 @@ interface ToolConfig {
   name: string
   description: string
   arguments: AnyMap
-  call: ToolAction
+  action: ToolAction
 }
 
 export interface ToolFactory extends HybridObject<{ ios: 'swift' }> {

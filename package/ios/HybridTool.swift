@@ -2,8 +2,10 @@ import FoundationModels
 import NitroModules
 
 class HybridTool: HybridToolSpec, Tool, @unchecked Sendable {
-    func call() throws -> Promise<NitroModules.AnyMapHolder> {
-        <#code#>
+    func call() throws -> Promise<AnyMapHolder> {
+        return Promise.async {
+            return AnyMapHolder()
+        }
     }
     
     let name: String

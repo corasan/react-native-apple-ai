@@ -25,11 +25,6 @@
       "edgeToEdgeEnabled": true,
       "package": "com.henrypaulino.example"
     },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
     "plugins": [
       "expo-router",
       "react-native-apple-ai",
@@ -40,8 +35,7 @@
             "deploymentTarget": "26.0"
           }
         }
-      ],
-      "expo-web-browser"
+      ]
     ],
     "experiments": {
       "typedRoutes": true

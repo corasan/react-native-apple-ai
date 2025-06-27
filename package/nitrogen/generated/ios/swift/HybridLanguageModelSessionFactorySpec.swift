@@ -14,7 +14,7 @@ public protocol HybridLanguageModelSessionFactorySpec_protocol: HybridObject {
   
 
   // Methods
-  func createSession(config: LanguageModelSessionConfig) throws -> FMLanguageModelSession
+  func createSession(config: LanguageModelSessionConfig) throws -> (any HybridFMLanguageModelSessionSpec)
 }
 
 /// See ``HybridLanguageModelSessionFactorySpec``

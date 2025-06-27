@@ -10,8 +10,8 @@
 // Forward declarations of C++ defined types
 // Forward declaration of `AnyMap` to properly resolve imports.
 namespace NitroModules { class AnyMap; }
-// Forward declaration of `FMLanguageModelSession` to properly resolve imports.
-namespace margelo::nitro::rnappleai { struct FMLanguageModelSession; }
+// Forward declaration of `HybridFMLanguageModelSessionSpec` to properly resolve imports.
+namespace margelo::nitro::rnappleai { class HybridFMLanguageModelSessionSpec; }
 // Forward declaration of `HybridFoundationModelsSpec` to properly resolve imports.
 namespace margelo::nitro::rnappleai { class HybridFoundationModelsSpec; }
 // Forward declaration of `HybridLanguageModelSessionFactorySpec` to properly resolve imports.
@@ -28,7 +28,7 @@ namespace margelo::nitro::rnappleai { struct LanguageModelSessionConfig; }
 namespace margelo::nitro::rnappleai { struct ToolConfig; }
 
 // Include C++ defined types
-#include "FMLanguageModelSession.hpp"
+#include "HybridFMLanguageModelSessionSpec.hpp"
 #include "HybridFoundationModelsSpec.hpp"
 #include "HybridLanguageModelSessionFactorySpec.hpp"
 #include "HybridToolBridgeSpec.hpp"
@@ -56,6 +56,8 @@ namespace margelo::nitro::rnappleai { struct ToolConfig; }
 #include <NitroModules/DateToChronoDate.hpp>
 
 // Forward declarations of Swift defined types
+// Forward declaration of `HybridFMLanguageModelSessionSpec_cxx` to properly resolve imports.
+namespace RNAppleAI { class HybridFMLanguageModelSessionSpec_cxx; }
 // Forward declaration of `HybridFoundationModelsSpec_cxx` to properly resolve imports.
 namespace RNAppleAI { class HybridFoundationModelsSpec_cxx; }
 // Forward declaration of `HybridLanguageModelSessionFactorySpec_cxx` to properly resolve imports.
