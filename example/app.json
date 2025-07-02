@@ -27,7 +27,7 @@
     },
     "plugins": [
       "expo-router",
-      "react-native-apple-ai",
+      "react-native-foundation-models",
       [
         "expo-build-properties",
         {

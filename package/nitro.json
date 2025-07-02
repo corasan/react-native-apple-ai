@@ -4,7 +4,7 @@
     "rnappleai"
   ],
   "ios": {
-    "iosModuleName": "RNAppleAI"
+    "iosModuleName": "RNFoundationModels"
   },
   "android": {
     "androidNamespace": [

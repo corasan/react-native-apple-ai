@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ActivityIndicator, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
-import { LanguageModelSession, ToolFactory } from 'react-native-apple-ai'
+import { LanguageModelSession, ToolFactory } from 'react-native-foundation-models'
 import { Text, View } from '@/components/Themed'
 
 const WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY
@@ -14,8 +14,8 @@ const weatherTool = ToolFactory.create({
   description: 'A tool to get the weather details based on the city',
   arguments: {
     city: {
-      type: 'string'
-    }
+      type: 'string',
+    },
   },
   action: async () => {
     // const url = `https://api.tomorrow.io/v4/weather/realtime?location=london&apikey=${WEATHER_API_KEY}`
@@ -30,7 +30,10 @@ const weatherTool = ToolFactory.create({
     }
   },
 })
-const session = new LanguageModelSession({instructions: "You are a helpful assistant", tools: [weatherTool]})
+const session = new LanguageModelSession({
+  instructions: 'You are a helpful assistant',
+  tools: [weatherTool],
+})
 
 // FoundationModels.initialize('You are a helpful assistant')
 
@@ -42,7 +45,7 @@ export default function IndexScreen() {
   const respond = async () => {
     try {
       setLoading(true)
-      session.streamResponse(prompt, (token) => {
+      session.streamResponse(prompt, token => {
         setResult(token)
       })
     } catch (error) {

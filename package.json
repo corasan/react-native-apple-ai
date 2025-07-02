@@ -1,5 +1,5 @@
 {
-  "name": "react-native-apple-ai",
+  "name": "react-native-foundation-models",
   "version": "0.1.0",
   "description": "Nitro module workspace",
   "main": "./package/lib/commonjs/index.js",
@@ -27,11 +27,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Developer/react-native-apple-ai.git"
+    "url": "https://github.com/Developer/react-native-foundation-models.git"
   },
   "license": "MIT",
-  "bugs": "https://github.com/Developer/react-native-apple-ai/issues",
-  "homepage": "https://github.com/Developer/react-native-apple-ai#readme",
+  "bugs": "https://github.com/Developer/react-native-foundation-models/issues",
+  "homepage": "https://github.com/Developer/react-native-foundation-models#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "provenance": true

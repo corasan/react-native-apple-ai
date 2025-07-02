@@ -50,7 +50,7 @@ This project uses React Native Nitro Modules, which provides:
 ### Nitro Configuration
 The `package/nitro.json` file configures:
 - C++ namespace: `rnappleai`
-- iOS module name: `RNAppleAI`
+- iOS module name: `RNFoundationModels`
 - Native class mappings for autolinking
 - Android namespace and library name
 

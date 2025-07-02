@@ -13,7 +13,7 @@ This system allows you to define your data models once in TypeScript and automat
 Create a `generable.config.ts` file in your project root:
 
 ```typescript
-import type { GenerableConfig } from 'react-native-apple-ai'
+import type { GenerableConfig } from 'react-native-foundation-models'
 
 const config: GenerableConfig = {
   schemas: [
@@ -161,7 +161,7 @@ For Expo projects, add to `app.config.js`:
 ```javascript
 export default {
   plugins: [
-    ['react-native-apple-ai/plugin', {
+    ['react-native-foundation-models/plugin', {
       configPath: 'generable.config.ts'
     }]
   ]

@@ -10,7 +10,7 @@
 #include "HybridFoundationModelsSpec.hpp"
 
 // Forward declaration of `HybridFoundationModelsSpec_cxx` to properly resolve imports.
-namespace RNAppleAI { class HybridFoundationModelsSpec_cxx; }
+namespace RNFoundationModels { class HybridFoundationModelsSpec_cxx; }
 
 
 
@@ -19,7 +19,7 @@ namespace RNAppleAI { class HybridFoundationModelsSpec_cxx; }
 #include <optional>
 #include <functional>
 
-#include "RNAppleAI-Swift-Cxx-Umbrella.hpp"
+#include "RNFoundationModels-Swift-Cxx-Umbrella.hpp"
 
 namespace margelo::nitro::rnappleai {
 
@@ -36,13 +36,13 @@ namespace margelo::nitro::rnappleai {
   class HybridFoundationModelsSpecSwift: public virtual HybridFoundationModelsSpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridFoundationModelsSpecSwift(const RNAppleAI::HybridFoundationModelsSpec_cxx& swiftPart):
+    explicit HybridFoundationModelsSpecSwift(const RNFoundationModels::HybridFoundationModelsSpec_cxx& swiftPart):
       HybridObject(HybridFoundationModelsSpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline RNAppleAI::HybridFoundationModelsSpec_cxx& getSwiftPart() noexcept {
+    inline RNFoundationModels::HybridFoundationModelsSpec_cxx& getSwiftPart() noexcept {
       return _swiftPart;
     }
 
@@ -84,7 +84,7 @@ namespace margelo::nitro::rnappleai {
     }
 
   private:
-    RNAppleAI::HybridFoundationModelsSpec_cxx _swiftPart;
+    RNFoundationModels::HybridFoundationModelsSpec_cxx _swiftPart;
   };
 
 } // namespace margelo::nitro::rnappleai

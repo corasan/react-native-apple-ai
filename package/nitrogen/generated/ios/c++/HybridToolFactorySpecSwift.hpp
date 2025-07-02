@@ -10,7 +10,7 @@
 #include "HybridToolFactorySpec.hpp"
 
 // Forward declaration of `HybridToolFactorySpec_cxx` to properly resolve imports.
-namespace RNAppleAI { class HybridToolFactorySpec_cxx; }
+namespace RNFoundationModels { class HybridToolFactorySpec_cxx; }
 
 // Forward declaration of `HybridToolSpec` to properly resolve imports.
 namespace margelo::nitro::rnappleai { class HybridToolSpec; }
@@ -27,7 +27,7 @@ namespace NitroModules { class AnyMap; }
 #include <functional>
 #include <NitroModules/Promise.hpp>
 
-#include "RNAppleAI-Swift-Cxx-Umbrella.hpp"
+#include "RNFoundationModels-Swift-Cxx-Umbrella.hpp"
 
 namespace margelo::nitro::rnappleai {
 
@@ -44,13 +44,13 @@ namespace margelo::nitro::rnappleai {
   class HybridToolFactorySpecSwift: public virtual HybridToolFactorySpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridToolFactorySpecSwift(const RNAppleAI::HybridToolFactorySpec_cxx& swiftPart):
+    explicit HybridToolFactorySpecSwift(const RNFoundationModels::HybridToolFactorySpec_cxx& swiftPart):
       HybridObject(HybridToolFactorySpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline RNAppleAI::HybridToolFactorySpec_cxx& getSwiftPart() noexcept {
+    inline RNFoundationModels::HybridToolFactorySpec_cxx& getSwiftPart() noexcept {
       return _swiftPart;
     }
 
@@ -76,7 +76,7 @@ namespace margelo::nitro::rnappleai {
     }
 
   private:
-    RNAppleAI::HybridToolFactorySpec_cxx _swiftPart;
+    RNFoundationModels::HybridToolFactorySpec_cxx _swiftPart;
   };
 
 } // namespace margelo::nitro::rnappleai

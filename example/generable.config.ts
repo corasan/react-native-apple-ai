@@ -1,4 +1,4 @@
-import type { GenerableConfig } from 'react-native-apple-ai'
+import type { GenerableConfig } from 'react-native-foundation-models'
 
 const config: GenerableConfig = {
   schemas: [
