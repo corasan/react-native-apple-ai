@@ -18,7 +18,6 @@ namespace NitroModules { class AnyMap; }
 
 #include <string>
 #include <NitroModules/AnyMap.hpp>
-#include <NitroModules/Promise.hpp>
 
 namespace margelo::nitro::rnappleai {
 
@@ -53,7 +52,7 @@ namespace margelo::nitro::rnappleai {
 
     public:
       // Methods
-      virtual std::shared_ptr<Promise<std::shared_ptr<AnyMap>>> call() = 0;
+      
 
     protected:
       // Hybrid Setup

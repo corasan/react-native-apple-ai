@@ -11,11 +11,10 @@ class HybridToolFactory: HybridToolFactorySpec {
         let name = config.name
         let description = config.description
         let arguments = config.arguments
-//        let call = config.call
+        let call = config.action
         
-        print("Tool with name \(name) and description: \(description)")
-        print(arguments)
-        
-        return HybridTool(name: name, description: description, arguments: arguments)
+        return HybridTool(name: name, description: description, arguments: arguments) { _ in
+            return Promise.async { AnyMap() }
+        }
     }
 }

@@ -255,15 +255,6 @@ namespace margelo::nitro::rnappleai::bridge::swift {
     return Func_void_std__shared_ptr_AnyMap__Wrapper(std::move(value));
   }
   
-  // pragma MARK: Result<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>
-  using Result_std__shared_ptr_Promise_std__shared_ptr_AnyMap____ = Result<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>;
-  inline Result_std__shared_ptr_Promise_std__shared_ptr_AnyMap____ create_Result_std__shared_ptr_Promise_std__shared_ptr_AnyMap____(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& value) {
-    return Result<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>::withValue(value);
-  }
-  inline Result_std__shared_ptr_Promise_std__shared_ptr_AnyMap____ create_Result_std__shared_ptr_Promise_std__shared_ptr_AnyMap____(const std::exception_ptr& error) {
-    return Result<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>::withError(error);
-  }
-  
   // pragma MARK: std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>
   /**
    * Specialized version of `std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>&)>`.

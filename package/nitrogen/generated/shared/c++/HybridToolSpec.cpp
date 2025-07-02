@@ -17,7 +17,6 @@ namespace margelo::nitro::rnappleai {
       prototype.registerHybridGetter("name", &HybridToolSpec::getName);
       prototype.registerHybridGetter("description", &HybridToolSpec::getDescription);
       prototype.registerHybridGetter("arguments", &HybridToolSpec::getArguments);
-      prototype.registerHybridMethod("call", &HybridToolSpec::call);
     });
   }
 

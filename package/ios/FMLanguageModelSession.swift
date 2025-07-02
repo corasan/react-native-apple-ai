@@ -21,6 +21,12 @@ class FMLanguageModelSession: HybridFMLanguageModelSessionSpec {
      * - Throws: Any errors that occur during session creation
      */
     init(config: CustomLanguageModelSessionConfig) throws {
+        if let instructions = config.instructions,
+           let tools = config.tools
+        {
+            let foundationTools: [any Tool] = tools.map { $0 as (any Tool) }
+            self.modelSession = LanguageModelSession(tools: foundationTools, instructions: instructions)
+        } else
         if let instructions = config.instructions {
             self.modelSession = LanguageModelSession(instructions: instructions)
         } else if let tools = config.tools {
@@ -40,6 +46,8 @@ class FMLanguageModelSession: HybridFMLanguageModelSessionSpec {
             guard let session = self.modelSession else {
                 return "Error: Session not initialized"
             }
+            
+            print("Session initialized")
             
             self.isResponding = true
             do {

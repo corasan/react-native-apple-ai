@@ -9,7 +9,7 @@ const options = {
   headers: { accept: 'application/json', 'accept-encoding': 'deflate, gzip, br' },
 }
 
-const tool = ToolFactory.create({
+const weatherTool = ToolFactory.create({
   name: 'WeatherTool',
   description: 'A tool to get the weather details based on the city',
   arguments: {
@@ -30,7 +30,7 @@ const tool = ToolFactory.create({
     }
   },
 })
-const session = new LanguageModelSession({instructions: "You are a helpful assistant", tools: [tool]})
+const session = new LanguageModelSession({instructions: "You are a helpful assistant", tools: [weatherTool]})
 
 // FoundationModels.initialize('You are a helpful assistant')
 
@@ -43,7 +43,7 @@ export default function IndexScreen() {
     try {
       setLoading(true)
       session.streamResponse(prompt, (token) => {
-        console.log('response ->',token)
+        setResult(token)
       })
     } catch (error) {
       console.log(error)
