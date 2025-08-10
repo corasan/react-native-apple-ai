@@ -1,9 +1,10 @@
 import type { AnyMap, HybridObject } from 'react-native-nitro-modules'
 
 export interface Tool {
-  readonly name: string
-  readonly description: string
-  readonly arguments: AnyMap
+  name: string
+  description: string
+  arguments: AnyMap
+  implementation: Promise<AnyMap>
 }
 
 export interface LanguageModelSession extends HybridObject<{ ios: 'swift' }> {
