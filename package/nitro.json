@@ -4,13 +4,13 @@
     "rnappleai"
   ],
   "ios": {
-    "iosModuleName": "RNFoundationModels"
+    "iosModuleName": "RNAppleAI"
   },
   "android": {
     "androidNamespace": [
       "rnappleai"
     ],
-    "androidCxxLibName": "RNFoundationModels"
+    "androidCxxLibName": "RNAppleAI"
   },
   "autolinking": {
     "FoundationModels": {
