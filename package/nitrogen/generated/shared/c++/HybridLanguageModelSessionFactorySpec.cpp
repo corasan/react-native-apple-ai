@@ -14,7 +14,7 @@ namespace margelo::nitro::rnappleai {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
-      prototype.registerHybridMethod("createSession", &HybridLanguageModelSessionFactorySpec::createSession);
+      prototype.registerHybridMethod("create", &HybridLanguageModelSessionFactorySpec::create);
     });
   }
 

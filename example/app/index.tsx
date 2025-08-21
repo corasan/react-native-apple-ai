@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { ActivityIndicator, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
-import { LanguageModelSession, ToolFactory } from 'react-native-foundation-models'
+import { LanguageModelSession } from 'react-native-apple-ai'
+import type { ToolDefinition } from 'react-native-apple-ai/src/specs/LanguageModelSession.nitro'
+import type { AnyMap } from 'react-native-nitro-modules'
 import { Text, View } from '@/components/Themed'
 
 const WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY
@@ -9,27 +11,39 @@ const options = {
   headers: { accept: 'application/json', 'accept-encoding': 'deflate, gzip, br' },
 }
 
-const weatherTool = ToolFactory.create({
-  name: 'WeatherTool',
+// const weatherTool = ToolFactory.create({
+//   name: 'WeatherTool',
+//   description: 'A tool to get the weather details based on the city',
+//   arguments: {
+//     city: {
+//       type: 'string',
+//     },
+//   },
+//   action: async () => {
+//     // const url = `https://api.tomorrow.io/v4/weather/realtime?location=london&apikey=${WEATHER_API_KEY}`
+//     // const res = await fetch(url, options)
+//     // const result = await res.json()
+//     // const data = result.data.values
+
+//     return {
+//       temperature: 0,
+//       humidity: 0,
+//       precipitation: 0,
+//     }
+//   },
+// })
+const weatherTool: ToolDefinition = {
+  name: 'weather_tool',
   description: 'A tool to get the weather details based on the city',
   arguments: {
     city: {
       type: 'string',
     },
   },
-  action: async () => {
-    // const url = `https://api.tomorrow.io/v4/weather/realtime?location=london&apikey=${WEATHER_API_KEY}`
-    // const res = await fetch(url, options)
-    // const result = await res.json()
-    // const data = result.data.values
-
-    return {
-      temperature: 0,
-      humidity: 0,
-      precipitation: 0,
-    }
+  implementation: async () => {
+    return { temperature: 50 }
   },
-})
+}
 const session = new LanguageModelSession({
   instructions: 'You are a helpful assistant',
   tools: [weatherTool],
@@ -39,7 +53,7 @@ const session = new LanguageModelSession({
 
 export default function IndexScreen() {
   const [result, setResult] = useState('')
-  const [prompt, setPrompt] = useState('')
+  const [prompt, setPrompt] = useState('What is the weather like in tokyo?')
   const [loading, setLoading] = useState(false)
 
   const respond = async () => {

@@ -2,7 +2,7 @@ import 'expo-dev-client'
 import 'react-native-reanimated'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
 import { Stack } from 'expo-router'
-import { ToolBridge } from 'react-native-foundation-models'
+import { ToolBridge } from 'react-native-apple-ai'
 import { useColorScheme } from '@/components/useColorScheme'
 
 export { ErrorBoundary } from 'expo-router'

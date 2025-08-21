@@ -18,15 +18,15 @@ namespace margelo::nitro::rnappleai { class HybridLanguageModelSessionSpec; }
 namespace margelo::nitro::rnappleai { class HybridToolSpec; }
 // Forward declaration of `LanguageModelSessionConfig` to properly resolve imports.
 namespace margelo::nitro::rnappleai { struct LanguageModelSessionConfig; }
-// Forward declaration of `Tool` to properly resolve imports.
-namespace margelo::nitro::rnappleai { struct Tool; }
+// Forward declaration of `ToolDefinition` to properly resolve imports.
+namespace margelo::nitro::rnappleai { struct ToolDefinition; }
 
 // Include C++ defined types
 #include "HybridLanguageModelSessionFactorySpec.hpp"
 #include "HybridLanguageModelSessionSpec.hpp"
 #include "HybridToolSpec.hpp"
 #include "LanguageModelSessionConfig.hpp"
-#include "Tool.hpp"
+#include "ToolDefinition.hpp"
 #include <NitroModules/AnyMap.hpp>
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>

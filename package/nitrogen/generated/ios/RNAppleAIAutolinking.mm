@@ -10,9 +10,6 @@
 #import "RNAppleAI-Swift-Cxx-Umbrella.hpp"
 #import <type_traits>
 
-#include "HybridFoundationModelsSpecSwift.hpp"
-#include "HybridToolBridgeSpecSwift.hpp"
-#include "HybridToolFactorySpecSwift.hpp"
 #include "HybridLanguageModelSessionFactorySpecSwift.hpp"
 
 @interface RNAppleAIAutolinking : NSObject
@@ -24,27 +21,6 @@
   using namespace margelo::nitro;
   using namespace margelo::nitro::rnappleai;
 
-  HybridObjectRegistry::registerHybridObjectConstructor(
-    "FoundationModels",
-    []() -> std::shared_ptr<HybridObject> {
-      std::shared_ptr<margelo::nitro::rnappleai::HybridFoundationModelsSpec> hybridObject = RNAppleAI::RNAppleAIAutolinking::createFoundationModels();
-      return hybridObject;
-    }
-  );
-  HybridObjectRegistry::registerHybridObjectConstructor(
-    "ToolBridge",
-    []() -> std::shared_ptr<HybridObject> {
-      std::shared_ptr<margelo::nitro::rnappleai::HybridToolBridgeSpec> hybridObject = RNAppleAI::RNAppleAIAutolinking::createToolBridge();
-      return hybridObject;
-    }
-  );
-  HybridObjectRegistry::registerHybridObjectConstructor(
-    "ToolFactory",
-    []() -> std::shared_ptr<HybridObject> {
-      std::shared_ptr<margelo::nitro::rnappleai::HybridToolFactorySpec> hybridObject = RNAppleAI::RNAppleAIAutolinking::createToolFactory();
-      return hybridObject;
-    }
-  );
   HybridObjectRegistry::registerHybridObjectConstructor(
     "LanguageModelSessionFactory",
     []() -> std::shared_ptr<HybridObject> {

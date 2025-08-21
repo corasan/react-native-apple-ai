@@ -55,6 +55,23 @@ namespace margelo::nitro::rnappleai::bridge::swift {
     };
   }
   
+  // pragma MARK: std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>()>
+  Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____ create_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = RNAppleAI::Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)]() mutable -> std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> {
+      auto __result = swiftClosure.call();
+      return __result;
+    };
+  }
+  
+  // pragma MARK: std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>
+  Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ create_Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = RNAppleAI::Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& result) mutable -> void {
+      swiftClosure.call(result);
+    };
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>
   std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec> create_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_(void* _Nonnull swiftUnsafePointer) {
     RNAppleAI::HybridLanguageModelSessionFactorySpec_cxx swiftPart = RNAppleAI::HybridLanguageModelSessionFactorySpec_cxx::fromUnsafe(swiftUnsafePointer);

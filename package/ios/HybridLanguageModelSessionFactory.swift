@@ -7,6 +7,7 @@ import FoundationModels
  * bridge between React Native and Apple's FoundationModels framework.
  */
 class HybridLanguageModelSessionFactory: HybridLanguageModelSessionFactorySpec {
+    private var tools: [any Tool] = []
     /**
      * Creates a new FMLanguageModelSession instance configured with the provided settings.
      *
@@ -14,16 +15,11 @@ class HybridLanguageModelSessionFactory: HybridLanguageModelSessionFactorySpec {
      * - Returns: A configured FMLanguageModelSession instance
      * - Throws: Any errors that occur during session creation
      */
-    func createSession(config: LanguageModelSessionConfig) throws -> any HybridFMLanguageModelSessionSpec {
-        let hybridTools: [HybridTool]? = config.tools?.compactMap { toolSpec in
-            return toolSpec as? HybridTool
-        }
-
-        let customConfig = CustomLanguageModelSessionConfig(
-            instructions: config.instructions,
-            tools: hybridTools
-        )
-
-        return try FMLanguageModelSession(config: customConfig) as any HybridFMLanguageModelSessionSpec
+    func create(config: LanguageModelSessionConfig) throws -> HybridLanguageModelSessionSpec {
+        return try HybridLanguageModelSession(config: config)
+    }
+    
+    private func privateCreateTool(params: ToolDefinition) {
+        
     }
 }

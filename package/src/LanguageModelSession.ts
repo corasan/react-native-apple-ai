@@ -1,12 +1,12 @@
 import { NitroModules } from 'react-native-nitro-modules'
 import type {
-  FMLanguageModelSession,
   LanguageModelSessionConfig,
-  LanguageModelSessionFactory,
-} from './specs/LanguageModelSessionFactory.nitro'
+  LanguageModelSessionFactory as LanguageModelSessionFactorySpec,
+  LanguageModelSession as LanguageModelSessionSpec,
+} from './specs/LanguageModelSession.nitro'
 
-const HybridLanguageModelSession =
-  NitroModules.createHybridObject<LanguageModelSessionFactory>(
+const LanguageModelSessionFactory =
+  NitroModules.createHybridObject<LanguageModelSessionFactorySpec>(
     'LanguageModelSessionFactory',
   )
 
@@ -33,7 +33,7 @@ const HybridLanguageModelSession =
  * ```
  */
 export class LanguageModelSession {
-  private session: FMLanguageModelSession
+  session: LanguageModelSessionSpec
 
   /**
    * Creates a new LanguageModelSession instance
@@ -42,7 +42,7 @@ export class LanguageModelSession {
    * @param tools - Optional array of tools that the AI can use during conversations
    */
   constructor(config?: LanguageModelSessionConfig) {
-    this.session = HybridLanguageModelSession.createSession({
+    this.session = LanguageModelSessionFactory.create({
       instructions: config?.instructions,
       tools: config?.tools,
     })

@@ -1,17 +1,11 @@
 import NitroModules
 import FoundationModels
 
-/**
- * Wrapper class that bridges the FoundationModels LanguageModelSession
- * with the Nitro interface FMLanguageModelSession.
- *
- * This wrapper encapsulates the actual FoundationModels session and provides
- * the interface methods required by the Nitro module system.
- */
-
-class FMLanguageModelSession: HybridFMLanguageModelSessionSpec {
-    private let modelSession: LanguageModelSession?
+class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
+    private var session: LanguageModelSession? = nil
     private var isResponding: Bool = false
+    private var tools: [any Tool] = []
+    private var jsTools: [ToolDefinition] = []
     
     /**
      * Initializes the wrapper with a FoundationModels session configured
@@ -20,21 +14,23 @@ class FMLanguageModelSession: HybridFMLanguageModelSessionSpec {
      * - Parameter config: Custom configuration containing instructions and HybridTool instances
      * - Throws: Any errors that occur during session creation
      */
-    init(config: CustomLanguageModelSessionConfig) throws {
-        if let instructions = config.instructions,
-           let tools = config.tools
-        {
-            let foundationTools: [any Tool] = tools.map { $0 as (any Tool) }
-            self.modelSession = LanguageModelSession(tools: foundationTools, instructions: instructions)
-        } else
-        if let instructions = config.instructions {
-            self.modelSession = LanguageModelSession(instructions: instructions)
-        } else if let tools = config.tools {
-            let foundationTools: [any Tool] = tools.map { $0 as (any Tool) }
-            self.modelSession = LanguageModelSession(tools: foundationTools)
-        } else {
-            self.modelSession = LanguageModelSession()
+    init(config: LanguageModelSessionConfig) throws {
+        let jsTools: [ToolDefinition] = config.tools ?? []
+        var tools: [any Tool] = []
+        
+        if (!jsTools.isEmpty) {
+            tools = try jsTools.map { tool in
+                return try HybridTool(
+                    name: tool.name,
+                    description: tool.description,
+                    parameters: tool.arguments,
+                    implementation: tool.implementation
+                )
+            }
         }
+        
+        let session = LanguageModelSession(tools: tools, instructions: config.instructions)
+        self.session = session
     }
     
     /**
@@ -43,19 +39,17 @@ class FMLanguageModelSession: HybridFMLanguageModelSessionSpec {
      */
     func streamResponse(prompt: String, onStream: @escaping (String) -> Void) throws -> Promise<String> {
         return Promise.async {
-            guard let session = self.modelSession else {
+            guard let modelSession = self.session else {
                 return "Error: Session not initialized"
             }
-            
-            print("Session initialized")
-            
+                        
             self.isResponding = true
             do {
-                let stream = session.streamResponse(to: prompt)
+                let stream = modelSession.streamResponse(to: prompt)
                 for try await token in stream {
-                    onStream(token)
+                    onStream(token.content)
                 }
-
+                
                 let result = try await stream.collect()
                 self.isResponding = false
                 return result.content
@@ -80,4 +74,3 @@ struct CustomLanguageModelSessionConfig {
         self.tools = tools
     }
 }
-

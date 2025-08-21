@@ -18,13 +18,13 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-// Forward declaration of `Tool` to properly resolve imports.
-namespace margelo::nitro::rnappleai { struct Tool; }
+// Forward declaration of `ToolDefinition` to properly resolve imports.
+namespace margelo::nitro::rnappleai { struct ToolDefinition; }
 
 #include <optional>
 #include <string>
 #include <vector>
-#include "Tool.hpp"
+#include "ToolDefinition.hpp"
 
 namespace margelo::nitro::rnappleai {
 
@@ -34,11 +34,11 @@ namespace margelo::nitro::rnappleai {
   struct LanguageModelSessionConfig {
   public:
     std::optional<std::string> instructions     SWIFT_PRIVATE;
-    std::optional<std::vector<Tool>> tools     SWIFT_PRIVATE;
+    std::optional<std::vector<ToolDefinition>> tools     SWIFT_PRIVATE;
 
   public:
     LanguageModelSessionConfig() = default;
-    explicit LanguageModelSessionConfig(std::optional<std::string> instructions, std::optional<std::vector<Tool>> tools): instructions(instructions), tools(tools) {}
+    explicit LanguageModelSessionConfig(std::optional<std::string> instructions, std::optional<std::vector<ToolDefinition>> tools): instructions(instructions), tools(tools) {}
   };
 
 } // namespace margelo::nitro::rnappleai
@@ -54,13 +54,13 @@ namespace margelo::nitro {
       jsi::Object obj = arg.asObject(runtime);
       return LanguageModelSessionConfig(
         JSIConverter<std::optional<std::string>>::fromJSI(runtime, obj.getProperty(runtime, "instructions")),
-        JSIConverter<std::optional<std::vector<Tool>>>::fromJSI(runtime, obj.getProperty(runtime, "tools"))
+        JSIConverter<std::optional<std::vector<ToolDefinition>>>::fromJSI(runtime, obj.getProperty(runtime, "tools"))
       );
     }
     static inline jsi::Value toJSI(jsi::Runtime& runtime, const LanguageModelSessionConfig& arg) {
       jsi::Object obj(runtime);
       obj.setProperty(runtime, "instructions", JSIConverter<std::optional<std::string>>::toJSI(runtime, arg.instructions));
-      obj.setProperty(runtime, "tools", JSIConverter<std::optional<std::vector<Tool>>>::toJSI(runtime, arg.tools));
+      obj.setProperty(runtime, "tools", JSIConverter<std::optional<std::vector<ToolDefinition>>>::toJSI(runtime, arg.tools));
       return obj;
     }
     static inline bool canConvert(jsi::Runtime& runtime, const jsi::Value& value) {
@@ -69,7 +69,7 @@ namespace margelo::nitro {
       }
       jsi::Object obj = value.getObject(runtime);
       if (!JSIConverter<std::optional<std::string>>::canConvert(runtime, obj.getProperty(runtime, "instructions"))) return false;
-      if (!JSIConverter<std::optional<std::vector<Tool>>>::canConvert(runtime, obj.getProperty(runtime, "tools"))) return false;
+      if (!JSIConverter<std::optional<std::vector<ToolDefinition>>>::canConvert(runtime, obj.getProperty(runtime, "tools"))) return false;
       return true;
     }
   };

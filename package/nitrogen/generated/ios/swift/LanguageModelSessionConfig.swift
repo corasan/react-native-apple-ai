@@ -18,17 +18,17 @@ public extension LanguageModelSessionConfig {
   /**
    * Create a new instance of `LanguageModelSessionConfig`.
    */
-  init(instructions: String?, tools: [Tool]?) {
+  init(instructions: String?, tools: [ToolDefinition]?) {
     self.init({ () -> bridge.std__optional_std__string_ in
       if let __unwrappedValue = instructions {
         return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
       } else {
         return .init()
       }
-    }(), { () -> bridge.std__optional_std__vector_Tool__ in
+    }(), { () -> bridge.std__optional_std__vector_ToolDefinition__ in
       if let __unwrappedValue = tools {
-        return bridge.create_std__optional_std__vector_Tool__({ () -> bridge.std__vector_Tool_ in
-          var __vector = bridge.create_std__vector_Tool_(__unwrappedValue.count)
+        return bridge.create_std__optional_std__vector_ToolDefinition__({ () -> bridge.std__vector_ToolDefinition_ in
+          var __vector = bridge.create_std__vector_ToolDefinition_(__unwrappedValue.count)
           for __item in __unwrappedValue {
             __vector.push_back(__item)
           }
@@ -63,10 +63,10 @@ public extension LanguageModelSessionConfig {
     }
   }
   
-  var tools: [Tool]? {
+  var tools: [ToolDefinition]? {
     @inline(__always)
     get {
-      return { () -> [Tool]? in
+      return { () -> [ToolDefinition]? in
         if let __unwrapped = self.__tools.value {
           return __unwrapped.map({ __item in __item })
         } else {
@@ -76,10 +76,10 @@ public extension LanguageModelSessionConfig {
     }
     @inline(__always)
     set {
-      self.__tools = { () -> bridge.std__optional_std__vector_Tool__ in
+      self.__tools = { () -> bridge.std__optional_std__vector_ToolDefinition__ in
         if let __unwrappedValue = newValue {
-          return bridge.create_std__optional_std__vector_Tool__({ () -> bridge.std__vector_Tool_ in
-            var __vector = bridge.create_std__vector_Tool_(__unwrappedValue.count)
+          return bridge.create_std__optional_std__vector_ToolDefinition__({ () -> bridge.std__vector_ToolDefinition_ in
+            var __vector = bridge.create_std__vector_ToolDefinition_(__unwrappedValue.count)
             for __item in __unwrappedValue {
               __vector.push_back(__item)
             }

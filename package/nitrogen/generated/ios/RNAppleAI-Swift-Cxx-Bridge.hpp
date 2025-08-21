@@ -16,8 +16,8 @@ namespace margelo::nitro::rnappleai { class HybridLanguageModelSessionFactorySpe
 namespace margelo::nitro::rnappleai { class HybridLanguageModelSessionSpec; }
 // Forward declaration of `HybridToolSpec` to properly resolve imports.
 namespace margelo::nitro::rnappleai { class HybridToolSpec; }
-// Forward declaration of `Tool` to properly resolve imports.
-namespace margelo::nitro::rnappleai { struct Tool; }
+// Forward declaration of `ToolDefinition` to properly resolve imports.
+namespace margelo::nitro::rnappleai { struct ToolDefinition; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridLanguageModelSessionFactorySpec_cxx` to properly resolve imports.
@@ -31,7 +31,7 @@ namespace RNAppleAI { class HybridToolSpec_cxx; }
 #include "HybridLanguageModelSessionFactorySpec.hpp"
 #include "HybridLanguageModelSessionSpec.hpp"
 #include "HybridToolSpec.hpp"
-#include "Tool.hpp"
+#include "ToolDefinition.hpp"
 #include <NitroModules/AnyMap.hpp>
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/PromiseHolder.hpp>
@@ -169,24 +169,81 @@ namespace margelo::nitro::rnappleai::bridge::swift {
     return Func_void_std__shared_ptr_AnyMap__Wrapper(std::move(value));
   }
   
-  // pragma MARK: std::vector<Tool>
+  // pragma MARK: std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>()>
   /**
-   * Specialized version of `std::vector<Tool>`.
+   * Specialized version of `std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>()>`.
    */
-  using std__vector_Tool_ = std::vector<Tool>;
-  inline std::vector<Tool> create_std__vector_Tool_(size_t size) {
-    std::vector<Tool> vector;
+  using Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____ = std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>()>;
+  /**
+   * Wrapper class for a `std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>()>`, this can be used from Swift.
+   */
+  class Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______Wrapper final {
+  public:
+    explicit Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______Wrapper(std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>()>&& func): _function(std::make_shared<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>()>>(std::move(func))) {}
+    inline std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> call() const {
+      auto __result = _function->operator()();
+      return __result;
+    }
+  private:
+    std::shared_ptr<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>()>> _function;
+  };
+  Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____ create_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____(void* _Nonnull swiftClosureWrapper);
+  inline Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______Wrapper wrap_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____(Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____ value) {
+    return Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>
+  /**
+   * Specialized version of `std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>`.
+   */
+  using std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____ = std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>;
+  inline std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> create_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____() {
+    return Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>::create();
+  }
+  inline PromiseHolder<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>> wrap_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____(std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> promise) {
+    return PromiseHolder<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>(std::move(promise));
+  }
+  
+  // pragma MARK: std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>
+  /**
+   * Specialized version of `std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>&)>`.
+   */
+  using Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ = std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& / * result * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper final {
+  public:
+    explicit Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper(std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>&& func): _function(std::make_shared<std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>>(std::move(func))) {}
+    inline void call(std::shared_ptr<Promise<std::shared_ptr<AnyMap>>> result) const {
+      _function->operator()(result);
+    }
+  private:
+    std::shared_ptr<std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>> _function;
+  };
+  Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ create_Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper wrap_Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ value) {
+    return Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::vector<ToolDefinition>
+  /**
+   * Specialized version of `std::vector<ToolDefinition>`.
+   */
+  using std__vector_ToolDefinition_ = std::vector<ToolDefinition>;
+  inline std::vector<ToolDefinition> create_std__vector_ToolDefinition_(size_t size) {
+    std::vector<ToolDefinition> vector;
     vector.reserve(size);
     return vector;
   }
   
-  // pragma MARK: std::optional<std::vector<Tool>>
+  // pragma MARK: std::optional<std::vector<ToolDefinition>>
   /**
-   * Specialized version of `std::optional<std::vector<Tool>>`.
+   * Specialized version of `std::optional<std::vector<ToolDefinition>>`.
    */
-  using std__optional_std__vector_Tool__ = std::optional<std::vector<Tool>>;
-  inline std::optional<std::vector<Tool>> create_std__optional_std__vector_Tool__(const std::vector<Tool>& value) {
-    return std::optional<std::vector<Tool>>(value);
+  using std__optional_std__vector_ToolDefinition__ = std::optional<std::vector<ToolDefinition>>;
+  inline std::optional<std::vector<ToolDefinition>> create_std__optional_std__vector_ToolDefinition__(const std::vector<ToolDefinition>& value) {
+    return std::optional<std::vector<ToolDefinition>>(value);
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>

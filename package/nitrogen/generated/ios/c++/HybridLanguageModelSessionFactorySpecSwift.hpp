@@ -16,8 +16,8 @@ namespace RNAppleAI { class HybridLanguageModelSessionFactorySpec_cxx; }
 namespace margelo::nitro::rnappleai { class HybridLanguageModelSessionSpec; }
 // Forward declaration of `LanguageModelSessionConfig` to properly resolve imports.
 namespace margelo::nitro::rnappleai { struct LanguageModelSessionConfig; }
-// Forward declaration of `Tool` to properly resolve imports.
-namespace margelo::nitro::rnappleai { struct Tool; }
+// Forward declaration of `ToolDefinition` to properly resolve imports.
+namespace margelo::nitro::rnappleai { struct ToolDefinition; }
 // Forward declaration of `AnyMap` to properly resolve imports.
 namespace NitroModules { class AnyMap; }
 
@@ -27,8 +27,9 @@ namespace NitroModules { class AnyMap; }
 #include <optional>
 #include <string>
 #include <vector>
-#include "Tool.hpp"
+#include "ToolDefinition.hpp"
 #include <NitroModules/AnyMap.hpp>
+#include <functional>
 #include <NitroModules/Promise.hpp>
 
 #include "RNAppleAI-Swift-Cxx-Umbrella.hpp"
@@ -70,8 +71,8 @@ namespace margelo::nitro::rnappleai {
 
   public:
     // Methods
-    inline std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec> createSession(const LanguageModelSessionConfig& config) override {
-      auto __result = _swiftPart.createSession(config);
+    inline std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec> create(const LanguageModelSessionConfig& config) override {
+      auto __result = _swiftPart.create(config);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

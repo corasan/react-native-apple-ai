@@ -13,15 +13,6 @@
     "androidCxxLibName": "RNAppleAI"
   },
   "autolinking": {
-    "FoundationModels": {
-      "swift": "HybridFoundationModels"
-    },
-    "ToolBridge": {
-      "swift": "ToolBridge"
-    },
-    "ToolFactory": {
-      "swift": "HybridToolFactory"
-    },
     "LanguageModelSessionFactory": {
       "swift": "HybridLanguageModelSessionFactory"
     }

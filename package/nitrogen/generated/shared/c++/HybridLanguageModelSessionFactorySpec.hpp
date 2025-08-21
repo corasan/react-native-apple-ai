@@ -53,7 +53,7 @@ namespace margelo::nitro::rnappleai {
 
     public:
       // Methods
-      virtual std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec> createSession(const LanguageModelSessionConfig& config) = 0;
+      virtual std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec> create(const LanguageModelSessionConfig& config) = 0;
 
     protected:
       // Hybrid Setup
