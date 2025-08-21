@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a React Native Nitro module that provides Apple Foundation Models integration for React Native applications. The project uses a workspace structure with the main package implementation and an example Expo app.
 
+IMPORTANT: Always use context7 for up to date documentation
+
 ## Project Structure
 
 - **Root workspace**: Contains scripts for building, linting, and releasing
