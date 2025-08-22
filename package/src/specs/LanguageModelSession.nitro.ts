@@ -1,4 +1,16 @@
 import type { AnyMap, HybridObject } from 'react-native-nitro-modules'
+import type { z } from 'zod'
+
+export type ZodObjectSchema = z.ZodObject<any>
+
+export type InferArgs<T extends ZodObjectSchema> = z.infer<T>
+
+export interface TypeSafeToolDefinition<T extends ZodObjectSchema> {
+  name: string
+  description: string
+  arguments: T
+  implementation: (args: InferArgs<T>) => Promise<AnyMap>
+}
 
 export interface ToolDefinition {
   name: string

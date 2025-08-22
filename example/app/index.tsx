@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ActivityIndicator, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
-import { LanguageModelSession } from 'react-native-apple-ai'
-import type { ToolDefinition } from 'react-native-apple-ai/src/specs/LanguageModelSession.nitro'
+import { createTool, LanguageModelSession } from 'react-native-apple-ai'
+import { z } from 'zod'
 import { Text, View } from '@/components/Themed'
 
 const WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY
@@ -10,14 +10,12 @@ const options = {
   headers: { accept: 'application/json', 'accept-encoding': 'deflate, gzip, br' },
 }
 
-const weatherTool: ToolDefinition = {
+const weatherTool = createTool({
   name: 'weather_tool',
   description: 'A weather tool that can get current weather information for any city.',
-  arguments: {
-    city: {
-      type: 'string',
-    },
-  },
+  arguments: z.object({
+    city: z.string(),
+  }),
   implementation: async args => {
     try {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${args.city}&units=imperial&APPID=${WEATHER_API_KEY}`
@@ -44,7 +42,7 @@ const weatherTool: ToolDefinition = {
       }
     }
   },
-}
+})
 const session = new LanguageModelSession({
   instructions: 'You are a helpful assistant',
   tools: [weatherTool],

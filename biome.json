@@ -28,6 +28,9 @@
         "useNumberNamespace": "error",
         "noInferrableTypes": "error",
         "noUselessElse": "warn"
+      },
+      "suspicious": {
+        "noExplicitAny": "off"
       }
     }
   },

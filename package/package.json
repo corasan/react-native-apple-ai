@@ -56,6 +56,9 @@
     "bin",
     "README.md"
   ],
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
