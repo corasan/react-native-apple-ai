@@ -97,7 +97,12 @@ public class HybridLanguageModelSessionSpec_cxx {
   }
 
   // Properties
-  
+  public final var wasContextReset: Bool {
+    @inline(__always)
+    get {
+      return self.__implementation.wasContextReset
+    }
+  }
 
   // Methods
   @inline(__always)

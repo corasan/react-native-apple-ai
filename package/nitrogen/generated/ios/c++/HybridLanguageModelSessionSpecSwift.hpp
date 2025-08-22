@@ -53,7 +53,9 @@ namespace margelo::nitro::rnappleai {
 
   public:
     // Properties
-    
+    inline bool getWasContextReset() noexcept override {
+      return _swiftPart.getWasContextReset();
+    }
 
   public:
     // Methods

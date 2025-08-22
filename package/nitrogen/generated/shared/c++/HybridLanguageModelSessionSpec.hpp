@@ -46,7 +46,7 @@ namespace margelo::nitro::rnappleai {
 
     public:
       // Properties
-      
+      virtual bool getWasContextReset() = 0;
 
     public:
       // Methods

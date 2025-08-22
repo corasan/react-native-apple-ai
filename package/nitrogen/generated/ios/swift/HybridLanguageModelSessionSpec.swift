@@ -11,7 +11,7 @@ import NitroModules
 /// See ``HybridLanguageModelSessionSpec``
 public protocol HybridLanguageModelSessionSpec_protocol: HybridObject {
   // Properties
-  
+  var wasContextReset: Bool { get }
 
   // Methods
   func streamResponse(prompt: String, onStream: @escaping (_ stream: String) -> Void) throws -> Promise<String>

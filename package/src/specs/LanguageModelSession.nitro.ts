@@ -26,6 +26,7 @@ export interface LanguageModelSessionConfig {
 
 export interface LanguageModelSession extends HybridObject<{ ios: 'swift' }> {
   streamResponse(prompt: string, onStream: (stream: string) => void): Promise<string>
+  readonly wasContextReset: boolean
 }
 
 export interface LanguageModelSessionFactory extends HybridObject<{ ios: 'swift' }> {
