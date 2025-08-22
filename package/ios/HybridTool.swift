@@ -5,32 +5,20 @@ struct HybridTool: Tool, @unchecked Sendable {
     var name: String
     var description: String
     var parameters: GenerationSchema
-    var arguments: AnyMap
     var implementation: (AnyMap) -> Promise<Promise<AnyMap>>
     
     init(name: String, description: String, parameters: AnyMap, implementation: @escaping (AnyMap) -> Promise<Promise<AnyMap>>) throws {
         self.name = name
         self.description = description
-        self.arguments = parameters
         self.implementation = implementation
         self.parameters = try Self.createGenerationSchema(from: parameters)
-        
-        let p = parameters.getAllKeys().joined(separator: ", ")
-        print("Initialized Tool: \(name) with parameters: \(p)")
     }
     
     func call(arguments: GeneratedContent) async throws -> some Generable {
-        print("Tool \(name) called with arguments: \(arguments)")
-        
-//        let argumentsMap = Self.convertGeneratedContentToAnyMap(arguments)
-        let resultPromise = implementation(self.arguments)
+        let argumentsMap = Self.convertGeneratedContentToAnyMap(arguments)
+        let resultPromise = implementation(argumentsMap)
         let result = try await resultPromise.await()
         let resultMap = try await result.await()
-        
-//        let stringResult = resultMap.getString(key: "temperature")
-//
-//        let keys = resultMap.getAllKeys()
-        let jsonString = Self.convertAnyMapToJsonString(anyMap: resultMap)
         return Self.convertAnyMapToGeneratedContent(resultMap)
     }
     
@@ -53,29 +41,6 @@ struct HybridTool: Tool, @unchecked Sendable {
         return try GenerationSchema(root: dynamicSchema, dependencies: [])
     }
     
-    private static func convertAnyMapToJsonString(anyMap: AnyMap) -> String {
-        var jsonDict: [String: Any] = [:]
-        let keys = anyMap.getAllKeys()
-        
-        for key in keys {
-            if anyMap.isString(key: key) {
-                jsonDict[key] = anyMap.getString(key: key)
-            } else if anyMap.isDouble(key: key) {
-                jsonDict[key] = anyMap.getDouble(key: key)
-            } else if anyMap.isBool(key: key) {
-                jsonDict[key] = anyMap.getBoolean(key: key)
-            } else if anyMap.isArray(key: key) {
-                jsonDict[key] = anyMap.getArray(key: key)
-            }
-        }
-        
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonDict, options: []),
-              let jsonString = String(data: jsonData, encoding: .utf8) else {
-            return "{}"
-        }
-        
-        return jsonString
-    }
     
     private static func createDynamicSchema(from anyMap: AnyMap, key: String) throws -> DynamicGenerationSchema {
         if anyMap.isString(key: key) {
@@ -85,8 +50,6 @@ struct HybridTool: Tool, @unchecked Sendable {
             return DynamicGenerationSchema(type: Double.self)
         } else if anyMap.isBool(key: key) {
             return DynamicGenerationSchema(type: Bool.self)
-//        } else if anyMap.isArray(key: key) {
-//            return DynamicGenerationSchema.array(DynamicGenerationSchema(type: String.self))
         } else {
             return DynamicGenerationSchema(type: String.self)
         }
@@ -105,29 +68,33 @@ struct HybridTool: Tool, @unchecked Sendable {
         }
     }
     
-//    private static func convertGeneratedContentToAnyMap(_ content: GeneratedContent) -> AnyMap {
-//        let anyMap = AnyMapHolder()
-//
-//        for property in content.properties {
-//            let key = property.key
-//            let value = property.value
-//            
-//            switch value {
-//            case let stringValue as String:
-//                anyMap.setString(key: key, value: stringValue)
-//            case let doubleValue as Double:
-//                anyMap.setDouble(key: key, value: doubleValue)
-//            case let intValue as Int:
-//                anyMap.setDouble(key: key, value: Double(intValue))
-//            case let boolValue as Bool:
-//                anyMap.setBoolean(key: key, value: boolValue)
-//            default:
-//                anyMap.setString(key: key, value: String(describing: value))
-//            }
-//        }
-//        
-//        return anyMap
-//    }
+    private static func convertGeneratedContentToAnyMap(_ content: GeneratedContent) -> AnyMap {
+        let anyMap = AnyMap()
+        let jsonString = content.jsonString
+        
+        guard let jsonData = jsonString.data(using: .utf8),
+              let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []),
+              let dictionary = jsonObject as? [String: Any] else {
+            return anyMap
+        }
+        
+        for (key, value) in dictionary {
+            switch value {
+            case let stringValue as String:
+                anyMap.setString(key: key, value: stringValue)
+            case let doubleValue as Double:
+                anyMap.setDouble(key: key, value: doubleValue)
+            case let intValue as Int:
+                anyMap.setDouble(key: key, value: Double(intValue))
+            case let boolValue as Bool:
+                anyMap.setBoolean(key: key, value: boolValue)
+            default:
+                anyMap.setString(key: key, value: String(describing: value))
+            }
+        }
+        
+        return anyMap
+    }
     
     private static func convertAnyMapToGeneratedContent(_ anyMap: AnyMap) -> GeneratedContent {
         let keys = anyMap.getAllKeys()
