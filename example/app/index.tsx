@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { ActivityIndicator, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import { LanguageModelSession } from 'react-native-apple-ai'
 import type { ToolDefinition } from 'react-native-apple-ai/src/specs/LanguageModelSession.nitro'
-import type { AnyMap } from 'react-native-nitro-modules'
 import { Text, View } from '@/components/Themed'
 
 const WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY
@@ -11,47 +10,38 @@ const options = {
   headers: { accept: 'application/json', 'accept-encoding': 'deflate, gzip, br' },
 }
 
-// const weatherTool = ToolFactory.create({
-//   name: 'WeatherTool',
-//   description: 'A tool to get the weather details based on the city',
-//   arguments: {
-//     city: {
-//       type: 'string',
-//     },
-//   },
-//   action: async () => {
-//     // const url = `https://api.tomorrow.io/v4/weather/realtime?location=london&apikey=${WEATHER_API_KEY}`
-//     // const res = await fetch(url, options)
-//     // const result = await res.json()
-//     // const data = result.data.values
-
-//     return {
-//       temperature: 0,
-//       humidity: 0,
-//       precipitation: 0,
-//     }
-//   },
-// })
 const weatherTool: ToolDefinition = {
   name: 'weather_tool',
-  description: 'A tool to get the weather details based on the city',
+  description: 'A weather tool that can get current weather information for any city.',
   arguments: {
     city: {
       type: 'string',
     },
   },
   implementation: async args => {
-    console.log('arguments:', args)
+    try {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${args.city}&units=imperial&APPID=${WEATHER_API_KEY}`
+      const res = await fetch(url, options)
+      const result = await res.json()
 
-    const url = `https://api.tomorrow.io/v4/weather/realtime?location=london&apikey=${WEATHER_API_KEY}`
-    const res = await fetch(url, options)
-    const result = await res.json()
-    const data = result.data.values
+      if (!result.main) {
+        throw new Error(`Invalid API response structure: ${JSON.stringify(result)}`)
+      }
 
-    return {
-      temperature: data.temperature,
-      humidity: data.humidity,
-      precipitation: data.precipitationProbability,
+      return {
+        temperature: result.main.temp,
+        humidity: result.main.humidity || 0,
+        precipitation: result.weather?.[0]?.description || 'Unknown',
+        units: 'imperial',
+      }
+    } catch (error) {
+      console.error('Weather tool error:', error)
+      return {
+        temperature: 0,
+        humidity: 0,
+        precipitation: 0,
+        units: 'imperial',
+      }
     }
   },
 }
@@ -60,16 +50,15 @@ const session = new LanguageModelSession({
   tools: [weatherTool],
 })
 
-// FoundationModels.initialize('You are a helpful assistant')
-
 export default function IndexScreen() {
   const [result, setResult] = useState('')
-  const [prompt, setPrompt] = useState('What is the weather like in tokyo?')
+  const [prompt, setPrompt] = useState('')
   const [loading, setLoading] = useState(false)
 
   const respond = async () => {
     try {
       setLoading(true)
+      setResult('')
       session.streamResponse(prompt, token => {
         setResult(token)
       })
