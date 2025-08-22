@@ -1,6 +1,17 @@
 import { useState } from 'react'
-import { ActivityIndicator, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
-import { createTool, LanguageModelSession } from 'react-native-apple-ai'
+import {
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native'
+import {
+  AppleAIError,
+  createTool,
+  isAppleAIError,
+  LanguageModelSession,
+} from 'react-native-apple-ai'
 import { z } from 'zod'
 import { Text, View } from '@/components/Themed'
 
@@ -52,16 +63,42 @@ export default function IndexScreen() {
   const [result, setResult] = useState('')
   const [prompt, setPrompt] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const respond = async () => {
+    if (!prompt.trim()) {
+      Alert.alert('Error', 'Please enter a message')
+      return
+    }
+
     try {
       setLoading(true)
+      setError(null)
       setResult('')
+
       session.streamResponse(prompt, token => {
         setResult(token)
       })
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
+      console.error('Error during streaming:', err)
+
+      let errorMessage = 'An unexpected error occurred'
+
+      if (isAppleAIError(err)) {
+        errorMessage = `${err.code}: ${err.message}`
+        if (err.details) {
+          console.error('Error details:', err.details)
+        }
+      } else if (err instanceof Error) {
+        errorMessage = err.message
+      } else if (typeof err === 'string') {
+        errorMessage = err
+      }
+
+      setError(errorMessage)
+      setResult('')
+
+      Alert.alert('Error', errorMessage)
     } finally {
       setLoading(false)
     }
@@ -70,17 +107,41 @@ export default function IndexScreen() {
   return (
     <View style={styles.container}>
       <View style={{ paddingBottom: 20 }}>
-        <Text style={styles.title}>{result}</Text>
+        {error ? (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        ) : (
+          <Text style={styles.title}>{result}</Text>
+        )}
       </View>
 
       <View style={{ height: 40 }}>{loading && <ActivityIndicator size="small" />}</View>
 
       <View style={styles.inputContainer}>
-        <TextInput value={prompt} onChangeText={setPrompt} style={styles.input} />
-        <TouchableOpacity onPress={() => respond()}>
-          <View style={styles.button}>
-            <Text style={{ color: 'white', fontWeight: '600', fontSize: 16 }}>Send</Text>
-          </View>
+        <TextInput
+          value={prompt}
+          onChangeText={text => {
+            setPrompt(text)
+            if (error) setError(null) // Clear error when user starts typing
+          }}
+          style={styles.input}
+          placeholder="Ask about the weather..."
+          editable={!loading}
+        />
+        <TouchableOpacity
+          onPress={() => respond()}
+          disabled={loading || !prompt.trim()}
+          style={[styles.button, (loading || !prompt.trim()) && styles.buttonDisabled]}
+        >
+          <Text
+            style={[
+              styles.buttonText,
+              (loading || !prompt.trim()) && styles.buttonTextDisabled,
+            ]}
+          >
+            {loading ? 'Sending...' : 'Send'}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -98,6 +159,19 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     paddingVertical: 10,
+  },
+  errorContainer: {
+    backgroundColor: '#ffebee',
+    borderRadius: 8,
+    padding: 12,
+    marginVertical: 10,
+    borderLeftWidth: 4,
+    borderLeftColor: '#f44336',
+  },
+  errorText: {
+    color: '#d32f2f',
+    fontSize: 16,
+    fontWeight: '500',
   },
   separator: {
     marginVertical: 30,
@@ -121,6 +195,18 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: 'dodgerblue',
     borderRadius: 100,
-    padding: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  buttonDisabled: {
+    backgroundColor: '#ccc',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '600',
+    fontSize: 16,
+  },
+  buttonTextDisabled: {
+    color: '#888',
   },
 })
