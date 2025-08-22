@@ -8,11 +8,26 @@
 #pragma once
 
 // Forward declarations of C++ defined types
-// Forward declaration of `HybridFoundationModelsSpec` to properly resolve imports.
-namespace margelo::nitro::rnappleai { class HybridFoundationModelsSpec; }
+// Forward declaration of `AnyMap` to properly resolve imports.
+namespace NitroModules { class AnyMap; }
+// Forward declaration of `HybridLanguageModelSessionFactorySpec` to properly resolve imports.
+namespace margelo::nitro::rnappleai { class HybridLanguageModelSessionFactorySpec; }
+// Forward declaration of `HybridLanguageModelSessionSpec` to properly resolve imports.
+namespace margelo::nitro::rnappleai { class HybridLanguageModelSessionSpec; }
+// Forward declaration of `HybridToolSpec` to properly resolve imports.
+namespace margelo::nitro::rnappleai { class HybridToolSpec; }
+// Forward declaration of `LanguageModelSessionConfig` to properly resolve imports.
+namespace margelo::nitro::rnappleai { struct LanguageModelSessionConfig; }
+// Forward declaration of `ToolDefinition` to properly resolve imports.
+namespace margelo::nitro::rnappleai { struct ToolDefinition; }
 
 // Include C++ defined types
-#include "HybridFoundationModelsSpec.hpp"
+#include "HybridLanguageModelSessionFactorySpec.hpp"
+#include "HybridLanguageModelSessionSpec.hpp"
+#include "HybridToolSpec.hpp"
+#include "LanguageModelSessionConfig.hpp"
+#include "ToolDefinition.hpp"
+#include <NitroModules/AnyMap.hpp>
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
@@ -20,6 +35,7 @@ namespace margelo::nitro::rnappleai { class HybridFoundationModelsSpec; }
 #include <memory>
 #include <optional>
 #include <string>
+#include <vector>
 
 // C++ helpers for Swift
 #include "RNAppleAI-Swift-Cxx-Bridge.hpp"
@@ -31,8 +47,12 @@ namespace margelo::nitro::rnappleai { class HybridFoundationModelsSpec; }
 #include <NitroModules/DateToChronoDate.hpp>
 
 // Forward declarations of Swift defined types
-// Forward declaration of `HybridFoundationModelsSpec_cxx` to properly resolve imports.
-namespace RNAppleAI { class HybridFoundationModelsSpec_cxx; }
+// Forward declaration of `HybridLanguageModelSessionFactorySpec_cxx` to properly resolve imports.
+namespace RNAppleAI { class HybridLanguageModelSessionFactorySpec_cxx; }
+// Forward declaration of `HybridLanguageModelSessionSpec_cxx` to properly resolve imports.
+namespace RNAppleAI { class HybridLanguageModelSessionSpec_cxx; }
+// Forward declaration of `HybridToolSpec_cxx` to properly resolve imports.
+namespace RNAppleAI { class HybridToolSpec_cxx; }
 
 // Include Swift defined types
 #if __has_include("RNAppleAI-Swift.h")

@@ -10,11 +10,11 @@
     "androidNamespace": [
       "rnappleai"
     ],
-    "androidCxxLibName": "RNFoundationModels"
+    "androidCxxLibName": "RNAppleAI"
   },
   "autolinking": {
-    "FoundationModels": {
-      "swift": "HybridFoundationModels"
+    "LanguageModelSessionFactory": {
+      "swift": "HybridLanguageModelSessionFactory"
     }
   },
   "ignorePaths": [

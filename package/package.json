@@ -12,7 +12,6 @@
   },
   "author": "Developer",
   "scripts": {
-    "postinstall": "tsc || exit 0;",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf android/build node_modules/**/android/build lib",
     "typescript": "tsc",
@@ -57,6 +56,9 @@
     "bin",
     "README.md"
   ],
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
   "peerDependencies": {
     "react": "*",
     "react-native": "*",

@@ -8,7 +8,9 @@
 #include "RNAppleAI-Swift-Cxx-Bridge.hpp"
 
 // Include C++ implementation defined types
-#include "HybridFoundationModelsSpecSwift.hpp"
+#include "HybridLanguageModelSessionFactorySpecSwift.hpp"
+#include "HybridLanguageModelSessionSpecSwift.hpp"
+#include "HybridToolSpecSwift.hpp"
 #include "RNAppleAI-Swift-Cxx-Umbrella.hpp"
 
 namespace margelo::nitro::rnappleai::bridge::swift {
@@ -29,19 +31,76 @@ namespace margelo::nitro::rnappleai::bridge::swift {
     };
   }
   
-  // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridFoundationModelsSpec>
-  std::shared_ptr<margelo::nitro::rnappleai::HybridFoundationModelsSpec> create_std__shared_ptr_margelo__nitro__rnappleai__HybridFoundationModelsSpec_(void* _Nonnull swiftUnsafePointer) {
-    RNAppleAI::HybridFoundationModelsSpec_cxx swiftPart = RNAppleAI::HybridFoundationModelsSpec_cxx::fromUnsafe(swiftUnsafePointer);
-    return std::make_shared<margelo::nitro::rnappleai::HybridFoundationModelsSpecSwift>(swiftPart);
+  // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec>
+  std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec> create_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec_(void* _Nonnull swiftUnsafePointer) {
+    RNAppleAI::HybridLanguageModelSessionSpec_cxx swiftPart = RNAppleAI::HybridLanguageModelSessionSpec_cxx::fromUnsafe(swiftUnsafePointer);
+    return std::make_shared<margelo::nitro::rnappleai::HybridLanguageModelSessionSpecSwift>(swiftPart);
   }
-  void* _Nonnull get_std__shared_ptr_margelo__nitro__rnappleai__HybridFoundationModelsSpec_(std__shared_ptr_margelo__nitro__rnappleai__HybridFoundationModelsSpec_ cppType) {
-    std::shared_ptr<margelo::nitro::rnappleai::HybridFoundationModelsSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::rnappleai::HybridFoundationModelsSpecSwift>(cppType);
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec_(std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::rnappleai::HybridLanguageModelSessionSpecSwift>(cppType);
   #ifdef NITRO_DEBUG
     if (swiftWrapper == nullptr) [[unlikely]] {
-      throw std::runtime_error("Class \"HybridFoundationModelsSpec\" is not implemented in Swift!");
+      throw std::runtime_error("Class \"HybridLanguageModelSessionSpec\" is not implemented in Swift!");
     }
   #endif
-    RNAppleAI::HybridFoundationModelsSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
+    RNAppleAI::HybridLanguageModelSessionSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
+    return swiftPart.toUnsafe();
+  }
+  
+  // pragma MARK: std::function<void(const std::shared_ptr<AnyMap>& /* result */)>
+  Func_void_std__shared_ptr_AnyMap_ create_Func_void_std__shared_ptr_AnyMap_(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = RNAppleAI::Func_void_std__shared_ptr_AnyMap_::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::shared_ptr<AnyMap>& result) mutable -> void {
+      swiftClosure.call(result);
+    };
+  }
+  
+  // pragma MARK: std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>
+  Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_ create_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = RNAppleAI::Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::shared_ptr<AnyMap>& args) mutable -> std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> {
+      auto __result = swiftClosure.call(args);
+      return __result;
+    };
+  }
+  
+  // pragma MARK: std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>
+  Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ create_Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = RNAppleAI::Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& result) mutable -> void {
+      swiftClosure.call(result);
+    };
+  }
+  
+  // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>
+  std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec> create_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_(void* _Nonnull swiftUnsafePointer) {
+    RNAppleAI::HybridLanguageModelSessionFactorySpec_cxx swiftPart = RNAppleAI::HybridLanguageModelSessionFactorySpec_cxx::fromUnsafe(swiftUnsafePointer);
+    return std::make_shared<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpecSwift>(swiftPart);
+  }
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_(std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_ cppType) {
+    std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpecSwift>(cppType);
+  #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridLanguageModelSessionFactorySpec\" is not implemented in Swift!");
+    }
+  #endif
+    RNAppleAI::HybridLanguageModelSessionFactorySpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
+    return swiftPart.toUnsafe();
+  }
+  
+  // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>
+  std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec> create_std__shared_ptr_margelo__nitro__rnappleai__HybridToolSpec_(void* _Nonnull swiftUnsafePointer) {
+    RNAppleAI::HybridToolSpec_cxx swiftPart = RNAppleAI::HybridToolSpec_cxx::fromUnsafe(swiftUnsafePointer);
+    return std::make_shared<margelo::nitro::rnappleai::HybridToolSpecSwift>(swiftPart);
+  }
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__rnappleai__HybridToolSpec_(std__shared_ptr_margelo__nitro__rnappleai__HybridToolSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::rnappleai::HybridToolSpecSwift>(cppType);
+  #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridToolSpec\" is not implemented in Swift!");
+    }
+  #endif
+    RNAppleAI::HybridToolSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
     return swiftPart.toUnsafe();
   }
 

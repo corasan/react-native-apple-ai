@@ -10,7 +10,7 @@
 #import "RNAppleAI-Swift-Cxx-Umbrella.hpp"
 #import <type_traits>
 
-#include "HybridFoundationModelsSpecSwift.hpp"
+#include "HybridLanguageModelSessionFactorySpecSwift.hpp"
 
 @interface RNAppleAIAutolinking : NSObject
 @end
@@ -22,9 +22,9 @@
   using namespace margelo::nitro::rnappleai;
 
   HybridObjectRegistry::registerHybridObjectConstructor(
-    "FoundationModels",
+    "LanguageModelSessionFactory",
     []() -> std::shared_ptr<HybridObject> {
-      std::shared_ptr<margelo::nitro::rnappleai::HybridFoundationModelsSpec> hybridObject = RNAppleAI::RNAppleAIAutolinking::createFoundationModels();
+      std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec> hybridObject = RNAppleAI::RNAppleAIAutolinking::createLanguageModelSessionFactory();
       return hybridObject;
     }
   );
