@@ -43,6 +43,9 @@
       "bin": {
         "generable": "./bin/generable",
       },
+      "dependencies": {
+        "zod": "^3.23.8",
+      },
       "devDependencies": {
         "@expo/config-plugins": "^8.0.0",
         "@types/react": "*",
