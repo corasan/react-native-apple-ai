@@ -24,12 +24,17 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
                     name: tool.name,
                     description: tool.description,
                     parameters: tool.arguments,
-                    implementation: { _ in tool.implementation(tool.arguments) }
+                    implementation: { args in tool.implementation(args) }
                 )
             }
         }
         
-        let session = LanguageModelSession(tools: tools, instructions: config.instructions)
+        let enhancedInstructions = Self.buildEnhancedInstructions(
+            baseInstructions: config.instructions, 
+            tools: jsTools
+        )
+        
+        let session = LanguageModelSession(tools: tools, instructions: enhancedInstructions)
         self.session = session
     }
     
@@ -42,10 +47,11 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
             guard let modelSession = self.session else {
                 return "Error: Session not initialized"
             }
-                        
+            
             self.isResponding = true
             do {
                 let stream = modelSession.streamResponse(to: prompt)
+                
                 for try await token in stream {
                     onStream(token.content)
                 }
@@ -59,6 +65,20 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
                 return ""
             }
         }
+    }
+    
+    private static func buildEnhancedInstructions(baseInstructions: String?, tools: [ToolDefinition]) -> String {
+        let base = baseInstructions ?? "You are a helpful assistant"
+        
+        guard !tools.isEmpty else {
+            return base
+        }
+        
+        let toolDescriptions = tools.map { tool in
+            "- \(tool.name): \(tool.description)"
+        }.joined(separator: "\n")
+        
+        return "\(base). You have access to these tools:\n\(toolDescriptions)"
     }
 }
 
