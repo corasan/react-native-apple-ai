@@ -4,7 +4,7 @@ export interface ToolDefinition {
   name: string
   description: string
   arguments: AnyMap
-  implementation: () => Promise<AnyMap>
+  implementation: (args: AnyMap) => Promise<AnyMap>
 }
 
 export interface LanguageModelSessionConfig {

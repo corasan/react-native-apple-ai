@@ -6,9 +6,9 @@ struct HybridTool: Tool, @unchecked Sendable {
     var description: String
     var parameters: GenerationSchema
     var arguments: AnyMap
-    var implementation: () -> Promise<Promise<AnyMapHolder>>
+    var implementation: (AnyMap) -> Promise<Promise<AnyMap>>
     
-    init(name: String, description: String, parameters: AnyMap, implementation: @escaping () -> Promise<Promise<AnyMapHolder>>) throws {
+    init(name: String, description: String, parameters: AnyMap, implementation: @escaping (AnyMap) -> Promise<Promise<AnyMap>>) throws {
         self.name = name
         self.description = description
         self.arguments = parameters
@@ -19,26 +19,19 @@ struct HybridTool: Tool, @unchecked Sendable {
         print("Initialized Tool: \(name) with parameters: \(p)")
     }
     
-    func call(arguments: GeneratedContent) async throws -> String {
+    func call(arguments: GeneratedContent) async throws -> some Generable {
         print("Tool \(name) called with arguments: \(arguments)")
         
 //        let argumentsMap = Self.convertGeneratedContentToAnyMap(arguments)
-//        let resultPromise = implementation()
-//        let result = try await resultPromise.await()
-//        let resultMap = try await result.await()
-//        
-//        if let stringResult = resultMap.getString(key: "result") {
-//            return stringResult
-//        }
-//        
-//        let keys = resultMap.getAllKeys()
-//        if let firstKey = keys.first {
-//            if resultMap.isString(key: firstKey) {
-//                return resultMap.getString(key: firstKey)
-//            }
-//        }
+        let resultPromise = implementation(self.arguments)
+        let result = try await resultPromise.await()
+        let resultMap = try await result.await()
         
-        return "Tool execution completed"
+//        let stringResult = resultMap.getString(key: "temperature")
+//
+//        let keys = resultMap.getAllKeys()
+        let jsonString = Self.convertAnyMapToJsonString(anyMap: resultMap)
+        return Self.convertAnyMapToGeneratedContent(resultMap)
     }
     
     // MARK: - Helper Methods
@@ -58,6 +51,30 @@ struct HybridTool: Tool, @unchecked Sendable {
         )
         
         return try GenerationSchema(root: dynamicSchema, dependencies: [])
+    }
+    
+    private static func convertAnyMapToJsonString(anyMap: AnyMap) -> String {
+        var jsonDict: [String: Any] = [:]
+        let keys = anyMap.getAllKeys()
+        
+        for key in keys {
+            if anyMap.isString(key: key) {
+                jsonDict[key] = anyMap.getString(key: key)
+            } else if anyMap.isDouble(key: key) {
+                jsonDict[key] = anyMap.getDouble(key: key)
+            } else if anyMap.isBool(key: key) {
+                jsonDict[key] = anyMap.getBoolean(key: key)
+            } else if anyMap.isArray(key: key) {
+                jsonDict[key] = anyMap.getArray(key: key)
+            }
+        }
+        
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonDict, options: []),
+              let jsonString = String(data: jsonData, encoding: .utf8) else {
+            return "{}"
+        }
+        
+        return jsonString
     }
     
     private static func createDynamicSchema(from anyMap: AnyMap, key: String) throws -> DynamicGenerationSchema {

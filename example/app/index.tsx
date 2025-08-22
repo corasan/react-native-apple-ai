@@ -40,8 +40,19 @@ const weatherTool: ToolDefinition = {
       type: 'string',
     },
   },
-  implementation: async () => {
-    return { temperature: 50 }
+  implementation: async args => {
+    console.log('arguments:', args)
+
+    const url = `https://api.tomorrow.io/v4/weather/realtime?location=london&apikey=${WEATHER_API_KEY}`
+    const res = await fetch(url, options)
+    const result = await res.json()
+    const data = result.data.values
+
+    return {
+      temperature: data.temperature,
+      humidity: data.humidity,
+      precipitation: data.precipitationProbability,
+    }
   },
 }
 const session = new LanguageModelSession({
