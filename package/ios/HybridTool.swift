@@ -11,15 +11,38 @@ struct HybridTool: Tool, @unchecked Sendable {
         self.name = name
         self.description = description
         self.implementation = implementation
-        self.parameters = try Self.createGenerationSchema(from: parameters)
+        do {
+            self.parameters = try Self.createGenerationSchema(from: parameters)
+        } catch {
+            throw AppleAIError.schemaCreationError("Failed to create schema for tool '\(name)': \(error.localizedDescription)")
+        }
     }
     
     func call(arguments: GeneratedContent) async throws -> some Generable {
-        let argumentsMap = Self.convertGeneratedContentToAnyMap(arguments)
-        let resultPromise = implementation(argumentsMap)
-        let result = try await resultPromise.await()
-        let resultMap = try await result.await()
-        return Self.convertAnyMapToGeneratedContent(resultMap)
+        do {
+            let argumentsMap = Self.convertGeneratedContentToAnyMap(arguments)
+            let resultPromise = implementation(argumentsMap)
+            
+            let result: Promise<AnyMap>
+            do {
+                result = try await resultPromise.await()
+            } catch {
+                throw AppleAIError.toolExecutionError(name, error)
+            }
+            
+            let resultMap: AnyMap
+            do {
+                resultMap = try await result.await()
+            } catch {
+                throw AppleAIError.toolExecutionError(name, error)
+            }
+            
+            return Self.convertAnyMapToGeneratedContent(resultMap)
+        } catch let error as AppleAIError {
+            throw error
+        } catch {
+            throw AppleAIError.toolCallError(error)
+        }
     }
     
     // MARK: - Helper Methods
@@ -72,25 +95,38 @@ struct HybridTool: Tool, @unchecked Sendable {
         let anyMap = AnyMap()
         let jsonString = content.jsonString
         
-        guard let jsonData = jsonString.data(using: .utf8),
-              let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []),
-              let dictionary = jsonObject as? [String: Any] else {
+        guard !jsonString.isEmpty else {
             return anyMap
         }
         
-        for (key, value) in dictionary {
-            switch value {
-            case let stringValue as String:
-                anyMap.setString(key: key, value: stringValue)
-            case let doubleValue as Double:
-                anyMap.setDouble(key: key, value: doubleValue)
-            case let intValue as Int:
-                anyMap.setDouble(key: key, value: Double(intValue))
-            case let boolValue as Bool:
-                anyMap.setBoolean(key: key, value: boolValue)
-            default:
-                anyMap.setString(key: key, value: String(describing: value))
+        guard let jsonData = jsonString.data(using: .utf8) else {
+            return anyMap
+        }
+        
+        do {
+            guard let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
+                return anyMap
             }
+            
+            for (key, value) in jsonObject {
+                switch value {
+                case let stringValue as String:
+                    anyMap.setString(key: key, value: stringValue)
+                case let doubleValue as Double:
+                    anyMap.setDouble(key: key, value: doubleValue)
+                case let intValue as Int:
+                    anyMap.setDouble(key: key, value: Double(intValue))
+                case let boolValue as Bool:
+                    anyMap.setBoolean(key: key, value: boolValue)
+                case is NSNull:
+                    anyMap.setString(key: key, value: "")
+                default:
+                    anyMap.setString(key: key, value: String(describing: value))
+                }
+            }
+        } catch {
+            // Log parsing error but return empty map to avoid crashing
+            print("Warning: Failed to parse GeneratedContent JSON: \(error.localizedDescription)")
         }
         
         return anyMap

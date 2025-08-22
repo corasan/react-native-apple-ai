@@ -19,13 +19,17 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
         var tools: [any Tool] = []
         
         if (!jsTools.isEmpty) {
-            tools = try jsTools.map { tool in
-                return try HybridTool(
-                    name: tool.name,
-                    description: tool.description,
-                    parameters: tool.arguments,
-                    implementation: { args in tool.implementation(args) }
-                )
+            do {
+                tools = try jsTools.map { tool in
+                    return try HybridTool(
+                        name: tool.name,
+                        description: tool.description,
+                        parameters: tool.arguments,
+                        implementation: { args in tool.implementation(args) }
+                    )
+                }
+            } catch {
+                throw AppleAIError.toolCallError(error)
             }
         }
         
@@ -34,8 +38,15 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
             tools: jsTools
         )
         
-        let session = LanguageModelSession(tools: tools, instructions: enhancedInstructions)
-        self.session = session
+        do {
+            let session = LanguageModelSession(tools: tools, instructions: enhancedInstructions)
+            self.session = session
+        } catch {
+            throw AppleAIError.sessionNotInitialized
+        }
+        
+        self.tools = tools
+        self.jsTools = jsTools
     }
     
     /**
@@ -45,13 +56,18 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
     func streamResponse(prompt: String, onStream: @escaping (String) -> Void) throws -> Promise<String> {
         return Promise.async {
             guard let modelSession = self.session else {
-                return "Error: Session not initialized"
+                throw AppleAIError.sessionNotInitialized
+            }
+            
+            guard !prompt.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                return ""
             }
             
             self.isResponding = true
+            
             do {
                 let stream = modelSession.streamResponse(to: prompt)
-                
+
                 for try await token in stream {
                     onStream(token.content)
                 }
@@ -59,10 +75,12 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
                 let result = try await stream.collect()
                 self.isResponding = false
                 return result.content
-            } catch {
-                print("Error streaming response: \(error)")
+            } catch let error as AppleAIError {
                 self.isResponding = false
-                return ""
+                throw error
+            } catch {
+                self.isResponding = false
+                throw AppleAIError.sessionStreamingError(error)
             }
         }
     }

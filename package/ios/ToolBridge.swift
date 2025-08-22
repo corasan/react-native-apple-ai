@@ -1,8 +1,6 @@
 import NitroModules
 import FoundationModels
 
-typealias AnyMap = AnyMapHolder
-
 //class ToolBridge: HybridToolBridgeSpec {
 //    static let shared = ToolBridge()
 //    private var jsImplementations: [String: (_ args: AnyMap) -> Promise<Promise<AnyMap>>] = [:]
