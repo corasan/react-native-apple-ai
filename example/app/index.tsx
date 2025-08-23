@@ -16,6 +16,24 @@ const options = {
   headers: { accept: 'application/json', 'accept-encoding': 'deflate, gzip, br' },
 }
 
+function weatherResult(data?: any) {
+  const units = 'imperial'
+  if (!data) {
+    return {
+      temperature: 0,
+      humidity: 0,
+      precipitation: 0,
+      units,
+    }
+  }
+  return {
+    temperature: data.temp,
+    humidity: data.humidity,
+    precipitation: data.weather?.[0]?.description || 'Unknown',
+    units,
+  }
+}
+
 const weatherTool = createTool({
   name: 'weather_tool',
   description: 'A weather tool that can get current weather information for any city.',
@@ -32,20 +50,10 @@ const weatherTool = createTool({
         throw new Error(`Invalid API response structure: ${JSON.stringify(result)}`)
       }
 
-      return {
-        temperature: result.main.temp,
-        humidity: result.main.humidity || 0,
-        precipitation: result.weather?.[0]?.description || 'Unknown',
-        units: 'imperial',
-      }
+      return weatherResult(result.main)
     } catch (error) {
       console.error('Weather tool error:', error)
-      return {
-        temperature: 0,
-        humidity: 0,
-        precipitation: 0,
-        units: 'imperial',
-      }
+      return weatherResult()
     }
   },
 })
