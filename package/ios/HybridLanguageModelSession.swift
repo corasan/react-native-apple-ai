@@ -94,8 +94,6 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
     private func createNewSessionWithSummary(previousSession: LanguageModelSession) async throws -> LanguageModelSession {
         let summarySession = LanguageModelSession(transcript: previousSession.transcript)
         let summaryResponse = try await summarySession.respond(to: "Summarize this conversation in a concise way that preserves the key context and information.")
-        let summaryResult = summaryResponse.content
-//        
         let enhancedInstructions = Self.buildEnhancedInstructions(
             baseInstructions: "You are a helpful assistant. Previous conversation summary: \(summaryResponse.content)",
             tools: self.jsTools

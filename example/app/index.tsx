@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import {
   ActivityIndicator,
   Alert,
@@ -6,12 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native'
-import {
-  AppleAIError,
-  createTool,
-  isAppleAIError,
-  LanguageModelSession,
-} from 'react-native-apple-ai'
+import { createTool, isAppleAIError, LanguageModelSession } from 'react-native-apple-ai'
 import { z } from 'zod'
 import { Text, View } from '@/components/Themed'
 
@@ -65,7 +60,7 @@ export default function IndexScreen() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const respond = async () => {
+  const respond = useCallback(async () => {
     if (!prompt.trim()) {
       Alert.alert('Error', 'Please enter a message')
       return
@@ -102,7 +97,7 @@ export default function IndexScreen() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [prompt])
 
   return (
     <View style={styles.container}>
@@ -195,8 +190,8 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: 'dodgerblue',
     borderRadius: 100,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
   },
   buttonDisabled: {
     backgroundColor: '#ccc',
