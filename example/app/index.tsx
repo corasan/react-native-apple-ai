@@ -9,29 +9,13 @@ import {
 import { createTool, isAppleAIError, LanguageModelSession } from 'react-native-apple-ai'
 import { z } from 'zod'
 import { Text, View } from '@/components/Themed'
+import { weatherResult } from '@/utils/weatherResult'
 
 const WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY
+const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather?units=imperial'
 const options = {
   method: 'GET',
   headers: { accept: 'application/json', 'accept-encoding': 'deflate, gzip, br' },
-}
-
-function weatherResult(data?: any) {
-  const units = 'imperial'
-  if (!data) {
-    return {
-      temperature: 0,
-      humidity: 0,
-      precipitation: 0,
-      units,
-    }
-  }
-  return {
-    temperature: data.temp,
-    humidity: data.humidity,
-    precipitation: data.weather?.[0]?.description || 'Unknown',
-    units,
-  }
 }
 
 const weatherTool = createTool({
@@ -42,7 +26,7 @@ const weatherTool = createTool({
   }),
   handler: async args => {
     try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${args.city}&units=imperial&APPID=${WEATHER_API_KEY}`
+      const url = `${BASE_URL}&q=${args.city}&APPID=${WEATHER_API_KEY}`
       const res = await fetch(url, options)
       const result = await res.json()
 
