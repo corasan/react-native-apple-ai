@@ -26,7 +26,7 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
                         name: tool.name,
                         description: tool.description,
                         parameters: tool.arguments,
-                        implementation: { args in tool.implementation(args) }
+                        handler: { args in tool.handler(args) }
                     )
                 }
             } catch {

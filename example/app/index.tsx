@@ -74,6 +74,10 @@ export default function IndexScreen() {
       session.streamResponse(prompt, token => {
         setResult(token)
       })
+
+      setTimeout(() => {
+        setLoading(false)
+      }, 2000)
     } catch (err) {
       console.error('Error during streaming:', err)
 
@@ -94,8 +98,6 @@ export default function IndexScreen() {
       setResult('')
 
       Alert.alert('Error', errorMessage)
-    } finally {
-      setLoading(false)
     }
   }, [prompt])
 
@@ -111,14 +113,18 @@ export default function IndexScreen() {
         )}
       </View>
 
-      <View style={{ height: 40 }}>{loading && <ActivityIndicator size="small" />}</View>
+      {loading && (
+        <View style={{ height: 40, paddingBottom: 20 }}>
+          <ActivityIndicator size="small" />
+        </View>
+      )}
 
       <View style={styles.inputContainer}>
         <TextInput
           value={prompt}
           onChangeText={text => {
             setPrompt(text)
-            if (error) setError(null) // Clear error when user starts typing
+            if (error) setError(null)
           }}
           style={styles.input}
           placeholder="Ask about the weather..."
@@ -135,7 +141,7 @@ export default function IndexScreen() {
               (loading || !prompt.trim()) && styles.buttonTextDisabled,
             ]}
           >
-            {loading ? 'Sending...' : 'Send'}
+            {loading ? '...' : 'Send'}
           </Text>
         </TouchableOpacity>
       </View>
@@ -153,7 +159,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    paddingVertical: 10,
+    paddingVertical: 6,
   },
   errorContainer: {
     backgroundColor: '#ffebee',

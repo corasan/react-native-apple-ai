@@ -5,12 +5,12 @@ struct HybridTool: Tool, @unchecked Sendable {
     var name: String
     var description: String
     var parameters: GenerationSchema
-    var implementation: (AnyMap) -> Promise<Promise<AnyMap>>
+    var handler: (AnyMap) -> Promise<Promise<AnyMap>>
     
-    init(name: String, description: String, parameters: AnyMap, implementation: @escaping (AnyMap) -> Promise<Promise<AnyMap>>) throws {
+    init(name: String, description: String, parameters: AnyMap, handler: @escaping (AnyMap) -> Promise<Promise<AnyMap>>) throws {
         self.name = name
         self.description = description
-        self.implementation = implementation
+        self.handler = handler
         do {
             self.parameters = try Self.createGenerationSchema(from: parameters)
         } catch {
@@ -21,7 +21,7 @@ struct HybridTool: Tool, @unchecked Sendable {
     func call(arguments: GeneratedContent) async throws -> some Generable {
         do {
             let argumentsMap = Self.convertGeneratedContentToAnyMap(arguments)
-            let resultPromise = implementation(argumentsMap)
+            let resultPromise = handler(argumentsMap)
             
             let result: Promise<AnyMap>
             do {
