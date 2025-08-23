@@ -14,8 +14,6 @@ namespace NitroModules { class AnyMap; }
 namespace margelo::nitro::rnappleai { class HybridLanguageModelSessionFactorySpec; }
 // Forward declaration of `HybridLanguageModelSessionSpec` to properly resolve imports.
 namespace margelo::nitro::rnappleai { class HybridLanguageModelSessionSpec; }
-// Forward declaration of `HybridToolSpec` to properly resolve imports.
-namespace margelo::nitro::rnappleai { class HybridToolSpec; }
 // Forward declaration of `LanguageModelSessionConfig` to properly resolve imports.
 namespace margelo::nitro::rnappleai { struct LanguageModelSessionConfig; }
 // Forward declaration of `ToolDefinition` to properly resolve imports.
@@ -24,7 +22,6 @@ namespace margelo::nitro::rnappleai { struct ToolDefinition; }
 // Include C++ defined types
 #include "HybridLanguageModelSessionFactorySpec.hpp"
 #include "HybridLanguageModelSessionSpec.hpp"
-#include "HybridToolSpec.hpp"
 #include "LanguageModelSessionConfig.hpp"
 #include "ToolDefinition.hpp"
 #include <NitroModules/AnyMap.hpp>
@@ -51,8 +48,6 @@ namespace margelo::nitro::rnappleai { struct ToolDefinition; }
 namespace RNAppleAI { class HybridLanguageModelSessionFactorySpec_cxx; }
 // Forward declaration of `HybridLanguageModelSessionSpec_cxx` to properly resolve imports.
 namespace RNAppleAI { class HybridLanguageModelSessionSpec_cxx; }
-// Forward declaration of `HybridToolSpec_cxx` to properly resolve imports.
-namespace RNAppleAI { class HybridToolSpec_cxx; }
 
 // Include Swift defined types
 #if __has_include("RNAppleAI-Swift.h")

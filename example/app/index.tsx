@@ -22,7 +22,7 @@ const weatherTool = createTool({
   arguments: z.object({
     city: z.string(),
   }),
-  implementation: async args => {
+  handler: async args => {
     try {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${args.city}&units=imperial&APPID=${WEATHER_API_KEY}`
       const res = await fetch(url, options)

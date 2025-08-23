@@ -18,9 +18,9 @@ public extension ToolDefinition {
   /**
    * Create a new instance of `ToolDefinition`.
    */
-  init(name: String, description: String, arguments: AnyMapHolder, implementation: @escaping (_ args: AnyMapHolder) -> Promise<Promise<AnyMapHolder>>) {
+  init(name: String, description: String, arguments: AnyMapHolder, handler: @escaping (_ args: AnyMapHolder) -> Promise<Promise<AnyMapHolder>>) {
     self.init(std.string(name), std.string(description), arguments.cppPart, { () -> bridge.Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_ in
-      let __closureWrapper = Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(implementation)
+      let __closureWrapper = Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(handler)
       return bridge.create_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(__closureWrapper.toUnsafe())
     }())
   }
@@ -58,11 +58,11 @@ public extension ToolDefinition {
     }
   }
   
-  var implementation: (_ args: AnyMapHolder) -> Promise<Promise<AnyMapHolder>> {
+  var handler: (_ args: AnyMapHolder) -> Promise<Promise<AnyMapHolder>> {
     @inline(__always)
     get {
       return { () -> (AnyMapHolder) -> Promise<Promise<AnyMapHolder>> in
-        let __wrappedFunction = bridge.wrap_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(self.__implementation)
+        let __wrappedFunction = bridge.wrap_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(self.__handler)
         return { (__args: AnyMapHolder) -> Promise<Promise<AnyMapHolder>> in
           let __result = __wrappedFunction.call(__args.cppPart)
           return { () -> Promise<Promise<AnyMapHolder>> in
@@ -91,7 +91,7 @@ public extension ToolDefinition {
     }
     @inline(__always)
     set {
-      self.__implementation = { () -> bridge.Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_ in
+      self.__handler = { () -> bridge.Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_ in
         let __closureWrapper = Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(newValue)
         return bridge.create_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(__closureWrapper.toUnsafe())
       }()

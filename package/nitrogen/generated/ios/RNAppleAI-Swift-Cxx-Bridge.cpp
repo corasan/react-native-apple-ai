@@ -10,7 +10,6 @@
 // Include C++ implementation defined types
 #include "HybridLanguageModelSessionFactorySpecSwift.hpp"
 #include "HybridLanguageModelSessionSpecSwift.hpp"
-#include "HybridToolSpecSwift.hpp"
 #include "RNAppleAI-Swift-Cxx-Umbrella.hpp"
 
 namespace margelo::nitro::rnappleai::bridge::swift {
@@ -85,22 +84,6 @@ namespace margelo::nitro::rnappleai::bridge::swift {
     }
   #endif
     RNAppleAI::HybridLanguageModelSessionFactorySpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
-    return swiftPart.toUnsafe();
-  }
-  
-  // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec>
-  std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpec> create_std__shared_ptr_margelo__nitro__rnappleai__HybridToolSpec_(void* _Nonnull swiftUnsafePointer) {
-    RNAppleAI::HybridToolSpec_cxx swiftPart = RNAppleAI::HybridToolSpec_cxx::fromUnsafe(swiftUnsafePointer);
-    return std::make_shared<margelo::nitro::rnappleai::HybridToolSpecSwift>(swiftPart);
-  }
-  void* _Nonnull get_std__shared_ptr_margelo__nitro__rnappleai__HybridToolSpec_(std__shared_ptr_margelo__nitro__rnappleai__HybridToolSpec_ cppType) {
-    std::shared_ptr<margelo::nitro::rnappleai::HybridToolSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::rnappleai::HybridToolSpecSwift>(cppType);
-  #ifdef NITRO_DEBUG
-    if (swiftWrapper == nullptr) [[unlikely]] {
-      throw std::runtime_error("Class \"HybridToolSpec\" is not implemented in Swift!");
-    }
-  #endif
-    RNAppleAI::HybridToolSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
     return swiftPart.toUnsafe();
   }
 

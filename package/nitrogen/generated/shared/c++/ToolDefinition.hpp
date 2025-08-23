@@ -36,11 +36,11 @@ namespace margelo::nitro::rnappleai {
     std::string name     SWIFT_PRIVATE;
     std::string description     SWIFT_PRIVATE;
     std::shared_ptr<AnyMap> arguments     SWIFT_PRIVATE;
-    std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)> implementation     SWIFT_PRIVATE;
+    std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)> handler     SWIFT_PRIVATE;
 
   public:
     ToolDefinition() = default;
-    explicit ToolDefinition(std::string name, std::string description, std::shared_ptr<AnyMap> arguments, std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)> implementation): name(name), description(description), arguments(arguments), implementation(implementation) {}
+    explicit ToolDefinition(std::string name, std::string description, std::shared_ptr<AnyMap> arguments, std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)> handler): name(name), description(description), arguments(arguments), handler(handler) {}
   };
 
 } // namespace margelo::nitro::rnappleai
@@ -58,7 +58,7 @@ namespace margelo::nitro {
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, "name")),
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, "description")),
         JSIConverter<std::shared_ptr<AnyMap>>::fromJSI(runtime, obj.getProperty(runtime, "arguments")),
-        JSIConverter<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>>::fromJSI(runtime, obj.getProperty(runtime, "implementation"))
+        JSIConverter<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>>::fromJSI(runtime, obj.getProperty(runtime, "handler"))
       );
     }
     static inline jsi::Value toJSI(jsi::Runtime& runtime, const ToolDefinition& arg) {
@@ -66,7 +66,7 @@ namespace margelo::nitro {
       obj.setProperty(runtime, "name", JSIConverter<std::string>::toJSI(runtime, arg.name));
       obj.setProperty(runtime, "description", JSIConverter<std::string>::toJSI(runtime, arg.description));
       obj.setProperty(runtime, "arguments", JSIConverter<std::shared_ptr<AnyMap>>::toJSI(runtime, arg.arguments));
-      obj.setProperty(runtime, "implementation", JSIConverter<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>>::toJSI(runtime, arg.implementation));
+      obj.setProperty(runtime, "handler", JSIConverter<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>>::toJSI(runtime, arg.handler));
       return obj;
     }
     static inline bool canConvert(jsi::Runtime& runtime, const jsi::Value& value) {
@@ -77,7 +77,7 @@ namespace margelo::nitro {
       if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, "name"))) return false;
       if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, "description"))) return false;
       if (!JSIConverter<std::shared_ptr<AnyMap>>::canConvert(runtime, obj.getProperty(runtime, "arguments"))) return false;
-      if (!JSIConverter<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>>::canConvert(runtime, obj.getProperty(runtime, "implementation"))) return false;
+      if (!JSIConverter<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>>::canConvert(runtime, obj.getProperty(runtime, "handler"))) return false;
       return true;
     }
   };
