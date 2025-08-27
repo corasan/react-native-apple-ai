@@ -9,6 +9,7 @@ public enum AppleAIError: Error, LocalizedError, CustomStringConvertible {
     case responseParsingError(String)
     case unknownToolError(String)
     case sessionStreamingError(Error)
+    case contextExceeded
     
     public var errorDescription: String? {
         switch self {
@@ -28,6 +29,8 @@ public enum AppleAIError: Error, LocalizedError, CustomStringConvertible {
             return "Unknown tool: \(toolName)"
         case .sessionStreamingError(let error):
             return "Session streaming failed: \(error.localizedDescription)"
+        case .contextExceeded:
+            return "Context window size exceeded, session recreated with conversation summary"
         }
     }
     
@@ -53,6 +56,8 @@ public enum AppleAIError: Error, LocalizedError, CustomStringConvertible {
             return "UNKNOWN_TOOL_ERROR"
         case .sessionStreamingError:
             return "SESSION_STREAMING_ERROR"
+        case .contextExceeded:
+            return "CONTEXT_EXCEEDED"
         }
     }
 }

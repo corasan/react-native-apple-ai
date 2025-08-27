@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import {
   ActivityIndicator,
   Alert,
@@ -6,16 +6,13 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native'
-import {
-  AppleAIError,
-  createTool,
-  isAppleAIError,
-  LanguageModelSession,
-} from 'react-native-apple-ai'
+import { createTool, isAppleAIError, LanguageModelSession } from 'react-native-apple-ai'
 import { z } from 'zod'
 import { Text, View } from '@/components/Themed'
+import { weatherResult } from '@/utils/weatherResult'
 
 const WEATHER_API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY
+const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather?units=imperial'
 const options = {
   method: 'GET',
   headers: { accept: 'application/json', 'accept-encoding': 'deflate, gzip, br' },
@@ -27,9 +24,9 @@ const weatherTool = createTool({
   arguments: z.object({
     city: z.string(),
   }),
-  implementation: async args => {
+  handler: async args => {
     try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${args.city}&units=imperial&APPID=${WEATHER_API_KEY}`
+      const url = `${BASE_URL}&q=${args.city}&APPID=${WEATHER_API_KEY}`
       const res = await fetch(url, options)
       const result = await res.json()
 
@@ -37,20 +34,10 @@ const weatherTool = createTool({
         throw new Error(`Invalid API response structure: ${JSON.stringify(result)}`)
       }
 
-      return {
-        temperature: result.main.temp,
-        humidity: result.main.humidity || 0,
-        precipitation: result.weather?.[0]?.description || 'Unknown',
-        units: 'imperial',
-      }
+      return weatherResult(result.main)
     } catch (error) {
       console.error('Weather tool error:', error)
-      return {
-        temperature: 0,
-        humidity: 0,
-        precipitation: 0,
-        units: 'imperial',
-      }
+      return weatherResult()
     }
   },
 })
@@ -63,9 +50,8 @@ export default function IndexScreen() {
   const [result, setResult] = useState('')
   const [prompt, setPrompt] = useState('')
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
 
-  const respond = async () => {
+  const respond = useCallback(async () => {
     if (!prompt.trim()) {
       Alert.alert('Error', 'Please enter a message')
       return
@@ -73,58 +59,37 @@ export default function IndexScreen() {
 
     try {
       setLoading(true)
-      setError(null)
       setResult('')
 
       session.streamResponse(prompt, token => {
         setResult(token)
       })
+
+      setTimeout(() => {
+        setLoading(false)
+      }, 2000)
     } catch (err) {
       console.error('Error during streaming:', err)
-
-      let errorMessage = 'An unexpected error occurred'
-
-      if (isAppleAIError(err)) {
-        errorMessage = `${err.code}: ${err.message}`
-        if (err.details) {
-          console.error('Error details:', err.details)
-        }
-      } else if (err instanceof Error) {
-        errorMessage = err.message
-      } else if (typeof err === 'string') {
-        errorMessage = err
-      }
-
-      setError(errorMessage)
       setResult('')
-
-      Alert.alert('Error', errorMessage)
-    } finally {
-      setLoading(false)
     }
-  }
+  }, [prompt])
 
   return (
     <View style={styles.container}>
       <View style={{ paddingBottom: 20 }}>
-        {error ? (
-          <View style={styles.errorContainer}>
-            <Text style={styles.errorText}>{error}</Text>
-          </View>
-        ) : (
-          <Text style={styles.title}>{result}</Text>
-        )}
+        <Text style={styles.title}>{result}</Text>
       </View>
 
-      <View style={{ height: 40 }}>{loading && <ActivityIndicator size="small" />}</View>
+      {loading && (
+        <View style={{ height: 40, paddingBottom: 20 }}>
+          <ActivityIndicator size="small" />
+        </View>
+      )}
 
       <View style={styles.inputContainer}>
         <TextInput
           value={prompt}
-          onChangeText={text => {
-            setPrompt(text)
-            if (error) setError(null) // Clear error when user starts typing
-          }}
+          onChangeText={setPrompt}
           style={styles.input}
           placeholder="Ask about the weather..."
           editable={!loading}
@@ -140,7 +105,7 @@ export default function IndexScreen() {
               (loading || !prompt.trim()) && styles.buttonTextDisabled,
             ]}
           >
-            {loading ? 'Sending...' : 'Send'}
+            {loading ? '...' : 'Send'}
           </Text>
         </TouchableOpacity>
       </View>
@@ -158,7 +123,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    paddingVertical: 10,
+    paddingVertical: 6,
   },
   errorContainer: {
     backgroundColor: '#ffebee',
@@ -195,8 +160,8 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: 'dodgerblue',
     borderRadius: 100,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
   },
   buttonDisabled: {
     backgroundColor: '#ccc',

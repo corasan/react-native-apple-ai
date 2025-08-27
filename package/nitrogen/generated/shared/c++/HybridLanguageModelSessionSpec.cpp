@@ -14,6 +14,7 @@ namespace margelo::nitro::rnappleai {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
+      prototype.registerHybridGetter("wasContextReset", &HybridLanguageModelSessionSpec::getWasContextReset);
       prototype.registerHybridMethod("streamResponse", &HybridLanguageModelSessionSpec::streamResponse);
     });
   }

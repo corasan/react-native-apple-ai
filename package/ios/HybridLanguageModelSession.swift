@@ -6,6 +6,7 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
     private var isResponding: Bool = false
     private var tools: [any Tool] = []
     private var jsTools: [ToolDefinition] = []
+    private var contextWasReset: Bool = false
     
     /**
      * Initializes the wrapper with a FoundationModels session configured
@@ -25,7 +26,7 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
                         name: tool.name,
                         description: tool.description,
                         parameters: tool.arguments,
-                        implementation: { args in tool.implementation(args) }
+                        handler: { args in tool.handler(args) }
                     )
                 }
             } catch {
@@ -38,13 +39,8 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
             tools: jsTools
         )
         
-        do {
-            let session = LanguageModelSession(tools: tools, instructions: enhancedInstructions)
-            self.session = session
-        } catch {
-            throw AppleAIError.sessionNotInitialized
-        }
-        
+        let session = LanguageModelSession(tools: tools, instructions: enhancedInstructions)
+        self.session = session
         self.tools = tools
         self.jsTools = jsTools
     }
@@ -75,6 +71,12 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
                 let result = try await stream.collect()
                 self.isResponding = false
                 return result.content
+            } catch LanguageModelSession.GenerationError.exceededContextWindowSize {
+                self.isResponding = false
+                let newSession = try await self.createNewSessionWithSummary(previousSession: modelSession)
+                self.session = newSession
+                self.contextWasReset = true
+                throw AppleAIError.contextExceeded
             } catch let error as AppleAIError {
                 self.isResponding = false
                 throw error
@@ -83,6 +85,21 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
                 throw AppleAIError.sessionStreamingError(error)
             }
         }
+    }
+    
+    var wasContextReset: Bool {
+        return contextWasReset
+    }
+    
+    private func createNewSessionWithSummary(previousSession: LanguageModelSession) async throws -> LanguageModelSession {
+        let summarySession = LanguageModelSession(transcript: previousSession.transcript)
+        let summaryResponse = try await summarySession.respond(to: "Summarize this conversation in a concise way that preserves the key context and information.")
+        let enhancedInstructions = Self.buildEnhancedInstructions(
+            baseInstructions: "You are a helpful assistant. Previous conversation summary: \(summaryResponse.content)",
+            tools: self.jsTools
+        )
+        
+        return LanguageModelSession(tools: self.tools, instructions: enhancedInstructions)
     }
     
     private static func buildEnhancedInstructions(baseInstructions: String?, tools: [ToolDefinition]) -> String {

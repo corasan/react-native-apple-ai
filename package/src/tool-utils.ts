@@ -1,16 +1,22 @@
 import type { AnyMap } from 'react-native-nitro-modules'
 import { z } from 'zod'
-import type {
-  ToolDefinition,
-  TypeSafeToolDefinition,
-  ZodObjectSchema,
-} from './specs/LanguageModelSession.nitro'
 import {
-  SchemaCreationError,
   ArgumentParsingError,
+  parseNativeError,
   ResponseParsingError,
-  parseNativeError
+  SchemaCreationError,
 } from './errors'
+import type { ToolDefinition } from './specs/LanguageModelSession.nitro'
+
+type ZodObjectSchema = z.ZodObject<any>
+type InferArgs<T extends ZodObjectSchema> = z.infer<T>
+
+export interface TypeSafeToolDefinition<T extends ZodObjectSchema> {
+  name: string
+  description: string
+  arguments: T
+  handler: (args: InferArgs<T>) => Promise<AnyMap>
+}
 
 /**
  * Converts a Zod schema to an AnyMap format that the native code can understand
@@ -28,7 +34,8 @@ function zodSchemaToAnyMap(schema: z.ZodObject<any>): AnyMap {
       } catch (error) {
         throw new SchemaCreationError(
           `Failed to convert property '${key}' to native type`,
-          { property: key, zodType: zodType.constructor.name, originalError: error }
+          // @ts-expect-error
+          { property: key, zodType: zodType.constructor.name, originalError: error },
         )
       }
     }
@@ -39,10 +46,10 @@ function zodSchemaToAnyMap(schema: z.ZodObject<any>): AnyMap {
     if (error instanceof SchemaCreationError) {
       throw error
     }
-    throw new SchemaCreationError(
-      'Failed to convert Zod schema to AnyMap',
-      { schemaKeys: Object.keys(schema.shape), originalError: error }
-    )
+    throw new SchemaCreationError('Failed to convert Zod schema to AnyMap', {
+      schemaKeys: Object.keys(schema.shape),
+      originalError: error,
+    })
   }
 }
 
@@ -76,28 +83,30 @@ export function createTool<T extends ZodObjectSchema>(
 ): ToolDefinition {
   try {
     const argumentsSchema = zodSchemaToAnyMap(definition.arguments)
-    
+
     return {
       name: definition.name,
       description: definition.description,
       arguments: argumentsSchema,
-      implementation: async (args: AnyMap) => {
+      handler: async (args: AnyMap) => {
         try {
           // Parse and validate the arguments using Zod
           const parsedArgs = definition.arguments.parse(args)
 
-          // Call the type-safe implementation
-          const result = await definition.implementation(parsedArgs)
+          // Call the type-safe handler
+          const result = await definition.handler(parsedArgs)
 
           // Validate that result is AnyMap-compatible
           if (result === null || result === undefined) {
-            throw new ResponseParsingError('Tool implementation returned null or undefined')
+            throw new ResponseParsingError(
+              'Tool handler returned null or undefined',
+            )
           }
 
           if (typeof result !== 'object') {
             throw new ResponseParsingError(
-              `Tool implementation must return an object, got ${typeof result}`,
-              { returnedType: typeof result, returnedValue: result }
+              `Tool handler must return an object, got ${typeof result}`,
+              { returnedType: typeof result, returnedValue: result },
             )
           }
 
@@ -110,16 +119,19 @@ export function createTool<T extends ZodObjectSchema>(
               {
                 toolName: definition.name,
                 zodErrors: error.errors,
-                receivedArgs: args
-              }
+                receivedArgs: args,
+              },
             )
           }
-          
-          if (error instanceof ArgumentParsingError || error instanceof ResponseParsingError) {
+
+          if (
+            error instanceof ArgumentParsingError ||
+            error instanceof ResponseParsingError
+          ) {
             throw error
           }
 
-          // Handle implementation errors
+          // Handle handler errors
           throw parseNativeError(error)
         }
       },
@@ -128,9 +140,9 @@ export function createTool<T extends ZodObjectSchema>(
     if (error instanceof SchemaCreationError) {
       throw error
     }
-    throw new SchemaCreationError(
-      `Failed to create tool '${definition.name}'`,
-      { toolName: definition.name, originalError: error }
-    )
+    throw new SchemaCreationError(`Failed to create tool '${definition.name}'`, {
+      toolName: definition.name,
+      originalError: error,
+    })
   }
 }
