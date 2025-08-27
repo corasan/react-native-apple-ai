@@ -29,7 +29,6 @@ export function useStreamingResponse(
 
   const activeStreamRef = useRef<Promise<string> | null>(null)
   const isCancelledRef = useRef<boolean>(false)
-  const accumulatedResponseRef = useRef<string>('')
 
   const cancel = useCallback(() => {
     isCancelledRef.current = true
@@ -42,7 +41,6 @@ export function useStreamingResponse(
     setIsStreaming(false)
     setIsComplete(false)
     setError(null)
-    accumulatedResponseRef.current = ''
     isCancelledRef.current = false
     activeStreamRef.current = null
   }, [])
@@ -68,15 +66,13 @@ export function useStreamingResponse(
         setIsComplete(false)
         setError(null)
         setResponse('')
-        accumulatedResponseRef.current = ''
         isCancelledRef.current = false
 
-        const streamPromise = session.session.streamResponse(prompt, (token: string) => {
+        const streamPromise = session.session.streamResponse(prompt, (fullResponse: string) => {
           if (isCancelledRef.current) return
 
-          accumulatedResponseRef.current += token
-          setResponse(accumulatedResponseRef.current)
-          options?.onToken?.(token)
+          setResponse(fullResponse)
+          options?.onToken?.(fullResponse)
         })
 
         activeStreamRef.current = streamPromise

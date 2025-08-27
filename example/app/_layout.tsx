@@ -26,6 +26,14 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Tabs.Screen
+          name="+not-found"
+          options={{
+            title: 'Streaming',
+            headerShown: false,
+            href: null,
+          }}
+        />
       </Tabs>
     </ThemeProvider>
   )

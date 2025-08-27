@@ -51,6 +51,8 @@ export default function IndexScreen() {
   const [prompt, setPrompt] = useState('')
   const [loading, setLoading] = useState(false)
 
+  console.log('Original: ->', result)
+
   const respond = useCallback(async () => {
     if (!prompt.trim()) {
       Alert.alert('Error', 'Please enter a message')
@@ -115,7 +117,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: 16,
-    paddingBottom: 60,
   },
   title: {
     fontSize: 18,
