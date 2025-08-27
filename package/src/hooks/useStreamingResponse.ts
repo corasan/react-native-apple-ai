@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import type { LanguageModelSession } from '../LanguageModelSession'
 import type { AppleAIError } from '../errors'
 import { isAppleAIError, parseNativeError } from '../errors'
+import type { LanguageModelSession } from '../LanguageModelSession'
 
 export interface StreamingOptions {
   onToken?: (token: string) => void
@@ -19,12 +19,14 @@ export interface UseStreamingResponseReturn {
   reset: () => void
 }
 
-export function useStreamingResponse(session: LanguageModelSession): UseStreamingResponseReturn {
+export function useStreamingResponse(
+  session: LanguageModelSession,
+): UseStreamingResponseReturn {
   const [response, setResponse] = useState<string>('')
   const [isStreaming, setIsStreaming] = useState<boolean>(false)
   const [isComplete, setIsComplete] = useState<boolean>(false)
   const [error, setError] = useState<AppleAIError | null>(null)
-  
+
   const activeStreamRef = useRef<Promise<string> | null>(null)
   const isCancelledRef = useRef<boolean>(false)
   const accumulatedResponseRef = useRef<string>('')
@@ -45,65 +47,65 @@ export function useStreamingResponse(session: LanguageModelSession): UseStreamin
     activeStreamRef.current = null
   }, [])
 
-  const streamResponse = useCallback(async (
-    prompt: string, 
-    options?: StreamingOptions
-  ): Promise<string> => {
-    if (!session?.session) {
-      const error = parseNativeError(new Error('Session not initialized'))
-      setError(error)
-      options?.onError?.(error)
-      throw error
-    }
+  const streamResponse = useCallback(
+    async (prompt: string, options?: StreamingOptions): Promise<string> => {
+      if (!session?.session) {
+        const error = parseNativeError(new Error('Session not initialized'))
+        setError(error)
+        options?.onError?.(error)
+        throw error
+      }
 
-    if (isStreaming) {
-      const error = parseNativeError(new Error('Another stream is already in progress'))
-      setError(error)
-      options?.onError?.(error)
-      throw error
-    }
+      if (isStreaming) {
+        const error = parseNativeError(new Error('Another stream is already in progress'))
+        setError(error)
+        options?.onError?.(error)
+        throw error
+      }
 
-    try {
-      setIsStreaming(true)
-      setIsComplete(false)
-      setError(null)
-      setResponse('')
-      accumulatedResponseRef.current = ''
-      isCancelledRef.current = false
+      try {
+        setIsStreaming(true)
+        setIsComplete(false)
+        setError(null)
+        setResponse('')
+        accumulatedResponseRef.current = ''
+        isCancelledRef.current = false
 
-      const streamPromise = session.session.streamResponse(prompt, (token: string) => {
-        if (isCancelledRef.current) return
+        const streamPromise = session.session.streamResponse(prompt, (token: string) => {
+          if (isCancelledRef.current) return
 
-        accumulatedResponseRef.current += token
-        setResponse(accumulatedResponseRef.current)
-        options?.onToken?.(token)
-      })
+          accumulatedResponseRef.current += token
+          setResponse(accumulatedResponseRef.current)
+          options?.onToken?.(token)
+        })
 
-      activeStreamRef.current = streamPromise
+        activeStreamRef.current = streamPromise
 
-      const fullResponse = await streamPromise
+        const fullResponse = await streamPromise
 
-      if (!isCancelledRef.current) {
-        setIsComplete(true)
+        if (!isCancelledRef.current) {
+          setIsComplete(true)
+          setIsStreaming(false)
+          options?.onComplete?.(fullResponse)
+        }
+
+        return fullResponse
+      } catch (err) {
         setIsStreaming(false)
-        options?.onComplete?.(fullResponse)
-      }
+        setIsComplete(false)
 
-      return fullResponse
-    } catch (err) {
-      setIsStreaming(false)
-      setIsComplete(false)
-      
-      const appleAIError = isAppleAIError(err) ? err : parseNativeError(err)
-      
-      if (!isCancelledRef.current) {
-        setError(appleAIError)
-        options?.onError?.(appleAIError)
+        const appleAIError = isAppleAIError(err) ? err : parseNativeError(err)
+
+        if (!isCancelledRef.current) {
+          setError(appleAIError)
+          options?.onError?.(appleAIError)
+        }
+
+        throw appleAIError
       }
-      
-      throw appleAIError
-    }
-  }, [session, isStreaming])
+    },
+    [session, isStreaming],
+  )
 
   useEffect(() => {
     return () => {
@@ -118,6 +120,6 @@ export function useStreamingResponse(session: LanguageModelSession): UseStreamin
     error,
     streamResponse,
     cancel,
-    reset
+    reset,
   }
 }
