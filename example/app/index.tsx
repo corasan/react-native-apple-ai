@@ -50,7 +50,6 @@ export default function IndexScreen() {
   const [result, setResult] = useState('')
   const [prompt, setPrompt] = useState('')
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
 
   const respond = useCallback(async () => {
     if (!prompt.trim()) {
@@ -60,7 +59,6 @@ export default function IndexScreen() {
 
     try {
       setLoading(true)
-      setError(null)
       setResult('')
 
       session.streamResponse(prompt, token => {
@@ -72,37 +70,14 @@ export default function IndexScreen() {
       }, 2000)
     } catch (err) {
       console.error('Error during streaming:', err)
-
-      let errorMessage = 'An unexpected error occurred'
-
-      if (isAppleAIError(err)) {
-        errorMessage = `${err.code}: ${err.message}`
-        if (err.details) {
-          console.error('Error details:', err.details)
-        }
-      } else if (err instanceof Error) {
-        errorMessage = err.message
-      } else if (typeof err === 'string') {
-        errorMessage = err
-      }
-
-      setError(errorMessage)
       setResult('')
-
-      Alert.alert('Error', errorMessage)
     }
   }, [prompt])
 
   return (
     <View style={styles.container}>
       <View style={{ paddingBottom: 20 }}>
-        {error ? (
-          <View style={styles.errorContainer}>
-            <Text style={styles.errorText}>{error}</Text>
-          </View>
-        ) : (
-          <Text style={styles.title}>{result}</Text>
-        )}
+        <Text style={styles.title}>{result}</Text>
       </View>
 
       {loading && (
@@ -114,10 +89,7 @@ export default function IndexScreen() {
       <View style={styles.inputContainer}>
         <TextInput
           value={prompt}
-          onChangeText={text => {
-            setPrompt(text)
-            if (error) setError(null)
-          }}
+          onChangeText={setPrompt}
           style={styles.input}
           placeholder="Ask about the weather..."
           editable={!loading}
