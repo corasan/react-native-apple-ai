@@ -47,13 +47,16 @@ export default function IndexScreen() {
     setLoading(true)
     setResult('')
 
-    session.streamResponse(prompt, token => {
-      setResult(token)
-    })
-
-    setTimeout(() => {
+    try {
+      await session.streamResponse(prompt, token => {
+        setResult(token)
+      })
+    } catch (error) {
+      console.error('Failed to stream response:', error)
+      setResult('Error: Failed to get response')
+    } finally {
       setLoading(false)
-    }, 2000)
+    }
   }, [])
 
   return <WeatherDemo response={result} isLoading={loading} onSubmit={handleSubmit} />
