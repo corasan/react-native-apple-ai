@@ -23,7 +23,7 @@ export class AppleAIError extends Error {
     return {
       code: this.code,
       message: this.message,
-      details: this.details
+      details: this.details,
     }
   }
 }
@@ -44,7 +44,7 @@ export class ToolExecutionError extends AppleAIError {
   constructor(toolName: string, message: string, details?: Record<string, any>) {
     super('TOOL_EXECUTION_ERROR', `Tool '${toolName}' execution failed: ${message}`, {
       ...details,
-      toolName
+      toolName,
     })
   }
 }
@@ -71,7 +71,7 @@ export class UnknownToolError extends AppleAIError {
   constructor(toolName: string, details?: Record<string, any>) {
     super('UNKNOWN_TOOL_ERROR', `Unknown tool: ${toolName}`, {
       ...details,
-      toolName
+      toolName,
     })
   }
 }
@@ -83,11 +83,9 @@ export class SessionStreamingError extends AppleAIError {
 }
 
 export function isAppleAIError(error: any): error is AppleAIError {
-  return error instanceof AppleAIError || (
-    error && 
-    typeof error === 'object' && 
-    'code' in error && 
-    'message' in error
+  return (
+    error instanceof AppleAIError ||
+    (error && typeof error === 'object' && 'code' in error && 'message' in error)
   )
 }
 
@@ -95,11 +93,16 @@ export function parseNativeError(error: any): AppleAIError {
   if (isAppleAIError(error)) {
     return error
   }
-  
+
   if (typeof error === 'string') {
     try {
       const parsed = JSON.parse(error)
-      if (parsed && typeof parsed === 'object' && 'code' in parsed && 'message' in parsed) {
+      if (
+        parsed &&
+        typeof parsed === 'object' &&
+        'code' in parsed &&
+        'message' in parsed
+      ) {
         return AppleAIError.fromErrorInfo(parsed)
       }
     } catch {
@@ -107,12 +110,12 @@ export function parseNativeError(error: any): AppleAIError {
     }
     return new AppleAIError('UNKNOWN_ERROR', error)
   }
-  
+
   if (error && typeof error === 'object') {
     const message = error.message || error.localizedDescription || 'Unknown error'
     const code = error.code || 'UNKNOWN_ERROR'
     return new AppleAIError(code, message, { originalError: error })
   }
-  
+
   return new AppleAIError('UNKNOWN_ERROR', 'An unknown error occurred')
 }
