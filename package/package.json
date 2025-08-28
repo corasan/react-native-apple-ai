@@ -12,10 +12,9 @@
   },
   "author": "Developer",
   "scripts": {
-    "typecheck": "tsc --noEmit",
+    "typescript": "tsc --noEmit",
     "clean": "rm -rf android/build node_modules/**/android/build lib",
-    "typescript": "tsc",
-    "build": "rm -rf lib && bun typecheck && bob build",
+    "build": "rm -rf lib && bun typescript && bob build",
     "specs": "bun nitro-codegen --logLevel=\"debug\"",
     "generate": "node lib/commonjs/cli.js",
     "generate:dev": "ts-node src/cli.ts"
