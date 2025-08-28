@@ -49,6 +49,11 @@
     }
   },
   "files": {
-    "includes": ["**/*.ts", "**/*.tsx"]
+    "includes": [
+      "example/**/*.ts",
+      "example/**/*.tsx",
+      "package/**/*.ts",
+      "package/**/*.tsx"
+    ]
   }
 }

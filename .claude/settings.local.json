@@ -1,8 +1,11 @@
 {
-  "enableAllProjectMcpServers": false,
   "permissions": {
     "allow": [
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "mcp__linear-server__list_teams",
+      "mcp__linear-server__create_project",
+      "mcp__linear-server__create_issue"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": false
 }

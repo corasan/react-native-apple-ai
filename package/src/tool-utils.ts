@@ -98,9 +98,7 @@ export function createTool<T extends ZodObjectSchema>(
 
           // Validate that result is AnyMap-compatible
           if (result === null || result === undefined) {
-            throw new ResponseParsingError(
-              'Tool handler returned null or undefined',
-            )
+            throw new ResponseParsingError('Tool handler returned null or undefined')
           }
 
           if (typeof result !== 'object') {
