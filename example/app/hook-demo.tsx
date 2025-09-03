@@ -1,5 +1,4 @@
-import { useCallback, useState } from 'react'
-import { createTool, LanguageModelSession } from 'react-native-apple-ai'
+import { createTool, useLanguageModel } from 'react-native-apple-ai'
 import { z } from 'zod'
 import { WeatherDemo } from '@/components/WeatherDemo'
 import { weatherResult } from '@/utils/weatherResult'
@@ -34,30 +33,36 @@ const weatherTool = createTool({
     }
   },
 })
-const session = new LanguageModelSession({
-  instructions: 'You are a helpful assistant',
-  tools: [weatherTool],
-})
 
-export default function IndexScreen() {
-  const [result, setResult] = useState('')
-  const [loading, setLoading] = useState(false)
+const tools = [weatherTool]
 
-  const handleSubmit = useCallback(async (prompt: string) => {
-    setLoading(true)
-    setResult('')
+export default function HookDemoScreen() {
+  const { response, loading, error, send, reset, isSessionReady } = useLanguageModel({
+    instructions:
+      'You are a helpful weather assistant. Always provide detailed and friendly weather information.',
+    tools,
+  })
+
+  const handleSubmit = async (prompt: string) => {
+    if (!isSessionReady) {
+      console.error('Session is not ready')
+      return
+    }
 
     try {
-      await session.streamResponse(prompt, token => {
-        setResult(token)
-      })
-    } catch (error) {
-      console.error('Failed to stream response:', error)
-      setResult('Error: Failed to get response')
-    } finally {
-      setLoading(false)
+      await send(prompt)
+    } catch (err) {
+      console.error('Failed to send prompt:', err)
     }
-  }, [])
+  }
 
-  return <WeatherDemo response={result} isLoading={loading} onSubmit={handleSubmit} />
+  return (
+    <WeatherDemo
+      response={response}
+      isLoading={loading}
+      error={error}
+      onSubmit={handleSubmit}
+      onReset={reset}
+    />
+  )
 }

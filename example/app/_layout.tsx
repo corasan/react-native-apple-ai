@@ -27,6 +27,13 @@ export default function RootLayout() {
           }}
         />
         <Tabs.Screen
+          name="hook-demo"
+          options={{
+            title: 'Hook',
+            headerShown: false,
+          }}
+        />
+        <Tabs.Screen
           name="+not-found"
           options={{
             title: 'Streaming',
