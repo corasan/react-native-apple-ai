@@ -24,3 +24,17 @@ export interface Tool {
   functionName: string
   resultSchema?: Record<string, GenerableProperty>
 }
+
+export type AvailabilityStatus =
+  | 'available'
+  | 'unavailable.platformNotSupported'
+  | 'unavailable.deviceNotEligible'
+  | 'unavailable.appleIntelligenceNotEnabled'
+  | 'unavailable.modelNotReady'
+  | 'unavailable.unknown'
+
+export interface FoundationModelsAvailability {
+  isAvailable: boolean
+  status: AvailabilityStatus
+  message: string
+}

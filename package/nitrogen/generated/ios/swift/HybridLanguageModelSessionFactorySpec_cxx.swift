@@ -106,7 +106,19 @@ open class HybridLanguageModelSessionFactorySpec_cxx {
   }
 
   // Properties
+  public final var isAvailable: Bool {
+    @inline(__always)
+    get {
+      return self.__implementation.isAvailable
+    }
+  }
   
+  public final var availabilityStatus: std.string {
+    @inline(__always)
+    get {
+      return std.string(self.__implementation.availabilityStatus)
+    }
+  }
 
   // Methods
   @inline(__always)

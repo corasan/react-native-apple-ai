@@ -9,6 +9,8 @@ import FoundationModels
 @available(iOS 26.0, *)
 class HybridLanguageModelSessionFactory: HybridLanguageModelSessionFactorySpec {
     private var tools: [any Tool] = []
+    private let model = SystemLanguageModel.default
+
     /**
      * Creates a new FMLanguageModelSession instance configured with the provided settings.
      *
@@ -19,8 +21,23 @@ class HybridLanguageModelSessionFactory: HybridLanguageModelSessionFactorySpec {
     func create(config: LanguageModelSessionConfig) throws -> HybridLanguageModelSessionSpec {
         return try HybridLanguageModelSession(config: config)
     }
-    
-    private func privateCreateTool(params: ToolDefinition) {
-        
+
+    var isAvailable: Bool {
+        return model.isAvailable
+    }
+
+    var availabilityStatus: String {
+        switch model.availability {
+        case .available:
+            return "available"
+        case .unavailable(.deviceNotEligible):
+            return "unavailable.deviceNotEligible"
+        case .unavailable(.appleIntelligenceNotEnabled):
+            return "unavailable.appleIntelligenceNotEnabled"
+        case .unavailable(.modelNotReady):
+            return "unavailable.modelNotReady"
+        case .unavailable(let other):
+            return "unavailable.unknown(\(other))"
+        }
     }
 }

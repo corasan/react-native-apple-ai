@@ -11,7 +11,8 @@ import NitroModules
 /// See ``HybridLanguageModelSessionFactorySpec``
 public protocol HybridLanguageModelSessionFactorySpec_protocol: HybridObject {
   // Properties
-  
+  var isAvailable: Bool { get }
+  var availabilityStatus: String { get }
 
   // Methods
   func create(config: LanguageModelSessionConfig) throws -> (any HybridLanguageModelSessionSpec)

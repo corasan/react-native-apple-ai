@@ -21,10 +21,10 @@ namespace margelo::nitro::rnappleai { struct ToolDefinition; }
 // Forward declaration of `AnyMap` to properly resolve imports.
 namespace NitroModules { class AnyMap; }
 
+#include <string>
 #include <memory>
 #include "HybridLanguageModelSessionSpec.hpp"
 #include "LanguageModelSessionConfig.hpp"
-#include <string>
 #include <optional>
 #include "ToolDefinition.hpp"
 #include <vector>
@@ -69,7 +69,13 @@ namespace margelo::nitro::rnappleai {
 
   public:
     // Properties
-    
+    inline bool getIsAvailable() noexcept override {
+      return _swiftPart.isAvailable();
+    }
+    inline std::string getAvailabilityStatus() noexcept override {
+      auto __result = _swiftPart.getAvailabilityStatus();
+      return __result;
+    }
 
   public:
     // Methods

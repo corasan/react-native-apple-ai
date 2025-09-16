@@ -18,6 +18,7 @@ namespace margelo::nitro::rnappleai { class HybridLanguageModelSessionSpec; }
 // Forward declaration of `LanguageModelSessionConfig` to properly resolve imports.
 namespace margelo::nitro::rnappleai { struct LanguageModelSessionConfig; }
 
+#include <string>
 #include <memory>
 #include "HybridLanguageModelSessionSpec.hpp"
 #include "LanguageModelSessionConfig.hpp"
@@ -49,7 +50,8 @@ namespace margelo::nitro::rnappleai {
 
     public:
       // Properties
-      
+      virtual bool getIsAvailable() = 0;
+      virtual std::string getAvailabilityStatus() = 0;
 
     public:
       // Methods

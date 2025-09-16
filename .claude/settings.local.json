@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "mcp__sosumi__fetchAppleDocumentation"
     ]
   },
   "enableAllProjectMcpServers": false
