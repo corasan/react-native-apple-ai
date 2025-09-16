@@ -1,4 +1,4 @@
-import { Text as DefaultText, useColorScheme, View as DefaultView } from 'react-native'
+import { Text as DefaultText, View as DefaultView, useColorScheme } from 'react-native'
 
 import Colors from '@/constants/Colors'
 

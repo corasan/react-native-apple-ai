@@ -82,6 +82,15 @@ export class SessionStreamingError extends AppleAIError {
   }
 }
 
+export class UnsupportedPlatformError extends AppleAIError {
+  constructor(
+    message = 'Foundation Models requires iOS 26.0 or later',
+    details?: Record<string, any>,
+  ) {
+    super('UNSUPPORTED_PLATFORM', message, details)
+  }
+}
+
 export function isAppleAIError(error: any): error is AppleAIError {
   return (
     error instanceof AppleAIError ||

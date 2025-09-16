@@ -1,6 +1,7 @@
-import FoundationModels
 import NitroModules
+import FoundationModels
 
+@available(iOS 26.0, *)
 struct HybridTool: Tool, @unchecked Sendable {
     var name: String
     var description: String

@@ -15,8 +15,8 @@
 
 
 
-#include <NitroModules/Promise.hpp>
 #include <string>
+#include <NitroModules/Promise.hpp>
 #include <functional>
 
 namespace margelo::nitro::rnappleai {

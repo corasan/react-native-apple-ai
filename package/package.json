@@ -15,7 +15,7 @@
     "typescript": "tsc --noEmit",
     "clean": "rm -rf android/build node_modules/**/android/build lib",
     "build": "rm -rf lib && bun typescript && bob build",
-    "specs": "bun nitro-codegen --logLevel=\"debug\"",
+    "specs": "bunx nitrogen --logLevel=\"debug\"",
     "generate": "node lib/commonjs/cli.js",
     "generate:dev": "ts-node src/cli.ts"
   },
@@ -64,10 +64,10 @@
     "react-native-nitro-modules": "*"
   },
   "devDependencies": {
-    "@expo/config-plugins": "^8.0.0",
+    "@expo/config-plugins": "^54.0.1",
     "@types/react": "*",
-    "nitro-codegen": "^0.26.2",
-    "react-native-builder-bob": "^0.33.1",
+    "nitrogen": "^0.29.6",
+    "react-native-builder-bob": "^0.40.13",
     "ts-node": "^10.9.2"
   },
   "react-native-builder-bob": {

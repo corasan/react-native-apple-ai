@@ -17,7 +17,7 @@ import NitroModules
  * - Other HybridObjects need to be wrapped/unwrapped from the Swift TCxx wrapper
  * - Throwing methods need to be wrapped with a Result<T, Error> type, as exceptions cannot be propagated to C++
  */
-public class HybridLanguageModelSessionFactorySpec_cxx {
+open class HybridLanguageModelSessionFactorySpec_cxx {
   /**
    * The Swift <> C++ bridge's namespace (`margelo::nitro::rnappleai::bridge::swift`)
    * from `RNAppleAI-Swift-Cxx-Bridge.hpp`.
@@ -33,7 +33,7 @@ public class HybridLanguageModelSessionFactorySpec_cxx {
   /**
    * Holds a weak pointer to the C++ class that wraps the Swift class.
    */
-  private var __cxxPart: bridge.std__weak_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_
+  private var __cxxPart: bridge.std__weak_ptr_HybridLanguageModelSessionFactorySpec_
 
   /**
    * Create a new `HybridLanguageModelSessionFactorySpec_cxx` that wraps the given `HybridLanguageModelSessionFactorySpec`.
@@ -72,15 +72,15 @@ public class HybridLanguageModelSessionFactorySpec_cxx {
 
   /**
    * Gets (or creates) the C++ part of this Hybrid Object.
-   * The C++ part is a `std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>`.
+   * The C++ part is a `std::shared_ptr<HybridLanguageModelSessionFactorySpec>`.
    */
-  public func getCxxPart() -> bridge.std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_ {
+  public func getCxxPart() -> bridge.std__shared_ptr_HybridLanguageModelSessionFactorySpec_ {
     let cachedCxxPart = self.__cxxPart.lock()
     if cachedCxxPart.__convertToBool() {
       return cachedCxxPart
     } else {
-      let newCxxPart = bridge.create_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_(self.toUnsafe())
-      __cxxPart = bridge.weakify_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_(newCxxPart)
+      let newCxxPart = bridge.create_std__shared_ptr_HybridLanguageModelSessionFactorySpec_(self.toUnsafe())
+      __cxxPart = bridge.weakify_std__shared_ptr_HybridLanguageModelSessionFactorySpec_(newCxxPart)
       return newCxxPart
     }
   }
@@ -96,22 +96,31 @@ public class HybridLanguageModelSessionFactorySpec_cxx {
     return MemoryHelper.getSizeOf(self.__implementation) + self.__implementation.memorySize
   }
 
+  /**
+   * Call dispose() on the Swift class.
+   * This _may_ be called manually from JS.
+   */
+  @inline(__always)
+  public func dispose() {
+    self.__implementation.dispose()
+  }
+
   // Properties
   
 
   // Methods
   @inline(__always)
-  public final func create(config: LanguageModelSessionConfig) -> bridge.Result_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec__ {
+  public final func create(config: LanguageModelSessionConfig) -> bridge.Result_std__shared_ptr_HybridLanguageModelSessionSpec__ {
     do {
       let __result = try self.__implementation.create(config: config)
-      let __resultCpp = { () -> bridge.std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec_ in
+      let __resultCpp = { () -> bridge.std__shared_ptr_HybridLanguageModelSessionSpec_ in
         let __cxxWrapped = __result.getCxxWrapper()
         return __cxxWrapped.getCxxPart()
       }()
-      return bridge.create_Result_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec__(__resultCpp)
+      return bridge.create_Result_std__shared_ptr_HybridLanguageModelSessionSpec__(__resultCpp)
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec__(__exceptionPtr)
+      return bridge.create_Result_std__shared_ptr_HybridLanguageModelSessionSpec__(__exceptionPtr)
     }
   }
 }

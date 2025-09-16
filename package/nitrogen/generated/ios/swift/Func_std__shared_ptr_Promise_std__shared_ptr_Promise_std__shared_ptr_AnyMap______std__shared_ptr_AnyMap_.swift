@@ -7,22 +7,23 @@
 
 import NitroModules
 
+
 /**
- * Wraps a Swift `(_ args: AnyMapHolder) -> Promise<Promise<AnyMapHolder>>` as a class.
+ * Wraps a Swift `(_ args: AnyMap) -> Promise<Promise<AnyMap>>` as a class.
  * This class can be used from C++, e.g. to wrap the Swift closure as a `std::function`.
  */
 public final class Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_ {
   public typealias bridge = margelo.nitro.rnappleai.bridge.swift
 
-  private let closure: (_ args: AnyMapHolder) -> Promise<Promise<AnyMapHolder>>
+  private let closure: (_ args: AnyMap) -> Promise<Promise<AnyMap>>
 
-  public init(_ closure: @escaping (_ args: AnyMapHolder) -> Promise<Promise<AnyMapHolder>>) {
+  public init(_ closure: @escaping (_ args: AnyMap) -> Promise<Promise<AnyMap>>) {
     self.closure = closure
   }
 
   @inline(__always)
-  public func call(args: margelo.nitro.TSharedMap) -> bridge.std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____ {
-    let __result: Promise<Promise<AnyMapHolder>> = self.closure(AnyMapHolder(withCppPart: args))
+  public func call(args: margelo.nitro.SharedAnyMap) -> bridge.std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____ {
+    let __result: Promise<Promise<AnyMap>> = self.closure(AnyMap(withCppPart: args))
     return { () -> bridge.std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____ in
       let __promise = bridge.create_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____()
       let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____(__promise)

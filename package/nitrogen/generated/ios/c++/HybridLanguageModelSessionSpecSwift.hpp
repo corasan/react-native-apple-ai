@@ -14,8 +14,8 @@ namespace RNAppleAI { class HybridLanguageModelSessionSpec_cxx; }
 
 
 
-#include <NitroModules/Promise.hpp>
 #include <string>
+#include <NitroModules/Promise.hpp>
 #include <functional>
 
 #include "RNAppleAI-Swift-Cxx-Umbrella.hpp"
@@ -46,9 +46,11 @@ namespace margelo::nitro::rnappleai {
     }
 
   public:
-    // Get memory pressure
     inline size_t getExternalMemorySize() noexcept override {
       return _swiftPart.getMemorySize();
+    }
+    void dispose() noexcept override {
+      _swiftPart.dispose();
     }
 
   public:

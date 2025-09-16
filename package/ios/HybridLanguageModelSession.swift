@@ -1,6 +1,7 @@
 import NitroModules
 import FoundationModels
 
+@available(iOS 26.0, *)
 class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
     private var session: LanguageModelSession? = nil
     private var isResponding: Bool = false

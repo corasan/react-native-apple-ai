@@ -44,7 +44,8 @@ public extension LanguageModelSessionConfig {
     @inline(__always)
     get {
       return { () -> String? in
-        if let __unwrapped = self.__instructions.value {
+        if bridge.has_value_std__optional_std__string_(self.__instructions) {
+          let __unwrapped = bridge.get_std__optional_std__string_(self.__instructions)
           return String(__unwrapped)
         } else {
           return nil
@@ -67,7 +68,8 @@ public extension LanguageModelSessionConfig {
     @inline(__always)
     get {
       return { () -> [ToolDefinition]? in
-        if let __unwrapped = self.__tools.value {
+        if bridge.has_value_std__optional_std__vector_ToolDefinition__(self.__tools) {
+          let __unwrapped = bridge.get_std__optional_std__vector_ToolDefinition__(self.__tools)
           return __unwrapped.map({ __item in __item })
         } else {
           return nil

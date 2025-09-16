@@ -24,7 +24,7 @@
   HybridObjectRegistry::registerHybridObjectConstructor(
     "LanguageModelSessionFactory",
     []() -> std::shared_ptr<HybridObject> {
-      std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec> hybridObject = RNAppleAI::RNAppleAIAutolinking::createLanguageModelSessionFactory();
+      std::shared_ptr<HybridLanguageModelSessionFactorySpec> hybridObject = RNAppleAI::RNAppleAIAutolinking::createLanguageModelSessionFactory();
       return hybridObject;
     }
   );

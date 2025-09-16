@@ -18,7 +18,7 @@ public extension ToolDefinition {
   /**
    * Create a new instance of `ToolDefinition`.
    */
-  init(name: String, description: String, arguments: AnyMapHolder, handler: @escaping (_ args: AnyMapHolder) -> Promise<Promise<AnyMapHolder>>) {
+  init(name: String, description: String, arguments: AnyMap, handler: @escaping (_ args: AnyMap) -> Promise<Promise<AnyMap>>) {
     self.init(std.string(name), std.string(description), arguments.cppPart, { () -> bridge.Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_ in
       let __closureWrapper = Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(handler)
       return bridge.create_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(__closureWrapper.toUnsafe())
@@ -47,10 +47,10 @@ public extension ToolDefinition {
     }
   }
   
-  var arguments: AnyMapHolder {
+  var arguments: AnyMap {
     @inline(__always)
     get {
-      return AnyMapHolder(withCppPart: self.__arguments)
+      return AnyMap(withCppPart: self.__arguments)
     }
     @inline(__always)
     set {
@@ -58,16 +58,16 @@ public extension ToolDefinition {
     }
   }
   
-  var handler: (_ args: AnyMapHolder) -> Promise<Promise<AnyMapHolder>> {
+  var handler: (_ args: AnyMap) -> Promise<Promise<AnyMap>> {
     @inline(__always)
     get {
-      return { () -> (AnyMapHolder) -> Promise<Promise<AnyMapHolder>> in
+      return { () -> (AnyMap) -> Promise<Promise<AnyMap>> in
         let __wrappedFunction = bridge.wrap_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(self.__handler)
-        return { (__args: AnyMapHolder) -> Promise<Promise<AnyMapHolder>> in
+        return { (__args: AnyMap) -> Promise<Promise<AnyMap>> in
           let __result = __wrappedFunction.call(__args.cppPart)
-          return { () -> Promise<Promise<AnyMapHolder>> in
-            let __promise = Promise<Promise<AnyMapHolder>>()
-            let __resolver = { (__result: Promise<AnyMapHolder>) in
+          return { () -> Promise<Promise<AnyMap>> in
+            let __promise = Promise<Promise<AnyMap>>()
+            let __resolver = { (__result: Promise<AnyMap>) in
               __promise.resolve(withResult: __result)
             }
             let __rejecter = { (__error: Error) in

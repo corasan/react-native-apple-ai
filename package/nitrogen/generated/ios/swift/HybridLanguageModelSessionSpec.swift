@@ -18,8 +18,9 @@ public protocol HybridLanguageModelSessionSpec_protocol: HybridObject {
 }
 
 /// See ``HybridLanguageModelSessionSpec``
-public class HybridLanguageModelSessionSpec_base {
+open class HybridLanguageModelSessionSpec_base {
   private weak var cxxWrapper: HybridLanguageModelSessionSpec_cxx? = nil
+  public init() { }
   public func getCxxWrapper() -> HybridLanguageModelSessionSpec_cxx {
   #if DEBUG
     guard self is HybridLanguageModelSessionSpec else {

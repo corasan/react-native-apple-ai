@@ -24,13 +24,13 @@ namespace NitroModules { class AnyMap; }
 #include <memory>
 #include "HybridLanguageModelSessionSpec.hpp"
 #include "LanguageModelSessionConfig.hpp"
-#include <optional>
 #include <string>
-#include <vector>
+#include <optional>
 #include "ToolDefinition.hpp"
+#include <vector>
 #include <NitroModules/AnyMap.hpp>
-#include <functional>
 #include <NitroModules/Promise.hpp>
+#include <functional>
 
 #include "RNAppleAI-Swift-Cxx-Umbrella.hpp"
 
@@ -60,9 +60,11 @@ namespace margelo::nitro::rnappleai {
     }
 
   public:
-    // Get memory pressure
     inline size_t getExternalMemorySize() noexcept override {
       return _swiftPart.getMemorySize();
+    }
+    void dispose() noexcept override {
+      _swiftPart.dispose();
     }
 
   public:
@@ -71,7 +73,7 @@ namespace margelo::nitro::rnappleai {
 
   public:
     // Methods
-    inline std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec> create(const LanguageModelSessionConfig& config) override {
+    inline std::shared_ptr<HybridLanguageModelSessionSpec> create(const LanguageModelSessionConfig& config) override {
       auto __result = _swiftPart.create(config);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());

@@ -1,4 +1,5 @@
 import { NitroModules } from 'react-native-nitro-modules'
+import { checkPlatformSupport } from './platform-utils'
 import type {
   LanguageModelSessionConfig,
   LanguageModelSessionFactory as LanguageModelSessionFactorySpec,
@@ -42,6 +43,7 @@ export class LanguageModelSession {
    * @param tools - Optional array of tools that the AI can use during conversations
    */
   constructor(config?: LanguageModelSessionConfig) {
+    checkPlatformSupport()
     this.session = LanguageModelSessionFactory.create({
       instructions: config?.instructions,
       tools: config?.tools,

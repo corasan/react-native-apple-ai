@@ -10,6 +10,7 @@ public enum AppleAIError: Error, LocalizedError, CustomStringConvertible {
     case unknownToolError(String)
     case sessionStreamingError(Error)
     case contextExceeded
+    case unsupportedPlatform(String)
     
     public var errorDescription: String? {
         switch self {
@@ -31,6 +32,8 @@ public enum AppleAIError: Error, LocalizedError, CustomStringConvertible {
             return "Session streaming failed: \(error.localizedDescription)"
         case .contextExceeded:
             return "Context window size exceeded, session recreated with conversation summary"
+        case .unsupportedPlatform(let message):
+            return message
         }
     }
     
@@ -58,6 +61,8 @@ public enum AppleAIError: Error, LocalizedError, CustomStringConvertible {
             return "SESSION_STREAMING_ERROR"
         case .contextExceeded:
             return "CONTEXT_EXCEEDED"
+        case .unsupportedPlatform:
+            return "UNSUPPORTED_PLATFORM"
         }
     }
 }

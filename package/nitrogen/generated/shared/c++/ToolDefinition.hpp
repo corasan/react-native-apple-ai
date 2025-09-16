@@ -23,8 +23,8 @@ namespace NitroModules { class AnyMap; }
 
 #include <string>
 #include <NitroModules/AnyMap.hpp>
-#include <functional>
 #include <NitroModules/Promise.hpp>
+#include <functional>
 
 namespace margelo::nitro::rnappleai {
 
@@ -47,26 +47,24 @@ namespace margelo::nitro::rnappleai {
 
 namespace margelo::nitro {
 
-  using namespace margelo::nitro::rnappleai;
-
   // C++ ToolDefinition <> JS ToolDefinition (object)
   template <>
-  struct JSIConverter<ToolDefinition> final {
-    static inline ToolDefinition fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
+  struct JSIConverter<margelo::nitro::rnappleai::ToolDefinition> final {
+    static inline margelo::nitro::rnappleai::ToolDefinition fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
       jsi::Object obj = arg.asObject(runtime);
-      return ToolDefinition(
+      return margelo::nitro::rnappleai::ToolDefinition(
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, "name")),
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, "description")),
         JSIConverter<std::shared_ptr<AnyMap>>::fromJSI(runtime, obj.getProperty(runtime, "arguments")),
-        JSIConverter<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>>::fromJSI(runtime, obj.getProperty(runtime, "handler"))
+        JSIConverter<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>&)>>::fromJSI(runtime, obj.getProperty(runtime, "handler"))
       );
     }
-    static inline jsi::Value toJSI(jsi::Runtime& runtime, const ToolDefinition& arg) {
+    static inline jsi::Value toJSI(jsi::Runtime& runtime, const margelo::nitro::rnappleai::ToolDefinition& arg) {
       jsi::Object obj(runtime);
       obj.setProperty(runtime, "name", JSIConverter<std::string>::toJSI(runtime, arg.name));
       obj.setProperty(runtime, "description", JSIConverter<std::string>::toJSI(runtime, arg.description));
       obj.setProperty(runtime, "arguments", JSIConverter<std::shared_ptr<AnyMap>>::toJSI(runtime, arg.arguments));
-      obj.setProperty(runtime, "handler", JSIConverter<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>>::toJSI(runtime, arg.handler));
+      obj.setProperty(runtime, "handler", JSIConverter<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>&)>>::toJSI(runtime, arg.handler));
       return obj;
     }
     static inline bool canConvert(jsi::Runtime& runtime, const jsi::Value& value) {
@@ -77,7 +75,7 @@ namespace margelo::nitro {
       if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, "name"))) return false;
       if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, "description"))) return false;
       if (!JSIConverter<std::shared_ptr<AnyMap>>::canConvert(runtime, obj.getProperty(runtime, "arguments"))) return false;
-      if (!JSIConverter<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>>::canConvert(runtime, obj.getProperty(runtime, "handler"))) return false;
+      if (!JSIConverter<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>&)>>::canConvert(runtime, obj.getProperty(runtime, "handler"))) return false;
       return true;
     }
   };

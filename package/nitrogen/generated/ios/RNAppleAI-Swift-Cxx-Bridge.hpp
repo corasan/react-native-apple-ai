@@ -49,10 +49,10 @@ namespace margelo::nitro::rnappleai::bridge::swift {
    * Specialized version of `std::shared_ptr<Promise<std::string>>`.
    */
   using std__shared_ptr_Promise_std__string__ = std::shared_ptr<Promise<std::string>>;
-  inline std::shared_ptr<Promise<std::string>> create_std__shared_ptr_Promise_std__string__() {
+  inline std::shared_ptr<Promise<std::string>> create_std__shared_ptr_Promise_std__string__() noexcept {
     return Promise<std::string>::create();
   }
-  inline PromiseHolder<std::string> wrap_std__shared_ptr_Promise_std__string__(std::shared_ptr<Promise<std::string>> promise) {
+  inline PromiseHolder<std::string> wrap_std__shared_ptr_Promise_std__string__(std::shared_ptr<Promise<std::string>> promise) noexcept {
     return PromiseHolder<std::string>(std::move(promise));
   }
   
@@ -66,15 +66,15 @@ namespace margelo::nitro::rnappleai::bridge::swift {
    */
   class Func_void_std__string_Wrapper final {
   public:
-    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* result */)>&& func): _function(std::make_shared<std::function<void(const std::string& /* result */)>>(std::move(func))) {}
-    inline void call(std::string result) const {
+    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* result */)>&& func): _function(std::make_unique<std::function<void(const std::string& /* result */)>>(std::move(func))) {}
+    inline void call(std::string result) const noexcept {
       _function->operator()(result);
     }
   private:
-    std::shared_ptr<std::function<void(const std::string& /* result */)>> _function;
-  };
-  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper);
-  inline Func_void_std__string_Wrapper wrap_Func_void_std__string(Func_void_std__string value) {
+    std::unique_ptr<std::function<void(const std::string& /* result */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper) noexcept;
+  inline Func_void_std__string_Wrapper wrap_Func_void_std__string(Func_void_std__string value) noexcept {
     return Func_void_std__string_Wrapper(std::move(value));
   }
   
@@ -88,36 +88,36 @@ namespace margelo::nitro::rnappleai::bridge::swift {
    */
   class Func_void_std__exception_ptr_Wrapper final {
   public:
-    explicit Func_void_std__exception_ptr_Wrapper(std::function<void(const std::exception_ptr& /* error */)>&& func): _function(std::make_shared<std::function<void(const std::exception_ptr& /* error */)>>(std::move(func))) {}
-    inline void call(std::exception_ptr error) const {
+    explicit Func_void_std__exception_ptr_Wrapper(std::function<void(const std::exception_ptr& /* error */)>&& func): _function(std::make_unique<std::function<void(const std::exception_ptr& /* error */)>>(std::move(func))) {}
+    inline void call(std::exception_ptr error) const noexcept {
       _function->operator()(error);
     }
   private:
-    std::shared_ptr<std::function<void(const std::exception_ptr& /* error */)>> _function;
-  };
-  Func_void_std__exception_ptr create_Func_void_std__exception_ptr(void* _Nonnull swiftClosureWrapper);
-  inline Func_void_std__exception_ptr_Wrapper wrap_Func_void_std__exception_ptr(Func_void_std__exception_ptr value) {
+    std::unique_ptr<std::function<void(const std::exception_ptr& /* error */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_std__exception_ptr create_Func_void_std__exception_ptr(void* _Nonnull swiftClosureWrapper) noexcept;
+  inline Func_void_std__exception_ptr_Wrapper wrap_Func_void_std__exception_ptr(Func_void_std__exception_ptr value) noexcept {
     return Func_void_std__exception_ptr_Wrapper(std::move(value));
   }
   
-  // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec>
+  // pragma MARK: std::shared_ptr<HybridLanguageModelSessionSpec>
   /**
-   * Specialized version of `std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec>`.
+   * Specialized version of `std::shared_ptr<HybridLanguageModelSessionSpec>`.
    */
-  using std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec_ = std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec>;
-  std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec> create_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec_(void* _Nonnull swiftUnsafePointer);
-  void* _Nonnull get_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec_(std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec_ cppType);
+  using std__shared_ptr_HybridLanguageModelSessionSpec_ = std::shared_ptr<HybridLanguageModelSessionSpec>;
+  std::shared_ptr<HybridLanguageModelSessionSpec> create_std__shared_ptr_HybridLanguageModelSessionSpec_(void* _Nonnull swiftUnsafePointer) noexcept;
+  void* _Nonnull get_std__shared_ptr_HybridLanguageModelSessionSpec_(std__shared_ptr_HybridLanguageModelSessionSpec_ cppType) noexcept;
   
-  // pragma MARK: std::weak_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec>
-  using std__weak_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec_ = std::weak_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec>;
-  inline std__weak_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec_ weakify_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec_(const std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec>& strong) { return strong; }
+  // pragma MARK: std::weak_ptr<HybridLanguageModelSessionSpec>
+  using std__weak_ptr_HybridLanguageModelSessionSpec_ = std::weak_ptr<HybridLanguageModelSessionSpec>;
+  inline std__weak_ptr_HybridLanguageModelSessionSpec_ weakify_std__shared_ptr_HybridLanguageModelSessionSpec_(const std::shared_ptr<HybridLanguageModelSessionSpec>& strong) noexcept { return strong; }
   
   // pragma MARK: Result<std::shared_ptr<Promise<std::string>>>
   using Result_std__shared_ptr_Promise_std__string___ = Result<std::shared_ptr<Promise<std::string>>>;
-  inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::shared_ptr<Promise<std::string>>& value) {
+  inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::shared_ptr<Promise<std::string>>& value) noexcept {
     return Result<std::shared_ptr<Promise<std::string>>>::withValue(value);
   }
-  inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::exception_ptr& error) {
+  inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::exception_ptr& error) noexcept {
     return Result<std::shared_ptr<Promise<std::string>>>::withError(error);
   }
   
@@ -126,8 +126,14 @@ namespace margelo::nitro::rnappleai::bridge::swift {
    * Specialized version of `std::optional<std::string>`.
    */
   using std__optional_std__string_ = std::optional<std::string>;
-  inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) {
+  inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) noexcept {
     return std::optional<std::string>(value);
+  }
+  inline bool has_value_std__optional_std__string_(const std::optional<std::string>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::string get_std__optional_std__string_(const std::optional<std::string>& optional) noexcept {
+    return *optional;
   }
   
   // pragma MARK: std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>
@@ -135,10 +141,10 @@ namespace margelo::nitro::rnappleai::bridge::swift {
    * Specialized version of `std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>`.
    */
   using std__shared_ptr_Promise_std__shared_ptr_AnyMap___ = std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>;
-  inline std::shared_ptr<Promise<std::shared_ptr<AnyMap>>> create_std__shared_ptr_Promise_std__shared_ptr_AnyMap___() {
+  inline std::shared_ptr<Promise<std::shared_ptr<AnyMap>>> create_std__shared_ptr_Promise_std__shared_ptr_AnyMap___() noexcept {
     return Promise<std::shared_ptr<AnyMap>>::create();
   }
-  inline PromiseHolder<std::shared_ptr<AnyMap>> wrap_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(std::shared_ptr<Promise<std::shared_ptr<AnyMap>>> promise) {
+  inline PromiseHolder<std::shared_ptr<AnyMap>> wrap_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(std::shared_ptr<Promise<std::shared_ptr<AnyMap>>> promise) noexcept {
     return PromiseHolder<std::shared_ptr<AnyMap>>(std::move(promise));
   }
   
@@ -152,15 +158,15 @@ namespace margelo::nitro::rnappleai::bridge::swift {
    */
   class Func_void_std__shared_ptr_AnyMap__Wrapper final {
   public:
-    explicit Func_void_std__shared_ptr_AnyMap__Wrapper(std::function<void(const std::shared_ptr<AnyMap>& /* result */)>&& func): _function(std::make_shared<std::function<void(const std::shared_ptr<AnyMap>& /* result */)>>(std::move(func))) {}
-    inline void call(std::shared_ptr<AnyMap> result) const {
+    explicit Func_void_std__shared_ptr_AnyMap__Wrapper(std::function<void(const std::shared_ptr<AnyMap>& /* result */)>&& func): _function(std::make_unique<std::function<void(const std::shared_ptr<AnyMap>& /* result */)>>(std::move(func))) {}
+    inline void call(std::shared_ptr<AnyMap> result) const noexcept {
       _function->operator()(result);
     }
   private:
-    std::shared_ptr<std::function<void(const std::shared_ptr<AnyMap>& /* result */)>> _function;
-  };
-  Func_void_std__shared_ptr_AnyMap_ create_Func_void_std__shared_ptr_AnyMap_(void* _Nonnull swiftClosureWrapper);
-  inline Func_void_std__shared_ptr_AnyMap__Wrapper wrap_Func_void_std__shared_ptr_AnyMap_(Func_void_std__shared_ptr_AnyMap_ value) {
+    std::unique_ptr<std::function<void(const std::shared_ptr<AnyMap>& /* result */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_std__shared_ptr_AnyMap_ create_Func_void_std__shared_ptr_AnyMap_(void* _Nonnull swiftClosureWrapper) noexcept;
+  inline Func_void_std__shared_ptr_AnyMap__Wrapper wrap_Func_void_std__shared_ptr_AnyMap_(Func_void_std__shared_ptr_AnyMap_ value) noexcept {
     return Func_void_std__shared_ptr_AnyMap__Wrapper(std::move(value));
   }
   
@@ -174,16 +180,16 @@ namespace margelo::nitro::rnappleai::bridge::swift {
    */
   class Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap__Wrapper final {
   public:
-    explicit Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap__Wrapper(std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>&& func): _function(std::make_shared<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>>(std::move(func))) {}
-    inline std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> call(std::shared_ptr<AnyMap> args) const {
+    explicit Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap__Wrapper(std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>&& func): _function(std::make_unique<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>>(std::move(func))) {}
+    inline std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> call(std::shared_ptr<AnyMap> args) const noexcept {
       auto __result = _function->operator()(args);
       return __result;
     }
   private:
-    std::shared_ptr<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>> _function;
-  };
-  Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_ create_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(void* _Nonnull swiftClosureWrapper);
-  inline Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap__Wrapper wrap_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_ value) {
+    std::unique_ptr<std::function<std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>(const std::shared_ptr<AnyMap>& /* args */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_ create_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(void* _Nonnull swiftClosureWrapper) noexcept;
+  inline Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap__Wrapper wrap_Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_(Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap_ value) noexcept {
     return Func_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap______std__shared_ptr_AnyMap__Wrapper(std::move(value));
   }
   
@@ -192,10 +198,10 @@ namespace margelo::nitro::rnappleai::bridge::swift {
    * Specialized version of `std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>`.
    */
   using std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____ = std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>>;
-  inline std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> create_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____() {
+  inline std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> create_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____() noexcept {
     return Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>::create();
   }
-  inline PromiseHolder<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>> wrap_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____(std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> promise) {
+  inline PromiseHolder<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>> wrap_std__shared_ptr_Promise_std__shared_ptr_Promise_std__shared_ptr_AnyMap_____(std::shared_ptr<Promise<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>> promise) noexcept {
     return PromiseHolder<std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>>(std::move(promise));
   }
   
@@ -209,15 +215,15 @@ namespace margelo::nitro::rnappleai::bridge::swift {
    */
   class Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper final {
   public:
-    explicit Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper(std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>&& func): _function(std::make_shared<std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>>(std::move(func))) {}
-    inline void call(std::shared_ptr<Promise<std::shared_ptr<AnyMap>>> result) const {
+    explicit Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper(std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>&& func): _function(std::make_unique<std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>>(std::move(func))) {}
+    inline void call(std::shared_ptr<Promise<std::shared_ptr<AnyMap>>> result) const noexcept {
       _function->operator()(result);
     }
   private:
-    std::shared_ptr<std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>> _function;
-  };
-  Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ create_Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(void* _Nonnull swiftClosureWrapper);
-  inline Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper wrap_Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ value) {
+    std::unique_ptr<std::function<void(const std::shared_ptr<Promise<std::shared_ptr<AnyMap>>>& /* result */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ create_Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(void* _Nonnull swiftClosureWrapper) noexcept;
+  inline Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper wrap_Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___(Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap___ value) noexcept {
     return Func_void_std__shared_ptr_Promise_std__shared_ptr_AnyMap____Wrapper(std::move(value));
   }
   
@@ -226,7 +232,7 @@ namespace margelo::nitro::rnappleai::bridge::swift {
    * Specialized version of `std::vector<ToolDefinition>`.
    */
   using std__vector_ToolDefinition_ = std::vector<ToolDefinition>;
-  inline std::vector<ToolDefinition> create_std__vector_ToolDefinition_(size_t size) {
+  inline std::vector<ToolDefinition> create_std__vector_ToolDefinition_(size_t size) noexcept {
     std::vector<ToolDefinition> vector;
     vector.reserve(size);
     return vector;
@@ -237,29 +243,35 @@ namespace margelo::nitro::rnappleai::bridge::swift {
    * Specialized version of `std::optional<std::vector<ToolDefinition>>`.
    */
   using std__optional_std__vector_ToolDefinition__ = std::optional<std::vector<ToolDefinition>>;
-  inline std::optional<std::vector<ToolDefinition>> create_std__optional_std__vector_ToolDefinition__(const std::vector<ToolDefinition>& value) {
+  inline std::optional<std::vector<ToolDefinition>> create_std__optional_std__vector_ToolDefinition__(const std::vector<ToolDefinition>& value) noexcept {
     return std::optional<std::vector<ToolDefinition>>(value);
   }
-  
-  // pragma MARK: std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>
-  /**
-   * Specialized version of `std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>`.
-   */
-  using std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_ = std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>;
-  std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec> create_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_(void* _Nonnull swiftUnsafePointer);
-  void* _Nonnull get_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_(std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_ cppType);
-  
-  // pragma MARK: std::weak_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>
-  using std__weak_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_ = std::weak_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>;
-  inline std__weak_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_ weakify_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionFactorySpec_(const std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionFactorySpec>& strong) { return strong; }
-  
-  // pragma MARK: Result<std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec>>
-  using Result_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec__ = Result<std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec>>;
-  inline Result_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec__ create_Result_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec__(const std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec>& value) {
-    return Result<std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec>>::withValue(value);
+  inline bool has_value_std__optional_std__vector_ToolDefinition__(const std::optional<std::vector<ToolDefinition>>& optional) noexcept {
+    return optional.has_value();
   }
-  inline Result_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec__ create_Result_std__shared_ptr_margelo__nitro__rnappleai__HybridLanguageModelSessionSpec__(const std::exception_ptr& error) {
-    return Result<std::shared_ptr<margelo::nitro::rnappleai::HybridLanguageModelSessionSpec>>::withError(error);
+  inline std::vector<ToolDefinition> get_std__optional_std__vector_ToolDefinition__(const std::optional<std::vector<ToolDefinition>>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::shared_ptr<HybridLanguageModelSessionFactorySpec>
+  /**
+   * Specialized version of `std::shared_ptr<HybridLanguageModelSessionFactorySpec>`.
+   */
+  using std__shared_ptr_HybridLanguageModelSessionFactorySpec_ = std::shared_ptr<HybridLanguageModelSessionFactorySpec>;
+  std::shared_ptr<HybridLanguageModelSessionFactorySpec> create_std__shared_ptr_HybridLanguageModelSessionFactorySpec_(void* _Nonnull swiftUnsafePointer) noexcept;
+  void* _Nonnull get_std__shared_ptr_HybridLanguageModelSessionFactorySpec_(std__shared_ptr_HybridLanguageModelSessionFactorySpec_ cppType) noexcept;
+  
+  // pragma MARK: std::weak_ptr<HybridLanguageModelSessionFactorySpec>
+  using std__weak_ptr_HybridLanguageModelSessionFactorySpec_ = std::weak_ptr<HybridLanguageModelSessionFactorySpec>;
+  inline std__weak_ptr_HybridLanguageModelSessionFactorySpec_ weakify_std__shared_ptr_HybridLanguageModelSessionFactorySpec_(const std::shared_ptr<HybridLanguageModelSessionFactorySpec>& strong) noexcept { return strong; }
+  
+  // pragma MARK: Result<std::shared_ptr<HybridLanguageModelSessionSpec>>
+  using Result_std__shared_ptr_HybridLanguageModelSessionSpec__ = Result<std::shared_ptr<HybridLanguageModelSessionSpec>>;
+  inline Result_std__shared_ptr_HybridLanguageModelSessionSpec__ create_Result_std__shared_ptr_HybridLanguageModelSessionSpec__(const std::shared_ptr<HybridLanguageModelSessionSpec>& value) noexcept {
+    return Result<std::shared_ptr<HybridLanguageModelSessionSpec>>::withValue(value);
+  }
+  inline Result_std__shared_ptr_HybridLanguageModelSessionSpec__ create_Result_std__shared_ptr_HybridLanguageModelSessionSpec__(const std::exception_ptr& error) noexcept {
+    return Result<std::shared_ptr<HybridLanguageModelSessionSpec>>::withError(error);
   }
 
 } // namespace margelo::nitro::rnappleai::bridge::swift

@@ -6,6 +6,7 @@ import FoundationModels
  * This class implements the Nitro module specification and serves as the
  * bridge between React Native and Apple's FoundationModels framework.
  */
+@available(iOS 26.0, *)
 class HybridLanguageModelSessionFactory: HybridLanguageModelSessionFactorySpec {
     private var tools: [any Tool] = []
     /**
