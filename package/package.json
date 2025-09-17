@@ -2,19 +2,19 @@
   "name": "react-native-apple-ai",
   "version": "0.1.0",
   "description": "A React Native Nitro module",
-  "main": "./lib/commonjs/index.js",
+  "main": "./lib/module/index.js",
   "module": "./lib/module/index.js",
-  "types": "./lib/typescript/commonjs/index.d.ts",
-  "react-native": "./src/index",
-  "source": "./src/index",
+  "types": "./lib/typescript/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "./src/index.ts",
   "bin": {
     "generable": "./bin/generable"
   },
   "author": "Developer",
   "scripts": {
-    "typescript": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "clean": "rm -rf android/build node_modules/**/android/build lib",
-    "build": "rm -rf lib && bun typescript && bob build",
+    "build": "rm -rf lib && bun typecheck && bob build",
     "specs": "bunx nitrogen --logLevel=\"debug\"",
     "generate": "node lib/commonjs/cli.js",
     "generate:dev": "ts-node src/cli.ts"
@@ -75,23 +75,12 @@
     "output": "lib",
     "targets": [
       [
-        "commonjs",
-        {
-          "esm": true
-        }
-      ],
-      [
         "module",
         {
           "esm": true
         }
       ],
-      [
-        "typescript",
-        {
-          "esm": true
-        }
-      ]
+      "typescript"
     ]
   }
 }

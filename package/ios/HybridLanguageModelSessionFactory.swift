@@ -6,11 +6,7 @@ import FoundationModels
  * This class implements the Nitro module specification and serves as the
  * bridge between React Native and Apple's FoundationModels framework.
  */
-@available(iOS 26.0, *)
 class HybridLanguageModelSessionFactory: HybridLanguageModelSessionFactorySpec {
-    private var tools: [any Tool] = []
-    private let model = SystemLanguageModel.default
-
     /**
      * Creates a new FMLanguageModelSession instance configured with the provided settings.
      *
@@ -19,25 +15,41 @@ class HybridLanguageModelSessionFactory: HybridLanguageModelSessionFactorySpec {
      * - Throws: Any errors that occur during session creation
      */
     func create(config: LanguageModelSessionConfig) throws -> HybridLanguageModelSessionSpec {
-        return try HybridLanguageModelSession(config: config)
+        if #available(iOS 26.0, *) {
+            return try HybridLanguageModelSession(config: config)
+        } else {
+            throw NSError(domain: "RNAppleAI.FoundationModels", code: 1001, userInfo: [
+                NSLocalizedDescriptionKey: "Apple Foundation Models requires iOS 26.0 or later"
+            ])
+        }
     }
 
     var isAvailable: Bool {
-        return model.isAvailable
+        if #available(iOS 26.0, *) {
+            let model = SystemLanguageModel.default
+            return model.isAvailable
+        } else {
+            return false
+        }
     }
 
     var availabilityStatus: String {
-        switch model.availability {
-        case .available:
-            return "available"
-        case .unavailable(.deviceNotEligible):
+        if #available(iOS 26.0, *) {
+            let model = SystemLanguageModel.default
+            switch model.availability {
+            case .available:
+                return "available"
+            case .unavailable(.deviceNotEligible):
+                return "unavailable.deviceNotEligible"
+            case .unavailable(.appleIntelligenceNotEnabled):
+                return "unavailable.appleIntelligenceNotEnabled"
+            case .unavailable(.modelNotReady):
+                return "unavailable.modelNotReady"
+            case .unavailable(let other):
+                return "unavailable.unknown(\(other))"
+            }
+        } else {
             return "unavailable.deviceNotEligible"
-        case .unavailable(.appleIntelligenceNotEnabled):
-            return "unavailable.appleIntelligenceNotEnabled"
-        case .unavailable(.modelNotReady):
-            return "unavailable.modelNotReady"
-        case .unavailable(let other):
-            return "unavailable.unknown(\(other))"
         }
     }
 }

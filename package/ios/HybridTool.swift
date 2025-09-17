@@ -8,6 +8,7 @@ struct HybridTool: Tool, @unchecked Sendable {
     var parameters: GenerationSchema
     var handler: (AnyMap) -> Promise<Promise<AnyMap>>
     
+    @available(iOS 26.0, *)
     init(name: String, description: String, parameters: AnyMap, handler: @escaping (AnyMap) -> Promise<Promise<AnyMap>>) throws {
         self.name = name
         self.description = description
@@ -19,6 +20,7 @@ struct HybridTool: Tool, @unchecked Sendable {
         }
     }
     
+    @available(iOS 26.0, *)
     func call(arguments: GeneratedContent) async throws -> some Generable {
         do {
             let argumentsMap = Self.convertGeneratedContentToAnyMap(arguments)
@@ -48,6 +50,7 @@ struct HybridTool: Tool, @unchecked Sendable {
     
     // MARK: - Helper Methods
     
+    @available(iOS 26.0, *)
     private static func createGenerationSchema(from anyMap: AnyMap) throws -> GenerationSchema {
         let keys = anyMap.getAllKeys()
         var properties: [DynamicGenerationSchema.Property] = []
@@ -66,6 +69,7 @@ struct HybridTool: Tool, @unchecked Sendable {
     }
     
     
+    @available(iOS 26.0, *)
     private static func createDynamicSchema(from anyMap: AnyMap, key: String) throws -> DynamicGenerationSchema {
         if anyMap.isString(key: key) {
             let typeString = anyMap.getString(key: key)
@@ -79,6 +83,7 @@ struct HybridTool: Tool, @unchecked Sendable {
         }
     }
     
+    @available(iOS 26.0, *)
     private static func createSchemaFromTypeString(_ typeString: String) -> DynamicGenerationSchema {
         switch typeString.lowercased() {
         case "string":
@@ -92,6 +97,7 @@ struct HybridTool: Tool, @unchecked Sendable {
         }
     }
     
+    @available(iOS 26.0, *)
     private static func convertGeneratedContentToAnyMap(_ content: GeneratedContent) -> AnyMap {
         let anyMap = AnyMap()
         let jsonString = content.jsonString
@@ -133,6 +139,7 @@ struct HybridTool: Tool, @unchecked Sendable {
         return anyMap
     }
     
+    @available(iOS 26.0, *)
     private static func convertAnyMapToGeneratedContent(_ anyMap: AnyMap) -> GeneratedContent {
         let keys = anyMap.getAllKeys()
         var keyValuePairs: [(String, any ConvertibleToGeneratedContent)] = []

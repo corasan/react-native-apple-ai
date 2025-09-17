@@ -49,7 +49,6 @@
       "devDependencies": {
         "@expo/config-plugins": "^54.0.1",
         "@types/react": "*",
-        "nitro-codegen": "^0.29.4",
         "nitrogen": "^0.29.6",
         "react-native-builder-bob": "^0.40.13",
         "ts-node": "^10.9.2",
@@ -1418,8 +1417,6 @@
     "netmask": ["netmask@2.0.2", "", {}, "sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg=="],
 
     "new-github-release-url": ["new-github-release-url@2.0.0", "", { "dependencies": { "type-fest": "^2.5.1" } }, "sha512-NHDDGYudnvRutt/VhKFlX26IotXe1w0cmkDm6JGquh5bz/bDTw0LufSmH/GxTjEdpHEO+bVKFTwdrcGa/9XlKQ=="],
-
-    "nitro-codegen": ["nitro-codegen@0.29.4", "", {}, "sha512-jHLm8JuSqxWco7zhPnv2wUnm0zwgCDKVzrekRSnCqdEKxDUDyA6sVNNTeeOUx1k8Pit51J2bXnf3/sJBXwut5g=="],
 
     "nitrogen": ["nitrogen@0.29.6", "", { "dependencies": { "chalk": "^5.3.0", "react-native-nitro-modules": "^0.29.6", "ts-morph": "^25.0.0", "yargs": "^17.7.2", "zod": "^4.0.5" }, "bin": { "nitrogen": "lib/index.js" } }, "sha512-LwHgCvxx3ruMM7Pv7j/aKhM7yL2yDtasRxH2yprAcZYTYqyRS6SFsjr2PJXAqFJtqtta/2OEghHRdHeZBW6b5A=="],
 

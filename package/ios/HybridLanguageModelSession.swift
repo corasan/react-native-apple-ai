@@ -50,6 +50,7 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
      * Implements the streaming response functionality required by the Nitro interface.
      * This method bridges the FoundationModels streaming API with the Nitro callback system.
      */
+    @available(iOS 26.0, *)
     func streamResponse(prompt: String, onStream: @escaping (String) -> Void) throws -> Promise<String> {
         return Promise.async {
             guard let modelSession = self.session else {
@@ -88,10 +89,12 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
         }
     }
     
+    @available(iOS 26.0, *)
     var wasContextReset: Bool {
         return contextWasReset
     }
     
+    @available(iOS 26.0, *)
     private func createNewSessionWithSummary(previousSession: LanguageModelSession) async throws -> LanguageModelSession {
         let summarySession = LanguageModelSession(transcript: previousSession.transcript)
         let summaryResponse = try await summarySession.respond(to: "Summarize this conversation in a concise way that preserves the key context and information.")
@@ -103,6 +106,7 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
         return LanguageModelSession(tools: self.tools, instructions: enhancedInstructions)
     }
     
+    @available(iOS 26.0, *)
     private static func buildEnhancedInstructions(baseInstructions: String?, tools: [ToolDefinition]) -> String {
         let base = baseInstructions ?? "You are a helpful assistant"
         
@@ -121,6 +125,7 @@ class HybridLanguageModelSession: HybridLanguageModelSessionSpec {
 /**
  * Custom configuration that uses HybridTool instead of HybridToolSpec
  */
+@available(iOS 26.0, *)
 struct CustomLanguageModelSessionConfig {
     let instructions: String?
     let tools: [HybridTool]?
