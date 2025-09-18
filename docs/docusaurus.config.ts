@@ -60,7 +60,7 @@ const config: Config = {
       title: 'React Native Apple AI',
       logo: {
         alt: 'React Native Apple AI Logo',
-        src: 'img/logo.svg',
+        src: 'img/rn-apple-ai.png',
       },
       items: [
         {
