@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a React Native Nitro module that provides access to Apple's Foundation Models (Apple Intelligence) for iOS 18.2+. The project implements a bridge between React Native and Apple's native language model capabilities, enabling AI-powered conversations with support for tool calling and streaming responses.
+This is a React Native Nitro module that provides access to Apple's Foundation Models (Apple Intelligence) for iOS 26.0+. The project exposes Apple's on-device language model capabilities to React Native applications, enabling AI features with support for tool calling and streaming responses.
 
 ## Architecture
 
@@ -92,7 +92,7 @@ The module supports creating custom tools that the AI can invoke during conversa
 
 ### Error Handling
 The module includes comprehensive error handling for Apple AI availability states:
-- Platform not supported (iOS < 18.2)
+- Platform not supported (iOS < 26.0)
 - Device not eligible for Apple Intelligence
 - Apple Intelligence not enabled in Settings
 - Model downloading or not ready
