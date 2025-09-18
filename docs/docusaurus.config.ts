@@ -22,7 +22,7 @@ const config: Config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'Developer', // Usually your GitHub org/user name.
+  organizationName: 'corasan', // Usually your GitHub org/user name.
   projectName: 'react-native-apple-ai', // Usually your repo name.
 
   onBrokenLinks: 'throw',
@@ -43,7 +43,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           editUrl:
-            'https://github.com/Developer/react-native-apple-ai/tree/main/docs/',
+            'https://github.com/corasan/react-native-apple-ai/tree/main/docs/',
         },
         blog: false,
         theme: {
@@ -70,7 +70,7 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          href: 'https://github.com/Developer/react-native-apple-ai',
+          href: 'https://github.com/corasan/react-native-apple-ai',
           label: 'GitHub',
           position: 'right',
         },
@@ -93,7 +93,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/Developer/react-native-apple-ai',
+              href: 'https://github.com/corasan/react-native-apple-ai',
             },
           ],
         },
