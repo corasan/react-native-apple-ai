@@ -19,6 +19,7 @@ const config: Config = {
   baseUrl: '/react-native-apple-ai/',
   organizationName: 'corasan',
   projectName: 'react-native-apple-ai',
+  deploymentBranch: 'gh-pages',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
