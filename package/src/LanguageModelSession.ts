@@ -50,7 +50,7 @@ export function checkFoundationModelsAvailability(): FoundationModelsAvailabilit
       status,
       message: getAvailabilityMessage(status),
     }
-  } catch (error) {
+  } catch (_error) {
     return {
       isAvailable: false,
       status: 'unavailable.platformNotSupported',

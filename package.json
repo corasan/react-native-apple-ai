@@ -15,7 +15,10 @@
     "specs:pod": "bun --cwd ./package specs && cd example/ios && pod install && cd ../../",
     "build": "bun --cwd package build",
     "release": "release-it",
-    "prebuild:ios": "bunx --cwd ./example expo prebuild -p ios"
+    "prebuild:ios": "bunx --cwd ./example expo prebuild -p ios",
+    "docs:dev": "bun --cwd docs start",
+    "docs:build": "bun --cwd docs build",
+    "docs:serve": "bun --cwd docs serve"
   },
   "keywords": [
     "react-native",
@@ -23,7 +26,8 @@
   ],
   "workspaces": [
     "package",
-    "example"
+    "example",
+    "docs"
   ],
   "repository": {
     "type": "git",
