@@ -2,83 +2,110 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Overview
+## Project Overview
 
-This is a React Native Nitro module that provides Apple Foundation Models integration for React Native applications. The project uses a workspace structure with the main package implementation and an example Expo app.
-
-IMPORTANT: Always use context7 for up to date documentation
-
-## Project Structure
-
-- **Root workspace**: Contains scripts for building, linting, and releasing
-- **`package/`**: Main Nitro module source code and native implementations
-- **`example/`**: Expo example app demonstrating the module usage
-- **`package/src/specs/`**: Nitro interface definitions (`.nitro.ts` files)
-- **`package/ios/`**: Native Swift implementations of Nitro modules
-- **`package/nitrogen/generated/`**: Auto-generated Nitro bridge code
-
-## Development Commands
-
-### Building and Development
-- `bun typescript` - Type check the package without emitting files
-- `bun build` - Build the package (runs from package directory)
-- `bun specs` - Generate Nitro bindings using nitro-codegen
-- `bun specs:pod` - Generate specs and install iOS pods
-- `bun clean` - Remove build artifacts and node_modules
-
-### Example App
-- `cd example && npm run ios` - Run example on iOS
-- `cd example && npm run android` - Run example on Android
-- `cd example && npm run prebuild` - Generate native code for Expo
-- `cd example && npm run pod` - Install iOS CocoaPods
-
-### Release
-- `bun release` - Create a new release (runs build and specs before releasing)
+This is a React Native Nitro module that provides access to Apple's Foundation Models (Apple Intelligence) for iOS 26.0+. The project exposes Apple's on-device language model capabilities to React Native applications, enabling AI features with support for tool calling and streaming responses.
 
 ## Architecture
 
-### Nitro Module System
-This project uses React Native Nitro Modules, which provides:
-- Type-safe native bridge interfaces defined in `.nitro.ts` files
-- Automatic code generation for Swift/Kotlin implementations
-- Hybrid objects that can hold native state
+### Workspace Structure
+- `package/` - The main Nitro module source code and native bindings
+- `example/` - Demo Expo app showcasing the module's capabilities
+- Root contains workspace configuration for both packages
 
-### Core Interfaces
-- **FoundationModels**: Main interface for AI model interactions with streaming support
-- **Tool**: Hybrid object representing AI tools with name, description, and arguments
-- **ToolFactory/ToolBridge**: Factory pattern for creating and managing tools
-- **LanguageModelSessionFactory**: Factory for creating language model sessions
+### Core Components
 
-### Nitro Configuration
-The `package/nitro.json` file configures:
-- C++ namespace: `rnappleai`
-- iOS module name: `RNAppleAI`
-- Native class mappings for autolinking
-- Android namespace and library name
+**Main Module (`package/src/`)**:
+- `LanguageModelSession.ts` - Core class that manages AI sessions and interfaces with native code
+- `hooks/useLanguageModel.ts` - React hook providing session lifecycle management and error handling
+- `hooks/useStreamingResponse.ts` - Lower-level hook for streaming AI responses
+- `types.ts` - TypeScript definitions including tool schemas and availability statuses
+- `tool-utils.ts` - Utilities for creating and managing AI tools
+- `errors.ts` - Custom error types for Apple AI integration
+- `specs/LanguageModelSession.nitro.ts` - Nitro interface specifications
 
-### Native Implementation
-Swift files in `package/ios/` implement the Nitro interfaces:
-- `HybridFoundationModels.swift` - Main Foundation Models implementation
-- `HybridTool.swift` - Tool hybrid object implementation
-- `FMLanguageModelSession.swift` - Language model session management
-- `ToolBridge.swift` - Tool bridge for communication
+**Native Integration**:
+- Uses Nitro modules for React Native-to-native bridging
+- iOS implementation connects to Apple's Foundation Models framework
+- Requires iOS 18.2+ and Apple Intelligence enabled
 
-## Important Notes
+## Common Development Commands
 
-- Always run `bun specs` after modifying `.nitro.ts` interface files to regenerate bindings
-- The project uses Bun as the package manager and task runner
-- iOS CocoaPods installation is required for iOS development (`bun specs:pod`)
-- The example app uses Expo with custom dev client for native module testing
-- Generated code in `nitrogen/generated/` should not be manually edited
-
-## Testing
-
-Run type checking before committing:
+### Build and Development
 ```bash
-bun typescript
-```
+# Install dependencies for all workspaces
+bun install
 
-For iOS development, ensure pods are installed:
-```bash
+# Build the module
+bun run build
+
+# Type checking
+bun run typecheck
+
+# Generate Nitro specs
+bun specs
+
+# Generate Nitro specs and install iOS pods
 bun specs:pod
+
+# Clean build artifacts
+bun run clean
 ```
+
+### Example App Development
+```bash
+cd example
+
+# Start Expo development server
+bun start
+# or
+npm run start
+
+# Run on iOS (requires macOS and Xcode)
+bun ios
+# or
+npm run ios
+
+# Run on Android
+bun android
+# or
+npm run android
+
+# Prebuild for iOS
+npm run prebuild:ios
+
+# Install iOS pods
+npm run pod
+```
+
+### Code Quality
+```bash
+# Format and lint code with Biome
+npx @biomejs/biome format --write .
+npx @biomejs/biome lint .
+```
+
+## Development Notes
+
+### Tool Integration
+The module supports creating custom tools that the AI can invoke during conversations. Tools are defined using Zod schemas and can perform external API calls or other operations. See `example/app/index.tsx` for a weather tool implementation.
+
+### Error Handling
+The module includes comprehensive error handling for Apple AI availability states:
+- Platform not supported (iOS < 26.0)
+- Device not eligible for Apple Intelligence
+- Apple Intelligence not enabled in Settings
+- Model downloading or not ready
+
+### Session Management
+`LanguageModelSession` handles the lifecycle of AI conversations. Sessions can be configured with system instructions and tools. The React hooks provide higher-level abstractions with automatic error handling and state management.
+
+### Native Dependencies
+- Requires `react-native-nitro-modules` peer dependency
+- iOS implementation uses Swift and integrates with Apple's Foundation Models framework
+- Build process generates TypeScript definitions from Nitro specs
+
+### Testing Device Requirements
+- iOS 26.0+ physical device or simulator
+- Apple Intelligence must be enabled in Settings > Apple Intelligence & Siri
+- Compatible hardware (Apple Silicon Macs, newer iPhones/iPads)
