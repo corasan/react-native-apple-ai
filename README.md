@@ -1,34 +1,124 @@
 # react-native-apple-ai
 
-Foundation Models implementation for React Native.
+React Native Nitro module for Apple's Foundation Models (Apple Intelligence). Enables AI capabilities in React Native applications using Apple's on-device model, with tool calling support and streaming responses on iOS 26.0+.
+
+## Requirements
+
+- iOS 26.0 or later
+- Apple Intelligence enabled in Settings > Apple Intelligence & Siri
+- Compatible Apple devices (Apple Silicon Macs, recent iPhones/iPads)
+- React Native with Nitro modules support
 
 ## Installation
 
 ```sh
-npm install react-native-apple-ai
+npm install react-native-apple-ai react-native-nitro-modules
+yarn add react-native-apple-ai react-native-nitro-modules
+bun add react-native-apple-ai react-native-nitro-modules
 ```
 
 ## Usage
 
-```javascript
-import { FoundationModelsSpec } from 'react-native-apple-ai';
-import { NitroModules } from 'react-native-nitro-modules';
+### Basic Chat Session
 
-const FoundationModels = NitroModules.create<FoundationModelsSpec>('FoundationModels');
+```typescript
+import { LanguageModelSession } from 'react-native-apple-ai';
 
-const result = FoundationModels.hello('World');
-console.log(result);
+const session = new LanguageModelSession({
+  instructions: 'You are a helpful assistant'
+});
+
+// Stream responses
+await session.streamResponse('Hello, how are you?', (response) => {
+  console.log('Streaming response:', response);
+});
 ```
 
-## API
+### Using React Hooks
 
-### `hello(name: string): string`
+```typescript
+import { useLanguageModel } from 'react-native-apple-ai';
 
-Returns a greeting message.
+function ChatComponent() {
+  const { send, response, loading, error, isSessionReady } = useLanguageModel({
+    instructions: 'You are a helpful coding assistant',
+    onResponse: (response) => console.log('Got response:', response),
+    onError: (error) => console.error('Error:', error)
+  });
 
-### `add(a: number, b: number): number`
+  const handleSendMessage = async () => {
+    if (isSessionReady) {
+      await send('Explain React hooks');
+    }
+  };
 
-Adds two numbers and returns the result.
+  return (
+    <View>
+      <Text>{response}</Text>
+      <Button onPress={handleSendMessage} disabled={loading} title="Send" />
+    </View>
+  );
+}
+```
+
+### Tool calling
+
+```typescript
+import { createTool, LanguageModelSession } from 'react-native-apple-ai';
+import { z } from 'zod';
+
+const weatherTool = createTool({
+  name: 'weather_tool',
+  description: 'Get current weather for a city',
+  arguments: z.object({
+    city: z.string(),
+  }),
+  handler: async (args) => {
+    const response = await fetch(`/weather?city=${args.city}`);
+    const res = await response.json();
+    return res.data
+  },
+});
+
+const session = new LanguageModelSession({
+  instructions: 'You are a weather assistant',
+  tools: [weatherTool]
+});
+```
+
+## API Reference
+
+### `LanguageModelSession`
+
+Core class for managing AI conversations.
+
+```typescript
+constructor(config?: {
+  instructions?: string;
+  tools?: Tool[];
+})
+```
+
+### `useLanguageModel(config)`
+
+React hook for session management with automatic lifecycle handling.
+
+Returns:
+- `session` - The current session instance
+- `response` - Latest AI response
+- `loading` - Whether a request is in progress
+- `error` - Any error that occurred
+- `send(prompt)` - Send a message to the AI
+- `reset()` - Reset the conversation state
+- `isSessionReady` - Whether the session is ready to use
+
+### `useStreamingResponse(session)`
+
+Lower-level hook for streaming responses.
+
+### `checkFoundationModelsAvailability()`
+
+Check if Apple Intelligence is available on the device.
 
 ## Development
 
@@ -39,23 +129,16 @@ This project uses a workspace structure with:
 ### Setup
 
 ```sh
-npm install
-npm run build
+bun install
+bun run build
 ```
 
 ### Running the example
 
 ```sh
 cd example
-npm run ios
-# or
-npm run android
+bun start    # Start Expo dev server
+bun ios      # Run on iOS
 ```
 
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository.
-
-## License
-
-MIT
+Note: Android is not supported as this module requires Apple's Foundation Models framework.
