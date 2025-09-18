@@ -36,10 +36,6 @@
   "license": "MIT",
   "bugs": "https://github.com/Developer/react-native-apple-ai/issues",
   "homepage": "https://github.com/Developer/react-native-apple-ai#readme",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "provenance": true
-  },
   "devDependencies": {
     "@biomejs/biome": "^2.0.6",
     "@release-it-plugins/workspaces": "^5.0.3",
